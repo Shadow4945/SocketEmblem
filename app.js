@@ -1,3 +1,4 @@
+var clients = [];
 var peopleInGame = 0;
 
 var express = require('express'),
@@ -19,16 +20,29 @@ io.on("connection", function (socket) {
     socket.nickname = 'Guest';
     socket.on("disconnect", function () {
         peopleInGame -= 1;
+        clients.splice(clients.indexOf(socket),1);
         console.log(socket.id + "user has disconnected");
+        io.emit('list clients', clients);
+        io.emit('user left', socket.nickname);
+        console.log(clients);
     });
 
-    socket.on("chat message", function (msg) {
-        console.log(msg.msg);
+    socket.on('add user',function(username){
+        socket.nickname = username;
+        clients.push(socket.nickname);
+        console.log(clients);
+        io.emit('list clients', clients);
+        io.emit('user joined', socket.nickname);
+    });
+    
+    socket.on("chat message", function(msg){
+       // console.log(msg.x);
         //console.log(io.sockets.clients());
         io.emit('chat received', {
             message: msg.msg,
             sid: socket.id,
-            name: msg.name
+            name: socket.nickname,
+            score: msg.score
         });
     });
 
@@ -39,9 +53,11 @@ io.on("connection", function (socket) {
 
     socket.on("get clients", function (msg) {
         console.log('sending clients');
-        console.log(io.sockets.clients());
-        io.emit('list clients', io.sockets.clients().adapter.sids);
+        //console.log(io.sockets.adapter);
+        
+        io.emit('list clients', clients);
     });
+
 });
 
 app.use(express.static('public'));

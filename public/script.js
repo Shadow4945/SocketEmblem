@@ -11,6 +11,10 @@ $('document').ready(function () {
     });
 
     socket.on("list clients", function (data) {
+        $("#connected-users").html("");
+        for(var c in data){
+            $("#connected-users").prepend($('<li>').text(data[c]));
+        }
         console.log(data);
     });
 
@@ -28,22 +32,36 @@ $('document').ready(function () {
         $('#name').val("");
         $('#name_holder').html('<h3>' + my_name + '</h3>');
         $('#message_form').show();
+        
+        socket.emit('add user', my_name);
     });
 
 
     $('#message_form').submit(function (evt) {
         evt.preventDefault();
+        player.score += 2;
+        player.x += player.score;
         var temp = {
             name: my_name,
-            msg: $('#msg').val()
+            msg: $('#msg').val(),
+            score: player.score,
+            x: player.x,
+            y: player.y
         }
         socket.emit('chat message', temp);
         $('#msg').val("");
     });
 
+    socket.on('user joined', function(data){
+        $("#messages").prepend($('<li>').text(data + " has joined."));
+    });
 
+    socket.on('user left', function(data){
+        $("#messages").prepend($('<li>').text(data + " has left."));
+    });
 
     socket.on("chat received", function (data) {
+        $('#messages').prepend($('<li>').text(data.name + ' score is: ' + data.score));
         $('#messages').prepend($('<li>').text(data.name + ' says: ' + data.message));
     });
 
@@ -57,7 +75,8 @@ $('document').ready(function () {
 });
 
 var player = {
-    x: ((Math.random() * 60) * 10) + 100,
+    score: 0,
+    x: ((Math.random()*60) * 10)+100,
     y: 20
 }
 
