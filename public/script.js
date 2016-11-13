@@ -2,18 +2,25 @@ var stage;
 var my_name;
 
 $('document').ready(function () {
-    
     var socket = io();
+
     $('#client_info').submit(function (evt) {
         evt.preventDefault();
         var temp = '';
         socket.emit('get clients', temp);
     });
-    
+
     socket.on("list clients", function (data) {
         console.log(data);
     });
-    
+
+    socket.on("peopleNum", function (peopleNum) {
+        if (peopleNum > 3) {
+            $('#name_form').hide();
+            $('#warning').text("Sorry but there are already three players. You are a spectator now.");
+        }
+    });
+
     $('#message_form').hide();
     $('#name_form').submit(function (evt) {
         evt.preventDefault();
@@ -22,6 +29,7 @@ $('document').ready(function () {
         $('#name_holder').html('<h3>' + my_name + '</h3>');
         $('#message_form').show();
     });
+
 
     $('#message_form').submit(function (evt) {
         evt.preventDefault();
@@ -33,15 +41,23 @@ $('document').ready(function () {
         $('#msg').val("");
     });
 
+
+
     socket.on("chat received", function (data) {
         $('#messages').prepend($('<li>').text(data.name + ' says: ' + data.message));
     });
-    
+
+    socket.on("check players", function (data) {
+        $('#name_form').hide();
+        $('#warning').append('<p>').text("Sorry there are too many people. But you can watch.");
+    });
+
     main();
+
 });
 
 var player = {
-    x: ((Math.random()*60) * 10)+100,
+    x: ((Math.random() * 60) * 10) + 100,
     y: 20
 }
 
@@ -55,13 +71,12 @@ function setupCanvas() {
 function createPlayer() {
     var rectangle = new createjs.Shape();
     rectangle.graphics.beginFill("#447").drawRect(0, 0, 20, 20);
-    myText = new createjs.Text(my_name, "12px Arial", "#ffffff");  //creates text object
-    myText.x = 0; 
-    myText.y = 0; 
+    myText = new createjs.Text(my_name, "12px Arial", "#ffffff"); //creates text object
+    myText.x = 0;
+    myText.y = 0;
 }
 
 function main() {
-    setupCanvas(); //sets up the canvas
+    setupCanvas();
     createPlayer();
 }
-

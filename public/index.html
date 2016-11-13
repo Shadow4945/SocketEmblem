@@ -10,10 +10,12 @@
 
 <body>
     <canvas id="game"></canvas>
-        <form id='client_info'>
-            <input type="submit" value="click">
-        </form>
-    <div id='name_holder'>        
+    <form id='client_info'>
+        <input type="submit" value="click">
+    </form>
+    <div id="warning">
+    </div>
+    <div id='name_holder'>
         <form id='name_form'>
             <label>Enter Name:</label>
             <input id="name" type="text" autocomplete="off">
@@ -21,11 +23,11 @@
         </form>
     </div>
     <div id='msg_holder'>
-    <form id='message_form'>
-        <input id="msg" type="text" autocomplete="off">
-        <input type="submit" value="submit">
-    </form>
-    <ul id='messages'></ul>
+        <form id='message_form' class="po">
+            <input id="msg" class="po" type="text" autocomplete="off">
+            <input type="submit" class="po" value="submit">
+        </form>
+        <ul id='messages'></ul>
     </div>
     <script src="http://code.createjs.com/createjs-2013.12.12.min.js"></script>
     <script src="script.js"></script>
