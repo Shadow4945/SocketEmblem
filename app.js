@@ -20,8 +20,8 @@ io.on("connection", function (socket) {
     socket.nickname = 'Guest';
     socket.on("disconnect", function () {
         peopleInGame -= 1;
-        clients.splice(clients.indexOf(socket),1);
-        console.log(socket.id + "user has disconnected");
+        clients.splice(clients.indexOf(socket.nickname),1);
+        console.log(clients.indexOf(socket.nickname) + " user has disconnected");
         io.emit('list clients', clients);
         io.emit('user left', socket.nickname);
         console.log(clients);
