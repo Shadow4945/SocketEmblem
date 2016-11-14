@@ -42,7 +42,9 @@ io.on("connection", function (socket) {
             message: msg.msg,
             sid: socket.id,
             name: socket.nickname,
-            score: msg.score
+            score: msg.score,
+            x: msg.score,
+            y: msg.score
         });
     });
 

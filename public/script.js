@@ -39,7 +39,7 @@ $('document').ready(function () {
 
     $('#message_form').submit(function (evt) {
         evt.preventDefault();
-        player.score += 2;
+        player.score += 3;
         player.x += player.score;
         var temp = {
             name: my_name,
@@ -62,6 +62,7 @@ $('document').ready(function () {
 
     socket.on("chat received", function (data) {
         $('#messages').prepend($('<li>').text(data.name + ' score is: ' + data.score));
+        $('#messages').prepend($('<li>').text(data.name + ' has an x and y value of ' + data.x + ", " + data.y));
         $('#messages').prepend($('<li>').text(data.name + ' says: ' + data.message));
     });
 
