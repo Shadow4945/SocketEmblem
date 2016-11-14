@@ -2,8 +2,8 @@ var stage;
 var my_name;
 
 $('document').ready(function () {
-
     var socket = io();
+
     $('#client_info').submit(function (evt) {
         evt.preventDefault();
         var temp = '';
@@ -11,10 +11,18 @@ $('document').ready(function () {
     });
 
     socket.on("list clients", function (data) {
-          console.log(data)
-          player.x+=10;
-                player.y+=50;
+        $("#connected-users").html("");
+        for(var c in data){
+            $("#connected-users").prepend($('<li>').text(data[c]));
+        }
+        console.log(data);
+    });
 
+    socket.on("peopleNum", function (peopleNum) {
+        if (peopleNum > 3) {
+            $('#name_form').hide();
+            $('#warning').text("Sorry but there are already three players. You are a spectator now.");
+        }
     });
 
     $('#message_form').hide();
@@ -24,31 +32,51 @@ $('document').ready(function () {
         $('#name').val("");
         $('#name_holder').html('<h3>' + my_name + '</h3>');
         $('#message_form').show();
+        
+        socket.emit('add user', my_name);
     });
+
 
     $('#message_form').submit(function (evt) {
         evt.preventDefault();
-          player.score+=100;
+        player.score += 3;
+        player.x += player.score;
         var temp = {
             name: my_name,
             msg: $('#msg').val(),
-            score:player.score,
-            y :Math.floor(player.y),
-            x:Math.floor(player.x)
+            score: player.score,
+            x: player.x,
+            y: player.y
         }
         socket.emit('chat message', temp);
         $('#msg').val("");
     });
 
-    socket.on("chat received", function (data) {
+    socket.on('user joined', function(data){
+        $("#messages").prepend($('<li>').text(data + " has joined."));
+    });
 
-        $('#messages').prepend($('<li>').text(data.name + ' says: ' + data.message+' also '+data.x+','+data.y+' Score:'+data.score));
+    socket.on('user left', function(data){
+        $("#messages").prepend($('<li>').text(data + " has left."));
+    });
+
+    socket.on("chat received", function (data) {
+        $('#messages').prepend($('<li>').text(data.name + ' score is: ' + data.score));
+        $('#messages').prepend($('<li>').text(data.name + ' has an x and y value of ' + data.x + ", " + data.y));
+        $('#messages').prepend($('<li>').text(data.name + ' says: ' + data.message));
+    });
+
+    socket.on("check players", function (data) {
+        $('#name_form').hide();
+        $('#warning').append('<p>').text("Sorry there are too many people. But you can watch.");
     });
 
     main();
+
 });
 
 var player = {
+    score: 0,
     x: ((Math.random()*60) * 10)+100,
     y: ((Math.random()*60) * 10)+100,
     score:0
@@ -64,12 +92,12 @@ function setupCanvas() {
 function createPlayer() {
     var rectangle = new createjs.Shape();
     rectangle.graphics.beginFill("#447").drawRect(0, 0, 20, 20);
-    myText = new createjs.Text(my_name, "12px Arial", "#ffffff");  //creates text object
+    myText = new createjs.Text(my_name, "12px Arial", "#ffffff"); //creates text object
     myText.x = 0;
     myText.y = 0;
 }
 
 function main() {
-    setupCanvas(); //sets up the canvas
+    setupCanvas();
     createPlayer();
 }
