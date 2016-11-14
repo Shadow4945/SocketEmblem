@@ -10,11 +10,13 @@
 
 <body>
     <canvas id="game"></canvas>
+
+    <div id="warning">
+    </div>
     <form id='client_info'>
         <input type="submit" value="click">
     </form>
-    <div id="warning">
-    </div>
+    <ul id="connected-users"></ul>
         <ul id="connected-users"></ul>
     <div id='name_holder'>        
         <form id='name_form'>
@@ -23,6 +25,7 @@
             <input type="submit" value="submit">
         </form>
     </div>
+
     <div id='msg_holder'>
         <form id='message_form' class="po">
             <input id="msg" class="po" type="text" autocomplete="off">
