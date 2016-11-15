@@ -36,7 +36,7 @@ $('document').ready(function () {
         socket.emit('add user', my_name);
     });
 
-
+//Variables should work now
     $('#message_form').submit(function (evt) {
         evt.preventDefault();
         player.score += 3;
