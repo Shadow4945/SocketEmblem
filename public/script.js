@@ -45,7 +45,7 @@ $('document').ready(function () {
             name: my_name,
             msg: $('#msg').val(),
             score: player.score,
-            x: player.x,
+            x: Math.floor(player.x),
             y: player.y
         }
         socket.emit('chat message', temp);
