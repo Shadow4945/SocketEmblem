@@ -36,7 +36,7 @@ $('document').ready(function () {
         socket.emit('add user', my_name);
     });
 
-
+//Variables should work now
     $('#message_form').submit(function (evt) {
         evt.preventDefault();
         player.score += 3;
@@ -45,7 +45,7 @@ $('document').ready(function () {
             name: my_name,
             msg: $('#msg').val(),
             score: player.score,
-            x: player.x,
+            x: Math.floor(player.x),
             y: player.y
         }
         socket.emit('chat message', temp);
