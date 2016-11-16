@@ -10,10 +10,6 @@ app.get('/', function (req, res) {
     res.sendFile(__dirname + "/public/index.html");
 });
 var people = 0;
-io.on("connection", function (socket) {
-    console.log(socket.id + " user has connected");
-    socket.nickname = 'Guest';
-    socket.on("disconnect", function () {
 
 io.on("connection", function (socket) {
     console.log(socket.id + " user has connected");
@@ -39,7 +35,7 @@ io.on("connection", function (socket) {
         io.emit('list clients', clients);
         io.emit('user joined', socket.nickname);
     });
-    
+
     socket.on("chat message", function(msg){
        // console.log(msg.x);
         console.log(msg.name)
@@ -62,7 +58,7 @@ io.on("connection", function (socket) {
     socket.on("get clients", function (msg) {
         console.log('sending clients');
         //console.log(io.sockets.adapter);
-        
+
         io.emit('list clients', clients);
     });
 
