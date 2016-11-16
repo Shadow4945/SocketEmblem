@@ -43,8 +43,8 @@ io.on("connection", function (socket) {
             sid: socket.id,
             name: socket.nickname,
             score: msg.score,
-            x: msg.score,
-            y: msg.score
+            x: msg.x,
+            y: msg.y
         });
     });
 
