@@ -10,6 +10,7 @@ var express = require('express'),
 app.get('/', function (req, res) {
     res.sendFile(__dirname + "/public/index.html");
 });
+var people = 0;
 
 io.on("connection", function (socket) {
     console.log(socket.id + " user has connected");
@@ -87,13 +88,13 @@ io.on("connection", function (socket) {
 
     socket.on("get clients", function (msg) {
         console.log('sending clients');
-        console.log(io.sockets.adapter);
+        //io.emit('list clients', clients);
+        //console.log(io.sockets.adapter);
 
         io.to(socket.room).emit('list clients', clients);
     });
 
 });
-
 app.use(express.static('public'));
 
 http.listen(process.env.PORT || 3000, function () {
