@@ -71,6 +71,11 @@ $('document').ready(function () {
         $('#warning').append('<p>').text("Sorry there are too many people. But you can watch.");
     });
 
+    socket.on('move room', function (data){
+        $("#messages").prepend($('<li>').text(data.message));
+        socket.emit('leave room');
+    });
+
     main();
 
 });
