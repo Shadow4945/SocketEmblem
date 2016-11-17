@@ -103,6 +103,7 @@ function loadComplete(evt) {
 }
 
 function loadFiles() {
+    console.log(" you");
     createjs.Sound.alternateExtensions = ["mp3"];
     queue = new createjs.LoadQueue(true, "assets/");
     queue.installPlugin(createjs.Sound);
@@ -185,7 +186,6 @@ $('document').ready(function () {
         socket.emit('leave room');
     });
 
-    main();
 
 
 });
