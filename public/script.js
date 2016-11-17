@@ -185,7 +185,7 @@ $('document').ready(function () {
         socket.emit('leave room');
     });
 
-    main();
+    
 
 
 });
