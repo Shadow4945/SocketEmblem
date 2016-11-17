@@ -8,7 +8,7 @@ var jsEnd = ".js?a=" + cacheVersion;
 manifest = [
 
     {
-        src: "scripts/title" + jsEnd
+        src: "/scripts/title" + jsEnd
    }
     , {
         src: "scripts/mouse" + jsEnd
