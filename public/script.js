@@ -52,10 +52,7 @@ manifest = [
 , {
         src: "images/GameOver.jpg"
         , id: "gameover"
-}, {
-        src: "sounds/DJ_Sona_Kinetic_The_Crystal_Method_x_Dada_Life_.ogg"
-        , id: "music"
-    }];
+}];
 var walk, blocks, blockArray;
 blockArray = [];
 //This displays the sprites on the screen. Notice that I am putting clones of the blocks into an array. This is a really efficient way to duplicate sprite content and the preferred method.
@@ -74,9 +71,9 @@ function loadComplete(evt) {
     gamearea = new createjs.Bitmap(queue.getResult("gamearea"));
     gameover = new createjs.Bitmap(queue.getResult("gameover"));
     mouser = new createjs.Text(mouseX + "," + mouseY, "12px Arial", "#ffffff");
-    music = createjs.Sound.play("music", {
-        loop: -1
-    });
+    // music = createjs.Sound.play("music", {
+    //     loop: -1
+    // });
     //This takes the images loaded from the sprite sheet and breaks it into the individual frames. I cut and pasted the 'frames' parameter from the .js file created by Flash when I exported in easelJS format. I didn't cut and paste anything except 'frames' because I am using preloadJS to load all the images completely before running the game. That's what the queue.getResult is all about.
     //I'm doing the same thing here. Notice I am reading this from the same sprite sheet. It is not reloading the sprite sheet though. It just copies it from memory since we already preloaded this image file. The 'animations' parameter is optional but it allows you to label a series of frames in order to play looping sprites. You can even control the playback speed in relation to the FPS. In the walk cycle, I used '.5' which means at 30 FPS, it plays at 15.
     var walkSheet = new createjs.SpriteSheet({
@@ -179,7 +176,7 @@ $('document').ready(function () {
         $('#warning').append('<p>').text("Sorry there are too many people. But you can watch.");
     });
 
-    
+
     socket.on('move room', function (data){
         $("#messages").prepend($('<li>').text(data.message));
         socket.emit('leave room');
