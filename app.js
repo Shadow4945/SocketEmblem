@@ -8,13 +8,13 @@ var express = require('express'),
     io = require('socket.io')(http);
 
 app.get('/', function (req, res) {
+
     res.sendFile(__dirname + "/public/index.html");
 });
 var people = 0;
 
 io.on("connection", function (socket) {
     console.log(socket.id + " user has connected");
-
     if (peopleInGame < 3) {
         console.log("Main Room");
         socket.room = 'main room';
@@ -38,7 +38,7 @@ io.on("connection", function (socket) {
 
         //Try catch in case there are no people in the extra room
         try{
-            if (io.sockets.adapter.rooms['extra room'].length >= 1) {   
+            if (io.sockets.adapter.rooms['extra room'].length >= 1) {
             var peopleInQueue = (Object.keys(io.sockets.adapter.rooms['extra room'].sockets));
 
             io.sockets.connected[peopleInQueue[0]].emit('move room', {
@@ -49,7 +49,7 @@ io.on("connection", function (socket) {
         }catch(err){
             console.log("No users in extra room");
         }
-        
+
 
 
     });
