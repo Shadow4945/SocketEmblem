@@ -28,6 +28,7 @@
          play.visible = false;
          score.visible = true;
          timerStart();
+         updateVisuals();
          break;
      case "instructions":
          titleScreen.visible = false;
@@ -43,6 +44,7 @@
          play.visible = true;
          break;
      case "gameover":
+          reset();
          titleScreen.visible = false;
          instructionScreen.visible = false;
          gamearea.visible = false;
@@ -55,7 +57,7 @@
          Ins.visible = false;
          play.visible = false;
          score.visible = true;
-         console.log(btnTitle.visible)
+
          break;
      }
      stage.update();
