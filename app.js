@@ -82,7 +82,7 @@ io.on("connection", function (socket) {
     });
 
     if (peopleInGame > 3) {
-        console.log("check players");
+        console.log("There are more than three people.");
 
     }
 
@@ -94,7 +94,20 @@ io.on("connection", function (socket) {
         io.to(socket.room).emit('list clients', clients);
     });
 
+    function getRandomInt(min, max){
+        return Math.floor(Math.random() * (max - min)) + min;
+    }
+
+    function getTank(user){
+        var startX = getRandomInt(40,700);
+        var startY = getRandomInt(40,400);
+        
+    }
+
 });
+
+
+
 app.use(express.static('public'));
 
 http.listen(process.env.PORT || 3000, function () {
