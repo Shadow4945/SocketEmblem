@@ -66,6 +66,8 @@ function displaySprites() {
     //    walk.x = 100;
     //    walk.y = 200;
     //    walk.gotoAndPlay("walkRight");
+    
+    
     tankBbottom = new createjs.Bitmap(queue.getResult("tankBbottom"));
     tankBbottom.x = 100;
     tankBbottom.y = 100;
@@ -76,6 +78,13 @@ function displaySprites() {
     tankBbottom.regY = 24;
     stage.addChild(tankBbottom);
 
+    tankBtop = new createjs.Bitmap(queue.getResult("tankBtop"));
+    tankTopPoint = tankBtop.localToGlobal(0, 1);
+    tankBtop.x = tankBbottom.x;
+    tankBtop.y = tankBbottom.y;
+    tankBtop.regX = 13.5;
+    tankBtop.regY = 35;
+    stage.addChild(tankBtop);
 
     //This draws the objects the first time. It isn't really needed because we have a loop that redraws every frame.
     stage.update();

@@ -14,27 +14,17 @@ function handleKeyDown(evt) {
     } //browser compatibility
     switch (evt.keyCode) {
     case KEYCODE_LEFT:
-      //  console.log("left pressed");
-        return false;
-    case KEYCODE_RIGHT:
-      //  console.log("right pressed");
-        return false;
-    case KEYCODE_UP:
-      //  console.log("up pressed");
-        return false;
-    case KEYCODE_DOWN:
-      //  console.log("down pressed");
-        return false;
-    case KEYCODE_W:
-        tankBbottom.regX = 0;
-        tankBbottom.regY = 0;
-        tankPoint = tankBbottom.localToGlobal(0, 1);
-        tankBbottom.y += (tankPoint.y - tankBbottom.y);
-        tankBbottom.x += (tankPoint.x - tankBbottom.x);
-        tankBbottom.regX = 21.5;
-        tankBbottom.regY = 24;
+        tankBtop.rotation -= 3;
         break;
-    case KEYCODE_S:
+    case KEYCODE_RIGHT:
+        tankBtop.rotation += 3;
+        break;
+    case KEYCODE_UP:
+            console.log("Pew Pew");
+        break;
+    case KEYCODE_DOWN:
+        break;
+    case KEYCODE_W:
         tankBbottom.regX = 0;
         tankBbottom.regY = 0;
         tankPoint = tankBbottom.localToGlobal(0, 1);
@@ -42,16 +32,31 @@ function handleKeyDown(evt) {
         tankBbottom.x -= (tankPoint.x - tankBbottom.x);
         tankBbottom.regX = 21.5;
         tankBbottom.regY = 24;
+
+        tankBtop.y = tankBbottom.y;
+        tankBtop.x = tankBbottom.x;
+        break;
+    case KEYCODE_S:
+        tankBbottom.regX = 0;
+        tankBbottom.regY = 0;
+        tankPoint = tankBbottom.localToGlobal(0, 1);
+        tankBbottom.y += (tankPoint.y - tankBbottom.y);
+        tankBbottom.x += (tankPoint.x - tankBbottom.x);
+        tankBbottom.regX = 21.5;
+        tankBbottom.regY = 24;
+
+        tankBtop.y = tankBbottom.y;
+        tankBtop.x = tankBbottom.x;
         break;
     case KEYCODE_A:
-        tankBbottom.rotation += 2;
-        break;
-    case KEYCODE_D:
         tankBbottom.rotation -= 2;
         break;
+    case KEYCODE_D:
+        tankBbottom.rotation += 2;
+        break;
     case KEYCODE_SPACE:
-      //  console.log("space pressed");
-      health-=50;
+        //  console.log("space pressed");
+        health -= 50;
         break;
     }
 }
@@ -65,28 +70,28 @@ function handleKeyUp(evt) {
         //console.log("left released");
         break;
     case KEYCODE_RIGHT:
-      //  console.log("right released");
+        //  console.log("right released");
         break;
     case KEYCODE_UP:
-      //  console.log("up released");
+        //  console.log("up released");
         break;
     case KEYCODE_DOWN:
-      //  console.log("down released");
+        //  console.log("down released");
         break;
     case KEYCODE_W:
         //console.log("w released");
         break;
     case KEYCODE_S:
-      //  console.log("s released");
+        //  console.log("s released");
         break;
     case KEYCODE_A:
-      //  console.log("a released");
+        //  console.log("a released");
         break;
     case KEYCODE_D:
-      //  console.log("d released");
+        //  console.log("d released");
         break;
     case KEYCODE_SPACE:
-      //  console.log("space released");
+        //  console.log("space released");
         break;
     }
 }
