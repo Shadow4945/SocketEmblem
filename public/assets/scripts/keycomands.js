@@ -14,16 +14,16 @@ function handleKeyDown(evt) {
     } //browser compatibility
     switch (evt.keyCode) {
     case KEYCODE_LEFT:
-        console.log("left pressed");
+      //  console.log("left pressed");
         return false;
     case KEYCODE_RIGHT:
-        console.log("right pressed");
+      //  console.log("right pressed");
         return false;
     case KEYCODE_UP:
-        console.log("up pressed");
+      //  console.log("up pressed");
         return false;
     case KEYCODE_DOWN:
-        console.log("down pressed");
+      //  console.log("down pressed");
         return false;
     case KEYCODE_W:
         tankBbottom.regX = 0;
@@ -50,7 +50,8 @@ function handleKeyDown(evt) {
         tankBbottom.rotation -= 2;
         break;
     case KEYCODE_SPACE:
-        console.log("space pressed");
+      //  console.log("space pressed");
+      health-=50;
         break;
     }
 }
@@ -61,31 +62,31 @@ function handleKeyUp(evt) {
     } //browser compatibility
     switch (evt.keyCode) {
     case KEYCODE_LEFT:
-        console.log("left released");
+        //console.log("left released");
         break;
     case KEYCODE_RIGHT:
-        console.log("right released");
+      //  console.log("right released");
         break;
     case KEYCODE_UP:
-        console.log("up released");
+      //  console.log("up released");
         break;
     case KEYCODE_DOWN:
-        console.log("down released");
+      //  console.log("down released");
         break;
     case KEYCODE_W:
-        console.log("w released");
+        //console.log("w released");
         break;
     case KEYCODE_S:
-        console.log("s released");
+      //  console.log("s released");
         break;
     case KEYCODE_A:
-        console.log("a released");
+      //  console.log("a released");
         break;
     case KEYCODE_D:
-        console.log("d released");
+      //  console.log("d released");
         break;
     case KEYCODE_SPACE:
-        console.log("space released");
+      //  console.log("space released");
         break;
     }
 }
