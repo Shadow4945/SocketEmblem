@@ -26,16 +26,28 @@ function handleKeyDown(evt) {
         console.log("down pressed");
         return false;
     case KEYCODE_W:
-        console.log("w pressed");
+        tankBbottom.regX = 0;
+        tankBbottom.regY = 0;
+        tankPoint = tankBbottom.localToGlobal(0, 1);
+        tankBbottom.y += (tankPoint.y - tankBbottom.y);
+        tankBbottom.x += (tankPoint.x - tankBbottom.x);
+        tankBbottom.regX = 21.5;
+        tankBbottom.regY = 24;
         break;
     case KEYCODE_S:
-        console.log("s pressed");
+        tankBbottom.regX = 0;
+        tankBbottom.regY = 0;
+        tankPoint = tankBbottom.localToGlobal(0, 1);
+        tankBbottom.y -= (tankPoint.y - tankBbottom.y);
+        tankBbottom.x -= (tankPoint.x - tankBbottom.x);
+        tankBbottom.regX = 21.5;
+        tankBbottom.regY = 24;
         break;
     case KEYCODE_A:
-        console.log("a pressed");
+        tankBbottom.rotation += 2;
         break;
     case KEYCODE_D:
-        console.log("d pressed");
+        tankBbottom.rotation -= 2;
         break;
     case KEYCODE_SPACE:
         console.log("space pressed");
