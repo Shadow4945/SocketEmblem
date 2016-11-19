@@ -1,8 +1,15 @@
  var GAMESTATE = "started";
+ var rotateTopRight = false;
+ var rotateTopLeft = false;
+ var moveForward = false;
+ var moveBackward = false;
+ var turnRight = false;
+ var turnLeft = false;
 
  function loop() {
      switch (GAMESTATE) {
      case "started":
+         movement();
          titleScreen.visible = true;
          instructionScreen.visible = false;
          gamearea.visible = false;
@@ -44,7 +51,7 @@
          play.visible = true;
          break;
      case "gameover":
-          reset();
+         reset();
          titleScreen.visible = false;
          instructionScreen.visible = false;
          gamearea.visible = false;
@@ -68,3 +75,43 @@
      createjs.Ticker.addEventListener('tick', loop);
      createjs.Ticker.setFPS(FPS);
  }
+
+function movement(){
+    if(rotateTopRight === true){
+        tankBtop.rotation += 3;
+    }else if(rotateTopLeft === true){
+        tankBtop.rotation -= 3;
+    }
+    
+    if(moveForward === true){
+        tankBbottom.regX = 0;
+        tankBbottom.regY = 0;
+        tankPoint = tankBbottom.localToGlobal(0, 1);
+        tankBbottom.y -= (tankPoint.y - tankBbottom.y);
+        tankBbottom.x -= (tankPoint.x - tankBbottom.x);
+        tankBbottom.regX = 21.5;
+        tankBbottom.regY = 24;
+
+        tankBtop.y = tankBbottom.y;
+        tankBtop.x = tankBbottom.x;
+    }else if(moveBackward === true){
+        tankBbottom.regX = 0;
+        tankBbottom.regY = 0;
+        tankPoint = tankBbottom.localToGlobal(0, 1);
+        tankBbottom.y += (tankPoint.y - tankBbottom.y);
+        tankBbottom.x += (tankPoint.x - tankBbottom.x);
+        tankBbottom.regX = 21.5;
+        tankBbottom.regY = 24;
+
+        tankBtop.y = tankBbottom.y;
+        tankBtop.x = tankBbottom.x;
+    }
+    
+    if(turnRight === true){
+        
+        tankBbottom.rotation += 2;
+    }else if(turnLeft === true){
+        
+        tankBbottom.rotation -= 2;
+    }
+}

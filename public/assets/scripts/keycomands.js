@@ -14,50 +14,30 @@ function handleKeyDown(evt) {
     } //browser compatibility
     switch (evt.keyCode) {
     case KEYCODE_LEFT:
-        tankBtop.rotation -= 3;
+        rotateTopLeft = true;
         break;
     case KEYCODE_RIGHT:
-        tankBtop.rotation += 3;
+        rotateTopRight = true;
         break;
     case KEYCODE_UP:
-            console.log("Pew Pew");
+        console.log("Pew Pew");
         break;
     case KEYCODE_DOWN:
         break;
     case KEYCODE_W:
-        tankBbottom.regX = 0;
-        tankBbottom.regY = 0;
-        tankPoint = tankBbottom.localToGlobal(0, 1);
-        tankBbottom.y -= (tankPoint.y - tankBbottom.y);
-        tankBbottom.x -= (tankPoint.x - tankBbottom.x);
-        tankBbottom.regX = 21.5;
-        tankBbottom.regY = 24;
-
-        tankBtop.y = tankBbottom.y;
-        tankBtop.x = tankBbottom.x;
+        moveForward = true;
         break;
     case KEYCODE_S:
-        tankBbottom.regX = 0;
-        tankBbottom.regY = 0;
-        tankPoint = tankBbottom.localToGlobal(0, 1);
-
-        tankBbottom.y += (tankPoint.y - tankBbottom.y);
-        tankBbottom.x += (tankPoint.x - tankBbottom.x);
-        tankBbottom.regX = 21.5;
-        tankBbottom.regY = 24;
-
-        tankBtop.y = tankBbottom.y;
-        tankBtop.x = tankBbottom.x;
+        moveBackward = true;
 
         break;
     case KEYCODE_A:
-        tankBbottom.rotation -= 2;
+        turnLeft = true;
         break;
     case KEYCODE_D:
-        tankBbottom.rotation += 2;
+        turnRight = true;
         break;
     case KEYCODE_SPACE:
-        //  console.log("space pressed");
         health -= 50;
         break;
     }
@@ -69,10 +49,10 @@ function handleKeyUp(evt) {
     } //browser compatibility
     switch (evt.keyCode) {
     case KEYCODE_LEFT:
-        //console.log("left released");
+        rotateTopLeft = false;
         break;
     case KEYCODE_RIGHT:
-        //  console.log("right released");
+        rotateTopRight = false;
         break;
     case KEYCODE_UP:
         //  console.log("up released");
@@ -81,16 +61,16 @@ function handleKeyUp(evt) {
         //  console.log("down released");
         break;
     case KEYCODE_W:
-        //console.log("w released");
+        moveForward = false;
         break;
     case KEYCODE_S:
-        //  console.log("s released");
+        moveBackward = false;
         break;
     case KEYCODE_A:
-        //  console.log("a released");
+        turnLeft = false;
         break;
     case KEYCODE_D:
-        //  console.log("d released");
+        turnRight = false;
         break;
     case KEYCODE_SPACE:
         //  console.log("space released");
