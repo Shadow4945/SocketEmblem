@@ -2,6 +2,7 @@ var total = 0;
 var rounds=0;
 var health=100;
 var collisionMethod = ndgmr.checkPixelCollision;
+var pt1;
 function showGameArea() {
     stage.addChild(gamearea);
     score = new createjs.Text("Score: " + total, "12px Arial", "#ffffff"); //creates text object
@@ -25,7 +26,10 @@ function updateVisuals(){
     if(health==0){
       GAMESTATE="gameover";
     }
-      pt1 = collisionMethod(tower, pesentArray[0], 0);
+      pt1 = collisionMethod(tankBbottom, rock, 0);
+      if(pt1){
+      
+      }
 }
 function reset(){
   health=100;

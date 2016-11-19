@@ -9,7 +9,9 @@ manifest = [
 
     {
         src: "scripts/title" + jsEnd
-   }
+   }, {
+        src: "scripts/ndgmr.collision" + jsEnd
+    }
     , {
         src: "scripts/mouse" + jsEnd
    }

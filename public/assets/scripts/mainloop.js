@@ -9,7 +9,7 @@
  function loop() {
      switch (GAMESTATE) {
      case "started":
-         movement();
+
          titleScreen.visible = true;
          instructionScreen.visible = false;
          gamearea.visible = false;
@@ -23,6 +23,7 @@
          score.visible = false;
          break;
      case "startgame":
+            movement();
          titleScreen.visible = false;
          instructionScreen.visible = false;
          gamearea.visible = true;
@@ -82,7 +83,7 @@ function movement(){
     }else if(rotateTopLeft === true){
         tankBtop.rotation -= 3;
     }
-    
+
     if(moveForward === true){
         tankBbottom.regX = 0;
         tankBbottom.regY = 0;
@@ -106,12 +107,12 @@ function movement(){
         tankBtop.y = tankBbottom.y;
         tankBtop.x = tankBbottom.x;
     }
-    
+
     if(turnRight === true){
-        
+
         tankBbottom.rotation += 2;
     }else if(turnLeft === true){
-        
+
         tankBbottom.rotation -= 2;
     }
 }
