@@ -52,10 +52,7 @@ manifest = [
 , {
         src: "images/GameOver.jpg"
         , id: "gameover"
-}, {
-        src: "sounds/DJ_Sona_Kinetic_The_Crystal_Method_x_Dada_Life_.ogg"
-        , id: "music"
-    }];
+}];
 var walk, blocks, blockArray;
 blockArray = [];
 //This displays the sprites on the screen. Notice that I am putting clones of the blocks into an array. This is a really efficient way to duplicate sprite content and the preferred method.
@@ -185,7 +182,6 @@ $('document').ready(function () {
         socket.emit('leave room');
     });
 
-    main();
 
 
 });
