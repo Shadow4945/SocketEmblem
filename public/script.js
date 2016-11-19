@@ -208,7 +208,9 @@ $('document').ready(function () {
         socket.emit('leave room');
     });
 
-    
+    socket.on('addTank', function(tank){
+        game.addTank(tank.id, tank.type, tank.isLocal, tank.x, tank.y);
+    });
 
 
 });

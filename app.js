@@ -101,7 +101,8 @@ io.on("connection", function (socket) {
     function getTank(user){
         var startX = getRandomInt(40,700);
         var startY = getRandomInt(40,400);
-        
+        user.emit('addTank',{id: user.id, type: tank.type, isLocal: true, x: startX, y: startY, hp: 100 });
+        user.broadcast.emit('addTank', {id: user.id, type: tank.type, isLocal: false, x: startX, y:startY, hp: 100});
     }
 
 });
