@@ -20,7 +20,10 @@ function handleKeyDown(evt) {
         rotateTopRight = true;
         break;
     case KEYCODE_UP:
-        console.log("Pew Pew");
+        if (isShooting === false) {
+            shoot();
+        }
+        //        console.log("Pew Pew");
         break;
     case KEYCODE_DOWN:
         break;
@@ -29,7 +32,6 @@ function handleKeyDown(evt) {
         break;
     case KEYCODE_S:
         moveBackward = true;
-
         break;
     case KEYCODE_A:
         turnLeft = true;

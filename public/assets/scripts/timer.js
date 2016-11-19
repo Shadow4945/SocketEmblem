@@ -19,7 +19,7 @@ function timerStart() {
         time = whole + "." + tenth;
         timer.text = time;
     }
-    if (time >= 5) {
+    if (time >= 60) {
         whole = tenth = seconds = time = 0;
         rounds++;
         total+=50;

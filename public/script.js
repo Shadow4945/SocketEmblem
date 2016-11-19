@@ -41,6 +41,9 @@ manifest = [
         src: "images/tankBtop.png",
         id: "tankBtop"
     }, {
+        src: "images/tankBbullet.png",
+        id: "tankBbullet"
+    }, {
         src: "images/title.jpg",
         id: "title"
     }
@@ -131,7 +134,7 @@ function loadComplete(evt) {
 }
 
 function loadFiles() {
-    console.log(" you");
+//    console.log(" you");
     createjs.Sound.alternateExtensions = ["mp3"];
     queue = new createjs.LoadQueue(true, "assets/");
     queue.installPlugin(createjs.Sound);
@@ -152,7 +155,7 @@ $('document').ready(function () {
         for (var c in data) {
             $("#connected-users").prepend($('<li>').text(data[c]));
         }
-        console.log(data);
+//        console.log(data);
     });
 
     socket.on("peopleNum", function (peopleNum) {
