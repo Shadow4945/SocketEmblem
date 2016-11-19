@@ -145,7 +145,7 @@
      if (isShooting === true) {
          tankBbullet.regX = 0;
          tankBbullet.regY = 0;
-         tankBulletPoint = tankBbullet.localToGlobal(0, 7);
+         tankBulletPoint = tankBbullet.localToGlobal(0, 13);
          tankBbullet.x -= (tankBulletPoint.x - tankBbullet.x);
          tankBbullet.y -= (tankBulletPoint.y - tankBbullet.y);
          tankBbullet.regX = 8;
