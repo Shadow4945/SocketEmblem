@@ -40,6 +40,7 @@ function handleKeyDown(evt) {
         tankBbottom.regX = 0;
         tankBbottom.regY = 0;
         tankPoint = tankBbottom.localToGlobal(0, 1);
+
         tankBbottom.y += (tankPoint.y - tankBbottom.y);
         tankBbottom.x += (tankPoint.x - tankBbottom.x);
         tankBbottom.regX = 21.5;
@@ -47,6 +48,7 @@ function handleKeyDown(evt) {
 
         tankBtop.y = tankBbottom.y;
         tankBtop.x = tankBbottom.x;
+
         break;
     case KEYCODE_A:
         tankBbottom.rotation -= 2;
