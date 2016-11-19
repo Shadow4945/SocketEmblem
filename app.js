@@ -2,6 +2,7 @@ var clients = [];
 var peopleInGame = 0;
 var chatRooms = ['main room', 'extra room'];
 
+
 var express = require('express'),
     app = express(),
     http = require('http').Server(app),
