@@ -9,6 +9,7 @@
  function loop() {
      switch (GAMESTATE) {
      case "started":
+
          titleScreen.visible = true;
          instructionScreen.visible = false;
          gamearea.visible = false;
@@ -92,6 +93,7 @@
          tankBbottom.regX = 21.5;
          tankBbottom.regY = 24;
 
+
          tankBtop.y = tankBbottom.y;
          tankBtop.x = tankBbottom.x;
      } else if (moveBackward === true) {
@@ -102,6 +104,7 @@
          tankBbottom.x += (tankPoint.x - tankBbottom.x);
          tankBbottom.regX = 21.5;
          tankBbottom.regY = 24;
+
 
          tankBtop.y = tankBbottom.y;
          tankBtop.x = tankBbottom.x;

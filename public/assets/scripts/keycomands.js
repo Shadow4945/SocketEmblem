@@ -29,6 +29,7 @@ function handleKeyDown(evt) {
         break;
     case KEYCODE_S:
         moveBackward = true;
+
         break;
     case KEYCODE_A:
         turnLeft = true;
