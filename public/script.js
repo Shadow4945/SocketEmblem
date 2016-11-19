@@ -9,7 +9,9 @@ manifest = [
 
     {
         src: "scripts/title" + jsEnd
-   }
+   }, {
+        src: "scripts/ndgmr.collision" + jsEnd
+    }
     , {
         src: "scripts/mouse" + jsEnd
    }
@@ -39,6 +41,9 @@ manifest = [
         src: "images/tankBtop.png",
         id: "tankBtop"
     }, {
+        src: "images/tankBbullet.png",
+        id: "tankBbullet"
+    }, {
         src: "images/title.jpg",
         id: "title"
     }
@@ -58,6 +63,9 @@ manifest = [
 , {
         src: "images/GameOver.jpg",
         id: "gameover"
+}, {
+    src: "images/Rock.png",
+    id: "Rock"
 }];
 var walk, blocks, blockArray;
 blockArray = [];
@@ -66,8 +74,8 @@ function displaySprites() {
     //    walk.x = 100;
     //    walk.y = 200;
     //    walk.gotoAndPlay("walkRight");
-    
-    
+
+
     tankBbottom = new createjs.Bitmap(queue.getResult("tankBbottom"));
     tankBbottom.x = 100;
     tankBbottom.y = 100;
@@ -96,9 +104,10 @@ function loadComplete(evt) {
     gamearea = new createjs.Bitmap(queue.getResult("gamearea"));
     gameover = new createjs.Bitmap(queue.getResult("gameover"));
     mouser = new createjs.Text(mouseX + "," + mouseY, "12px Arial", "#ffffff");
-    // music = createjs.Sound.play("music", {
-    //     loop: -1
-    // });
+    music = createjs.Sound.play("music", {
+        loop: -1
+    });
+    rock = new createjs.Bitmap(queue.getResult("Rock"))
     //This takes the images loaded from the sprite sheet and breaks it into the individual frames. I cut and pasted the 'frames' parameter from the .js file created by Flash when I exported in easelJS format. I didn't cut and paste anything except 'frames' because I am using preloadJS to load all the images completely before running the game. That's what the queue.getResult is all about.
     //I'm doing the same thing here. Notice I am reading this from the same sprite sheet. It is not reloading the sprite sheet though. It just copies it from memory since we already preloaded this image file. The 'animations' parameter is optional but it allows you to label a series of frames in order to play looping sprites. You can even control the playback speed in relation to the FPS. In the walk cycle, I used '.5' which means at 30 FPS, it plays at 15.
     var walkSheet = new createjs.SpriteSheet({
@@ -125,7 +134,7 @@ function loadComplete(evt) {
 }
 
 function loadFiles() {
-    console.log(" you");
+//    console.log(" you");
     createjs.Sound.alternateExtensions = ["mp3"];
     queue = new createjs.LoadQueue(true, "assets/");
     queue.installPlugin(createjs.Sound);
@@ -146,7 +155,7 @@ $('document').ready(function () {
         for (var c in data) {
             $("#connected-users").prepend($('<li>').text(data[c]));
         }
-        console.log(data);
+//        console.log(data);
     });
 
     socket.on("peopleNum", function (peopleNum) {
