@@ -30,19 +30,19 @@ function buttons() {
         GAMESTATE = "started";
     });
     btnMute = new createjs.Shape();
-    btnMute.graphics.beginFill("#447").drawRect(10, 420, 50, 30);
+    btnMute.graphics.beginFill("#447").drawRect(10, 450, 50, 30);
     stage.addChild(btnMute);
     Mute = new createjs.Text("Mute", "12px Arial", "#ffffff"); //creates text object
     Mute.x = 15; //positions the text
-    Mute.y = 430;
+    Mute.y = 460;
     stage.addChild(Mute); //adds the text object to the stage
     unMute = new createjs.Text("Unmute", "12px Arial", "#ffffff"); //creates text object
     btnunMute = new createjs.Shape();
-    btnunMute.graphics.beginFill("#447").drawRect(60, 420, 50, 30);
+    btnunMute.graphics.beginFill("#447").drawRect(60, 450, 50, 30);
     stage.addChild(btnunMute);
     btnunMute.visible = false;
     unMute.x = 65; //positions the text
-    unMute.y = 430;
+    unMute.y = 460;
     unMute.visible = false;
     stage.addChild(unMute); //adds the text object to the stage
     btnunMute.on("click", function (evt) {

@@ -6,11 +6,13 @@
  var turnRight = false;
  var turnLeft = false;
  var isShooting = false;
-
+ var collisionMethod = ndgmr.checkPixelCollision;
+ var pt1;
+ var tankBbullet;
  function loop() {
      switch (GAMESTATE) {
      case "started":
-
+          winner.visible=false;
          titleScreen.visible = true;
          instructionScreen.visible = false;
          gamearea.visible = false;
@@ -21,11 +23,18 @@
          Title.visible = false;
          Ins.visible = true;
          play.visible = true;
+         tankBtop.visible=false;
+         tankBbottom.visible=false;
+         rockArray[0].visible=false;
+         rockArray[1].visible=false;
+         rockArray[2].visible=false;
+         rockArray[3].visible=false;
          score.visible = false;
          break;
      case "startgame":
          movement();
          shooting();
+                   winner.visible=false;
          titleScreen.visible = false;
          instructionScreen.visible = false;
          gamearea.visible = true;
@@ -37,10 +46,17 @@
          Ins.visible = false;
          play.visible = false;
          score.visible = true;
+         tankBtop.visible=true;
+         tankBbottom.visible=true;
+         rockArray[0].visible=true;
+         rockArray[1].visible=true;
+         rockArray[2].visible=true;
+         rockArray[3].visible=true;
          timerStart();
          updateVisuals();
          break;
      case "instructions":
+               winner.visible=false;
          titleScreen.visible = false;
          instructionScreen.visible = true;
          gamearea.visible = false;
@@ -52,9 +68,19 @@
          Ins.visible = false;
          score.visible = false;
          play.visible = true;
+         tankBtop.visible=false;
+         tankBbottom.visible=false;
+         rockArray[0].visible=false;
+         rockArray[1].visible=false;
+         rockArray[2].visible=false;
+         rockArray[3].visible=false;
          break;
      case "gameover":
          reset();
+                   winner.visible=true;
+         tankBtop.visible=false;
+         tankBbottom.visible=false;
+                rockArray.visible=false;
          titleScreen.visible = false;
          instructionScreen.visible = false;
          gamearea.visible = false;
@@ -67,7 +93,10 @@
          Ins.visible = false;
          play.visible = false;
          score.visible = true;
-
+         rockArray[0].visible=false;
+         rockArray[1].visible=false;
+         rockArray[2].visible=false;
+         rockArray[3].visible=false;
          break;
      }
      stage.update();
@@ -150,11 +179,47 @@
          tankBbullet.y -= (tankBulletPoint.y - tankBbullet.y);
          tankBbullet.regX = 8;
          tankBbullet.regY = 90;
+         pt1 = collisionMethod(tankBbullet, rockArray[0], 0);
+         pt2 = collisionMethod(tankBbullet, rockArray[1], 0);
+         pt3 = collisionMethod(tankBbullet, rockArray[2], 0);
+         pt4 = collisionMethod(tankBbullet, rockArray[3], 0);
 
          if (tankBbullet.x < 0 || tankBbullet.y < 0 || tankBbullet.x > 750 || tankBbullet.y > 500) {
              console.log("Reloaded");
              isShooting= false;
              stage.removeChild(tankBbullet);
+         }
+         if(pt1||pt2||pt3||pt4){
+           switch (pt1||pt2||pt3||pt4) {
+             case pt1:
+             console.log("hits")
+             isShooting=false;
+              // stage.removeChild(rockArray[0]);
+               rockArray[0].x=-50;
+               stage.removeChild(tankBbullet);
+   tankBbullet.x=-50;
+               break;
+               case pt2:
+                // stage.removeChild(rockArray[1]);
+                 stage.removeChild(tankBbullet);
+                    rockArray[1].x=-50;
+                       tankBbullet.x=-50;
+                 break;
+                 case pt3:
+                  // stage.removeChild(rockArray[2]);
+                   tankBbullet.x=-50;
+                   stage.removeChild(tankBbullet);
+                      rockArray[2].x=-50;
+                   break;
+                   case pt4:
+                  //   stage.removeChild(rockArray[3]);
+                     stage.removeChild(tankBbullet);
+                          rockArray[3].x=-50;
+                             tankBbullet.x=-50;
+                     break;
+             default:
+               break;
+           }
          }
      }
  }

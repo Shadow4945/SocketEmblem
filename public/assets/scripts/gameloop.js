@@ -1,38 +1,60 @@
 var total = 0;
 var rounds=0;
+var winner;
 var health=100;
-var collisionMethod = ndgmr.checkPixelCollision;
-var pt1;
+var rockArray=[];
 function showGameArea() {
+  winner = new createjs.Text("Winner is " + player.name, "20px Arial", "#ffffff"); //creates text object
+  winner.x = 400;
+  winner.y = 250;
+  stage.addChild(winner)
     stage.addChild(gamearea);
     score = new createjs.Text("Score: " + total, "12px Arial", "#ffffff"); //creates text object
     score.x = score.y = 30;
-    stage.addChild(score)
+    stage.addChild(score);
     round = new createjs.Text("Round: " + rounds, "12px Arial", "#ffffff"); //creates text object
     round.x =  30;
     round.y =40;
     stage.addChild(round)
     healthbar = new createjs.Shape();
-    healthbar.graphics.beginFill('#f00').drawRect(100, 400, health, 10);
+    healthbar.graphics.beginFill('#f00').drawRect(100, 50, health, 10);
     stage.addChild(healthbar);
-    rock.x=250;
-    rock.y=300;
-    stage.addChild(rock);
+    for (i = 0; i < 4; i++) {
+        rock.scaleX=rock.scaleY=.5;
+        rockArray.push(rock.clone());
+    }
+    for (j = 0; j < 4; j++) {
+        stage.addChild(rockArray[j]);
+    };
+    rockArray[0].x=250
+    rockArray[0].y= 200;
+        rockArray[1].x=250;
+        rockArray[1].y= 400;
+        rockArray[2].x=450;
+        rockArray[2].y= 200;
+        rockArray[3].x=450;
+        rockArray[3].y= 400;
 }
+
 function updateVisuals(){
     score.text="Score:" + total;
     round.text="Round:" + rounds;
-    healthbar.graphics.clear().beginFill('#f00').drawRect(100, 400, health, 10).endFill();
+    healthbar.graphics.clear().beginFill('#f00').drawRect(100, 50, health, 10).endFill();
     if(health==0){
       GAMESTATE="gameover";
     }
-      pt1 = collisionMethod(tankBbottom, rock, 0);
-      if(pt1){
-      
-      }
+
 }
 function reset(){
   health=100;
   rounds=0;
   total=0;
+  rockArray[0].x=250
+  rockArray[0].y= 200;
+      rockArray[1].x=250;
+      rockArray[1].y= 400;
+      rockArray[2].x=450;
+      rockArray[2].y= 200;
+      rockArray[3].x=450;
+      rockArray[3].y= 400;
 }
