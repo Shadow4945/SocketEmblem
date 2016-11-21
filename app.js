@@ -110,7 +110,7 @@ var game = new GameServer();
 
 io.on("connection", function (socket) {
     console.log(socket.id + " user has connected");
-    if (peopleInGame < 3) {
+    if (io.sockets.adapter.rooms['extra room'].length < 3) {
         console.log("Main Room");
         socket.room = 'main room';
         socket.join('main room');
