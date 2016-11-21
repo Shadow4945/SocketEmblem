@@ -6,6 +6,8 @@ var cacheVersion = date.getTime();
 var selectedTank = 1;
 var tankName = '';
 var ROTATION_SPEED = 5;
+var socket;
+var mainRoom = false;
 //replace date.getTime() above with the version number when ready to upload. This will prevent caching during development but will allow it for a particular version number when uploaded.
 var jsEnd = ".js?a=" + cacheVersion;
 manifest = [
@@ -70,10 +72,6 @@ manifest = [
     id: "Rock"
 }];
 
-
-
-var walk, blocks, blockArray;
-blockArray = [];
 //This displays the sprites on the screen. Notice that I am putting clones of the blocks into an array. This is a really efficient way to duplicate sprite content and the preferred method.
 function displaySprites() {
     //    walk.x = 100;
@@ -81,26 +79,26 @@ function displaySprites() {
     //    walk.gotoAndPlay("walkRight");
 
 
-    tankBbottom = new createjs.Bitmap(queue.getResult("tankBbottom"));
-    tankBbottom.x = 100;
-    tankBbottom.y = 100;
-    tankPoint = tankBbottom.localToGlobal(0, 1);
-    tankBbottom.y += (tankPoint.y - tankBbottom.y);
-    tankBbottom.x += (tankPoint.x - tankBbottom.x);
-    tankBbottom.regX = 21.5;
-    tankBbottom.regY = 24;
-    stage.addChild(tankBbottom);
+    myTank.tankBbottom = new createjs.Bitmap(queue.getResult("tankBbottom"));
+    myTank.tankBbottom.x = getRandomInt(10, 700);
+    myTank.tankBbottom.y = getRandomInt(10, 400);
+    myTank.tankPoint = myTank.tankBbottom.localToGlobal(0, 1);
+    myTank.tankBbottom.y += (myTank.tankPoint.y - myTank.tankBbottom.y);
+    myTank.tankBbottom.x += (myTank.tankPoint.x - myTank.tankBbottom.x);
+    myTank.tankBbottom.regX = 21.5;
+    myTank.tankBbottom.regY = 24;
+    stage.addChild(myTank.tankBbottom);
 
-    tankBtop = new createjs.Bitmap(queue.getResult("tankBtop"));
-    tankTopPoint = tankBtop.localToGlobal(0, 1);
-    tankBtop.x = tankBbottom.x;
-    tankBtop.y = tankBbottom.y;
-    tankBtop.regX = 13.5;
-    tankBtop.regY = 35;
-    stage.addChild(tankBtop);
+    myTank.tankBtop = new createjs.Bitmap(queue.getResult("tankBtop"));
+    myTank.tankTopPoint = myTank.tankBtop.localToGlobal(0, 1);
+    myTank.tankBtop.x = myTank.tankBbottom.x;
+    myTank.tankBtop.y = myTank.tankBbottom.y;
+    myTank.tankBtop.regX = 13.5;
+    myTank.tankBtop.regY = 35;
+    stage.addChild(myTank.tankBtop);
 
     //This draws the objects the first time. It isn't really needed because we have a loop that redraws every frame.
-    stage.update();
+   //stage.update();
 }
 
 function loadComplete(evt) {
@@ -190,7 +188,8 @@ $('document').ready(function () {
 
     socket.on('user joined', function (data, isMainRoom) {
         $("#messages").prepend($('<li>').text(data + " has joined."));
-        if(isMainRoom){
+        mainRoom = isMainRoom;
+        if(mainRoom){
             $('#game').show();
         }
     });
@@ -216,7 +215,7 @@ $('document').ready(function () {
         socket.emit('leave room');
     });
 
-
+    
 });
 
 
@@ -243,6 +242,8 @@ function getRandomInt(min, max){
 function main() {
     setupCanvas();
     loadFiles();
+    
+    
     
 }
 if (!!(window.addEventListener)) {

@@ -9,6 +9,18 @@
  var collisionMethod = ndgmr.checkPixelCollision;
  var pt1;
  var tankBbullet;
+ var socket = io();
+ myTank = {
+     tankId: socket.id,
+     tankBtop: this.tankBtop,
+     tankBbottom: this.tankBbottom,
+     tankBbullet: this.tankBbullet,
+     tankPoint: this.tankPoint,
+     tankTopPoint: this.tankTopPoint,
+     tankBulletPoint: this.tankBulletPoint,     
+     isShooting: this.isShooting
+ }
+ 
 
  function loop() {
      switch (GAMESTATE) {
@@ -24,8 +36,8 @@
          Title.visible = false;
          Ins.visible = true;
          play.visible = true;
-         tankBtop.visible=false;
-         tankBbottom.visible=false;
+         myTank.tankBtop.visible=false;
+         myTank.tankBbottom.visible=false;
          rockArray[0].visible=false;
          rockArray[1].visible=false;
          rockArray[2].visible=false;
@@ -47,14 +59,15 @@
          Ins.visible = false;
          play.visible = false;
          score.visible = true;
-         tankBtop.visible=true;
-         tankBbottom.visible=true;
+         myTank.tankBtop.visible=true;
+         myTank.tankBbottom.visible=true;
          rockArray[0].visible=true;
          rockArray[1].visible=true;
          rockArray[2].visible=true;
          rockArray[3].visible=true;
          timerStart();
          updateVisuals();
+         socket.emit('get clients');
          break;
      case "instructions":
                winner.visible=false;
@@ -69,8 +82,8 @@
          Ins.visible = false;
          score.visible = false;
          play.visible = true;
-         tankBtop.visible=false;
-         tankBbottom.visible=false;
+         myTank.tankBtop.visible=false;
+         myTank.tankBbottom.visible=false;
          rockArray[0].visible=false;
          rockArray[1].visible=false;
          rockArray[2].visible=false;
@@ -79,8 +92,8 @@
      case "gameover":
          reset();
                    winner.visible=true;
-         tankBtop.visible=false;
-         tankBbottom.visible=false;
+         myTank.tankBtop.visible=false;
+         myTank.tankBbottom.visible=false;
                 rockArray.visible=false;
          titleScreen.visible = false;
          instructionScreen.visible = false;
@@ -103,120 +116,134 @@
      stage.update();
  }
 
+ socket.on('recieve clients',function(){
+    var dataToSend = {
+        myTank,
+        rockArray
+    }
+    socket.emit('sendBack', dataToSend);
+ });
+
+ socket.on('client data', function(dataRecieved){
+     console.log("This is "+ dataRecieved);
+ });
+
  function startLoop() {
      var FPS = 30;
      createjs.Ticker.addEventListener('tick', loop);
      createjs.Ticker.setFPS(FPS);
+     //socket.emit('get clients', "from game");
  }
 
  function movement() {
      if (rotateTopRight === true) {
-         tankBtop.rotation += 3;
+         myTank.tankBtop.rotation += 3;
      } else if (rotateTopLeft === true) {
-         tankBtop.rotation -= 3;
+         myTank.tankBtop.rotation -= 3;
      }
 
      if (moveForward === true) {
-         tankBbottom.regX = 0;
-         tankBbottom.regY = 0;
-         tankPoint = tankBbottom.localToGlobal(0, 3);
-         tankBbottom.y -= (tankPoint.y - tankBbottom.y);
-         tankBbottom.x -= (tankPoint.x - tankBbottom.x);
-         tankBbottom.regX = 21.5;
-         tankBbottom.regY = 24;
+         myTank.tankBbottom.regX = 0;
+         myTank.tankBbottom.regY = 0;
+         myTank.tankPoint = myTank.tankBbottom.localToGlobal(0, 3);
+         myTank.tankBbottom.y -= (myTank.tankPoint.y - myTank.tankBbottom.y);
+         myTank.tankBbottom.x -= (myTank.tankPoint.x - myTank.tankBbottom.x);
+         myTank.tankBbottom.regX = 21.5;
+         myTank.tankBbottom.regY = 24;
 
-         tankTopPoint = tankBbottom.localToGlobal(0, 3);
-         tankBtop.y = tankBbottom.y;
-         tankBtop.x = tankBbottom.x;
+         myTank.tankTopPoint = myTank.tankBbottom.localToGlobal(0, 3);
+         myTank.tankBtop.y = myTank.tankBbottom.y;
+         myTank.tankBtop.x = myTank.tankBbottom.x;
      } else if (moveBackward === true) {
-         tankBbottom.regX = 0;
-         tankBbottom.regY = 0;
-         tankPoint = tankBbottom.localToGlobal(0, 3);
-         tankBbottom.y += (tankPoint.y - tankBbottom.y);
-         tankBbottom.x += (tankPoint.x - tankBbottom.x);
-         tankBbottom.regX = 21.5;
-         tankBbottom.regY = 24;
+         myTank.tankBbottom.regX = 0;
+         myTank.tankBbottom.regY = 0;
+         myTank.tankPoint = myTank.tankBbottom.localToGlobal(0, 3);
+         myTank.tankBbottom.y += (myTank.tankPoint.y - myTank.tankBbottom.y);
+         myTank.tankBbottom.x += (myTank.tankPoint.x - myTank.tankBbottom.x);
+         myTank.tankBbottom.regX = 21.5;
+         myTank.tankBbottom.regY = 24;
 
-         tankTopPoint = tankBbottom.localToGlobal(0, 1);
-         tankBtop.y = tankBbottom.y;
-         tankBtop.x = tankBbottom.x;
+         myTank.tankTopPoint = myTank.tankBbottom.localToGlobal(0, 1);
+         myTank.tankBtop.y = myTank.tankBbottom.y;
+         myTank.tankBtop.x = myTank.tankBbottom.x;
      }
 
      if (turnRight === true) {
-         tankBbottom.rotation += 2;
+         myTank.tankBbottom.rotation += 2;
      } else if (turnLeft === true) {
-         tankBbottom.rotation -= 2;
+         myTank.tankBbottom.rotation -= 2;
      }
+    
  }
 
  function shoot() {
-     tankBbullet = new createjs.Bitmap(queue.getResult("tankBbullet"));
-     tankBtop.regX = 0;
-     tankBtop.regY = 0;
-     tankTopPoint = tankBtop.localToGlobal(0, 3);
-     tankBbullet.x += (tankTopPoint.x);
-     tankBbullet.y += (tankTopPoint.y);
-     tankBbullet.regX = 8;
-     tankBbullet.regY = 90;
-     tankBbullet.rotation = tankBtop.rotation;
-     tankBtop.regX = 13.5;
-     tankBtop.regY = 35;
+     myTank.tankBbullet = new createjs.Bitmap(queue.getResult("tankBbullet"));
+     myTank.tankBtop.regX = 0;
+     myTank.tankBtop.regY = 0;
+     myTank.tankTopPoint = myTank.tankBtop.localToGlobal(0, 3);
+     myTank.tankBbullet.x += (myTank.tankTopPoint.x);
+     myTank.tankBbullet.y += (myTank.tankTopPoint.y);
+     myTank.tankBbullet.regX = 8;
+     myTank.tankBbullet.regY = 90;
+     myTank.tankBbullet.rotation = myTank.tankBtop.rotation;
+     myTank.tankBtop.regX = 13.5;
+     myTank.tankBtop.regY = 35;
      //     console.log((tankTopPoint.x - tankBtop.x));
-     tankBbullet.scaleX = 0.5;
-     tankBbullet.scaleY = 0.5;
-     isShooting = true;
+     myTank.tankBbullet.scaleX = 0.5;
+     myTank.tankBbullet.scaleY = 0.5;
+     myTank.isShooting = true;
 
-     stage.addChild(tankBbullet);
+     stage.addChild(myTank.tankBbullet);
  }
 
  var timePerShot = 300;
 
  function shooting() {
-     if (isShooting === true) {
-         tankBbullet.regX = 0;
-         tankBbullet.regY = 0;
-         tankBulletPoint = tankBbullet.localToGlobal(0, 13);
-         tankBbullet.x -= (tankBulletPoint.x - tankBbullet.x);
-         tankBbullet.y -= (tankBulletPoint.y - tankBbullet.y);
-         tankBbullet.regX = 8;
-         tankBbullet.regY = 90;
-         pt1 = collisionMethod(tankBbullet, rockArray[0], 0);
-         pt2 = collisionMethod(tankBbullet, rockArray[1], 0);
-         pt3 = collisionMethod(tankBbullet, rockArray[2], 0);
-         pt4 = collisionMethod(tankBbullet, rockArray[3], 0);
+     if (myTank.isShooting === true) {
+         myTank.tankBbullet.regX = 0;
+         myTank.tankBbullet.regY = 0;
+         myTank.tankBulletPoint = myTank.tankBbullet.localToGlobal(0, 13);
+         myTank.tankBbullet.x -= (myTank.tankBulletPoint.x - myTank.tankBbullet.x);
+         myTank.tankBbullet.y -= (myTank.tankBulletPoint.y - myTank.tankBbullet.y);
+         myTank.tankBbullet.regX = 8;
+         myTank.tankBbullet.regY = 90;
+         pt1 = collisionMethod(myTank.tankBbullet, rockArray[0], 0);
+         pt2 = collisionMethod(myTank.tankBbullet, rockArray[1], 0);
+         pt3 = collisionMethod(myTank.tankBbullet, rockArray[2], 0);
+         pt4 = collisionMethod(myTank.tankBbullet, rockArray[3], 0);
 
-         if (tankBbullet.x < 0 || tankBbullet.y < 0 || tankBbullet.x > 750 || tankBbullet.y > 500) {
+         if (myTank.tankBbullet.x < 0 || myTank.tankBbullet.y < 0 || myTank.tankBbullet.x > 750 || myTank.tankBbullet.y > 500) {
              console.log("Reloaded");
-             isShooting= false;
-             stage.removeChild(tankBbullet);
+             myTank.isShooting= false;
+             stage.removeChild(myTank.tankBbullet);
          }
          if(pt1||pt2||pt3||pt4){
            switch (pt1||pt2||pt3||pt4) {
              case pt1:
              console.log("hits")
-             isShooting=false;
+             myTank.isShooting=false;
               // stage.removeChild(rockArray[0]);
                rockArray[0].x=-50;
-               stage.removeChild(tankBbullet);
-   tankBbullet.x=-50;
+               stage.removeChild(myTank.tankBbullet);
+   myTank.tankBbullet.x=-50;
                break;
                case pt2:
                 // stage.removeChild(rockArray[1]);
-                 stage.removeChild(tankBbullet);
+                 stage.removeChild(myTank.tankBbullet);
                     rockArray[1].x=-50;
-                       tankBbullet.x=-50;
+                       myTank.tankBbullet.x=-50;
                  break;
                  case pt3:
                   // stage.removeChild(rockArray[2]);
-                   tankBbullet.x=-50;
-                   stage.removeChild(tankBbullet);
+                   myTank.tankBbullet.x=-50;
+                   stage.removeChild(myTank.tankBbullet);
                       rockArray[2].x=-50;
                    break;
                    case pt4:
                   //   stage.removeChild(rockArray[3]);
-                     stage.removeChild(tankBbullet);
+                     stage.removeChild(myTank.tankBbullet);
                           rockArray[3].x=-50;
-                             tankBbullet.x=-50;
+                             myTank.tankBbullet.x=-50;
                      break;
              default:
                break;

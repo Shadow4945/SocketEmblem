@@ -7,6 +7,7 @@ var BALL_SPEED = 10;
 
 
 
+
 var express = require('express'),
     app = express(),
     http = require('http').Server(app),
@@ -18,109 +19,40 @@ app.get('/', function (req, res) {
 });
 var people = 0;
 
-function GameServer(){
-    this.tanks = [];
-    this.balls = [];
-    this.lastBallId = 0;
-}
-
-GameServer.prototype = {
-
-    addTank: function(tank){
-        this.tanks.push(tank);
-    },
-
-    addBall: function(ball){
-        this.balls.push(ball);
-    },
-
-    removeTank: function(tankId){
-        this.tanks = this.tanks.filter(function(t){return t.id != tankId});
-    },
-
-    syncTank: function(newTankData){
-        this.tanks.forEach(function (tank){
-            if(tank.id == newTankData.id){
-                tank.x = newTankData.x;
-                tank.y = newTankData.y;
-                tank.baseAngle = newTankData.baseAngle;
-                tank.cannonAngle = newTankData.cannonAngle;
-            }
-        });
-    },
-
-    syncBalls: function(){
-        var self = this;
-
-        this.balls.forEach(function(ball){
-            self.detectCollision(ball);
-
-            if(ball.x < 0 || ball.x > WIDTH || ball.y < 0 || ball.y > HEIGHT){
-                ball.out = true;
-            }else{
-                ball.fly();
-            }
-        });
-    },
-
-    detectCollision: function(ball){
-        var self = this;
-
-        this.tank.forEach(function(tank){
-            if(tank.id != ball.ownderId && Math.abs(tank.x - ball.x) < 30 && Math.abs(tank.y - ball.y) < 30){
-                self.hurtTank(tank);
-                ball.out = true;
-            }
-        });
-    },
-
-    hurtTank: function(tank){
-        tank.hp -= 2;
-    },
-
-    getData: function(){
-        var gameData = {};
-        gameData.tanks = this.tanks;
-        gameData.balls = this.balls;
-
-        return gameData;
-    },
-
-    cleadDeadTanks: function(){
-        this.tanks = this.tanks.filter(function(t){
-            return t.hp > 0;
-        });
-    },
-
-    cleanDeadBalls: function(){
-        this.balls = this.balls.filter(function(ball){
-            return !ball.out;
-        });
-    },
-
-    increaseLastBallId: function(){
-        this.lastBallId ++;
-        if(this.lastBallId > 1000){
-            this.lastBallId = 0;
-        }
-    }
-}
-
-var game = new GameServer();
 
 io.on("connection", function (socket) {
     console.log(socket.id + " user has connected");
-    if (io.sockets.adapter.rooms['main room'].length > 3) {
-        console.log("Main Room");
-        socket.room = 'main room';
-        socket.join('main room');
-        console.log(io.sockets.adapter.rooms['main room']);
-        peopleInGame += 1;
-    } else {
-        console.log("Extra room")
-        socket.room = 'extra room';
-        socket.join('extra room');
+    try {
+        if (io.sockets.adapter.rooms['main room'].length < 3) {
+            console.log("Main Room");
+            socket.room = 'main room';
+            socket.join('main room');
+            console.log(io.sockets.adapter.rooms['main room']);
+            peopleInGame += 1;
+            
+        } else {
+            console.log("Extra room")
+            socket.room = 'extra room';
+            socket.join('extra room');
+        }
+    } catch (err) {
+          console.log("Main Room");
+            socket.room = 'main room';
+            socket.join('main room');
+            console.log(io.sockets.adapter.rooms['main room']);
     }
+
+    // if (io.sockets.adapter.rooms['main room'].length > 3) {
+    //     console.log("Main Room");
+    //     socket.room = 'main room';
+    //     socket.join('main room');
+    //     console.log(io.sockets.adapter.rooms['main room']);
+    //     peopleInGame += 1;
+    // } else {
+    //     console.log("Extra room")
+    //     socket.room = 'extra room';
+    //     socket.join('extra room');
+    // }
 
     socket.nickname = 'Guest';
     socket.on("disconnect", function () {
@@ -132,16 +64,16 @@ io.on("connection", function (socket) {
         console.log(peopleInGame);
 
         //Try catch in case there are no people in the extra room
-        try{
+        try {
             if (io.sockets.adapter.rooms['extra room'].length >= 1) {
-            var peopleInQueue = (Object.keys(io.sockets.adapter.rooms['extra room'].sockets));
+                var peopleInQueue = (Object.keys(io.sockets.adapter.rooms['extra room'].sockets));
 
-            io.sockets.connected[peopleInQueue[0]].emit('move room', {
-                message: "Leaving room"
-            });
-            peopleInGame += 1;
-        }
-        }catch(err){
+                io.sockets.connected[peopleInQueue[0]].emit('move room', {
+                    message: "Leaving room"
+                });
+                peopleInGame += 1;
+            }
+        } catch (err) {
             console.log("No users in extra room");
         }
 
@@ -149,8 +81,8 @@ io.on("connection", function (socket) {
 
     });
 
-    io.on('sync', function(data){
-        if(data.tank != undefined){
+    io.on('sync', function (data) {
+        if (data.tank != undefined) {
             game.syncTank(data.tank);
         }
 
@@ -161,15 +93,15 @@ io.on("connection", function (socket) {
 
         game.cleadDeadTanks();
         game.cleanDeadBalls();
-        counter ++;
+        counter++;
     });
 
-    io.on('shoot', function(ball){
+    io.on('shoot', function (ball) {
         var ball = new Ball(ball.ownderId, ball.alpha, ball.x, ball.y);
         game.addBall(ball);
     });
 
-    io.on('leaveGame', function(tankId){
+    io.on('leaveGame', function (tankId) {
         game.removeTank(tankId);
         client.broadcast.emit('removeTank', tankId);
     });
@@ -184,11 +116,11 @@ io.on("connection", function (socket) {
     });
 
     socket.on('add user', function (username) {
-        var isMainRoom = true;
+        var isMainRoom = false;
         socket.nickname = username;
         clients.push(socket.nickname);
         console.log(clients);
-        if(socket.room === 'main room'){
+        if (socket.room === 'main room') {
             isMainRoom = true;
         }
         io.to(socket.room).emit('user joined', socket.nickname, isMainRoom);
@@ -212,27 +144,31 @@ io.on("connection", function (socket) {
 
     }
 
-    socket.on("get clients", function (msg) {
-        console.log('sending clients');
+    socket.on("get clients", function () {
+        //console.log('sending clients');
         //io.emit('list clients', clients);
-        //console.log(io.sockets.adapter);
+      
 
-        io.to(socket.room).emit('list clients', clients);
+        socket.broadcast.to(socket.room).emit('recieve clients');
     });
 
-   
+    socket.on('sendBack', function(dataFromClients){
+        socket.broadcast.to(socket.room).emit('clientData', dataFromClients);
+    });
 
-    function getTank(user){
-        var startX = getRandomInt(40,700);
-        var startY = getRandomInt(40,400);
-        user.emit('addTank',{id: user.id, type: tank.type, isLocal: true, x: startX, y: startY, hp: 100 });
-        user.broadcast.emit('addTank', {id: user.id, type: tank.type, isLocal: false, x: startX, y:startY, hp: 100});
-        game.addTank({id: user.id, type: tank.type, hp:100});
+
+
+    function getTank(user) {
+        var startX = getRandomInt(40, 700);
+        var startY = getRandomInt(40, 400);
+        user.emit('addTank', { id: user.id, type: tank.type, isLocal: true, x: startX, y: startY, hp: 100 });
+        user.broadcast.emit('addTank', { id: user.id, type: tank.type, isLocal: false, x: startX, y: startY, hp: 100 });
+        game.addTank({ id: user.id, type: tank.type, hp: 100 });
     }
 
 });
 
-function Ball(ownderId, alpha, x, y){
+function Ball(ownderId, alpha, x, y) {
     this.id = game.lastBallId;
     game.increaseLastBallId();
     this.ownerId = ownerId;
@@ -243,7 +179,7 @@ function Ball(ownderId, alpha, x, y){
 };
 
 Ball.prototype = {
-    fly: function(){
+    fly: function () {
         var speedX = BALL_SPEED * Math.sin(this.alpha);
         var speedY = -BALL_SPEED * Math.cos(this.alpha);
         this.x += speedX;
@@ -251,9 +187,9 @@ Ball.prototype = {
     }
 }
 
- function getRandomInt(min, max){
-        return Math.floor(Math.random() * (max - min)) + min;
-    }
+function getRandomInt(min, max) {
+    return Math.floor(Math.random() * (max - min)) + min;
+}
 
 
 
