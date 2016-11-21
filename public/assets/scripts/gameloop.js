@@ -3,6 +3,10 @@ var rounds=1;
 var winner;
 var health=100;
 var rockArray=[];
+
+
+
+
 function showGameArea() {
   winner = new createjs.Text("Winner is " + player.name, "20px Arial", "#ffffff"); //creates text object
   winner.x = 400;

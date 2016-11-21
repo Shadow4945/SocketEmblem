@@ -5,6 +5,7 @@ var date = new Date();
 var cacheVersion = date.getTime();
 var selectedTank = 1;
 var tankName = '';
+var ROTATION_SPEED = 5;
 //replace date.getTime() above with the version number when ready to upload. This will prevent caching during development but will allow it for a particular version number when uploaded.
 var jsEnd = ".js?a=" + cacheVersion;
 manifest = [
@@ -35,9 +36,7 @@ manifest = [
     }
     , {
         src: "scripts/timer" + jsEnd
-    }, {
-        src: "scripts/tanks" + jsEnd
-    }, {
+    },  {
         src: "images/tankBbottom.png",
         id: "tankBbottom"
     }, {
@@ -70,6 +69,9 @@ manifest = [
     src: "images/Rock.png",
     id: "Rock"
 }];
+
+
+
 var walk, blocks, blockArray;
 blockArray = [];
 //This displays the sprites on the screen. Notice that I am putting clones of the blocks into an array. This is a really efficient way to duplicate sprite content and the preferred method.
@@ -158,6 +160,7 @@ $('document').ready(function () {
         }
     });
 
+    $('#game').hide();
     $('#message_form').hide();
     $('#name_form').submit(function (evt) {
         evt.preventDefault();
@@ -185,8 +188,11 @@ $('document').ready(function () {
         $('#msg').val("");
     });
 
-    socket.on('user joined', function (data) {
+    socket.on('user joined', function (data, isMainRoom) {
         $("#messages").prepend($('<li>').text(data + " has joined."));
+        if(isMainRoom){
+            $('#game').show();
+        }
     });
 
     socket.on('user left', function (data) {
@@ -210,34 +216,9 @@ $('document').ready(function () {
         socket.emit('leave room');
     });
 
-    $('#join').click(function(){
-        tankName = $('#name_holder').val();
-        joinGame(tankName, selectedTank, socket);
-    });
-
-
 
 });
 
-$(window).on('beforeunload', function(){
-    socket.emit('leaveGame', tankName);
-});
-
-socket.on('addTank', function(tank){
-        game.addTank(tank.id, tank.type, tank.isLocal, tank.x, tank.y);
-    });
-
-    socket.on('sync', function(gameServerData){
-        game.recieveData(gameServerData);
-    });
-
-    socket.on('killTank', function(tankData){
-        game.killTank(tankData);
-    });
-
-    socket.on('removeTank', function(tankId){
-        game.removeTank(tankId);
-    });
 
 var player = {
     score: 0,
@@ -253,18 +234,16 @@ function setupCanvas() {
     stage = new createjs.Stage(canvas); //makes stage object from the canvas
 }
 
-function createPlayer() {
-    var rectangle = new createjs.Shape();
-    rectangle.graphics.beginFill("#447").drawRect(0, 0, 20, 20);
-    myText = new createjs.Text(my_name, "12px Arial", "#ffffff"); //creates text object
-    myText.x = 0;
-    myText.y = 0;
-}
+
+
+function getRandomInt(min, max){
+        return Math.floor(Math.random() * (max - min)) + min;
+    }
 
 function main() {
     setupCanvas();
     loadFiles();
-    createPlayer();
+    
 }
 if (!!(window.addEventListener)) {
     window.addEventListener("DOMContentLoaded", main);

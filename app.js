@@ -6,6 +6,7 @@ var HEIGHT = 500;
 var BALL_SPEED = 10;
 
 
+
 var express = require('express'),
     app = express(),
     http = require('http').Server(app),
@@ -148,27 +149,27 @@ io.on("connection", function (socket) {
 
     });
 
-    client.on('sync', function(data){
+    io.on('sync', function(data){
         if(data.tank != undefined){
             game.syncTank(data.tank);
         }
 
         game.syncBalls();
 
-        client.emit('sync', game.getData());
-        client.broadcast.emit('sync', game.getData());
+        io.emit('sync', game.getData());
+        io.broadcast.emit('sync', game.getData());
 
         game.cleadDeadTanks();
         game.cleanDeadBalls();
         counter ++;
     });
 
-    client.on('shoot', function(ball){
+    io.on('shoot', function(ball){
         var ball = new Ball(ball.ownderId, ball.alpha, ball.x, ball.y);
         game.addBall(ball);
     });
 
-    client.on('leaveGame', function(tankId){
+    io.on('leaveGame', function(tankId){
         game.removeTank(tankId);
         client.broadcast.emit('removeTank', tankId);
     });
@@ -183,10 +184,14 @@ io.on("connection", function (socket) {
     });
 
     socket.on('add user', function (username) {
+        var isMainRoom = true;
         socket.nickname = username;
         clients.push(socket.nickname);
         console.log(clients);
-        io.to(socket.room).emit('user joined', socket.nickname);
+        if(socket.room === 'main room'){
+            isMainRoom = true;
+        }
+        io.to(socket.room).emit('user joined', socket.nickname, isMainRoom);
     });
 
     socket.on("chat message", function (msg) {

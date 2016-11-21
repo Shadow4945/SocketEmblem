@@ -9,6 +9,7 @@
  var collisionMethod = ndgmr.checkPixelCollision;
  var pt1;
  var tankBbullet;
+
  function loop() {
      switch (GAMESTATE) {
      case "started":
