@@ -8,6 +8,8 @@ var tankName = '';
 var ROTATION_SPEED = 5;
 var socket;
 var mainRoom = false;
+var socket = io();
+
 //replace date.getTime() above with the version number when ready to upload. This will prevent caching during development but will allow it for a particular version number when uploaded.
 var jsEnd = ".js?a=" + cacheVersion;
 manifest = [
@@ -38,7 +40,7 @@ manifest = [
     }
     , {
         src: "scripts/timer" + jsEnd
-    },  {
+    }, {
         src: "images/tankBbottom.png",
         id: "tankBbottom"
     }, {
@@ -68,8 +70,8 @@ manifest = [
         src: "images/GameOver.jpg",
         id: "gameover"
 }, {
-    src: "images/Rock.png",
-    id: "Rock"
+        src: "images/Rock.png",
+        id: "Rock"
 }];
 
 //This displays the sprites on the screen. Notice that I am putting clones of the blocks into an array. This is a really efficient way to duplicate sprite content and the preferred method.
@@ -98,7 +100,7 @@ function displaySprites() {
     stage.addChild(myTank.tankBtop);
 
     //This draws the objects the first time. It isn't really needed because we have a loop that redraws every frame.
-   //stage.update();
+    //stage.update();
 }
 
 function loadComplete(evt) {
@@ -111,9 +113,9 @@ function loadComplete(evt) {
         loop: -1
     });
     rock = new createjs.Bitmap(queue.getResult("Rock"))
-    //This takes the images loaded from the sprite sheet and breaks it into the individual frames. I cut and pasted the 'frames' parameter from the .js file created by Flash when I exported in easelJS format. I didn't cut and paste anything except 'frames' because I am using preloadJS to load all the images completely before running the game. That's what the queue.getResult is all about.
-    //I'm doing the same thing here. Notice I am reading this from the same sprite sheet. It is not reloading the sprite sheet though. It just copies it from memory since we already preloaded this image file. The 'animations' parameter is optional but it allows you to label a series of frames in order to play looping sprites. You can even control the playback speed in relation to the FPS. In the walk cycle, I used '.5' which means at 30 FPS, it plays at 15.
-  
+        //This takes the images loaded from the sprite sheet and breaks it into the individual frames. I cut and pasted the 'frames' parameter from the .js file created by Flash when I exported in easelJS format. I didn't cut and paste anything except 'frames' because I am using preloadJS to load all the images completely before running the game. That's what the queue.getResult is all about.
+        //I'm doing the same thing here. Notice I am reading this from the same sprite sheet. It is not reloading the sprite sheet though. It just copies it from memory since we already preloaded this image file. The 'animations' parameter is optional but it allows you to label a series of frames in order to play looping sprites. You can even control the playback speed in relation to the FPS. In the walk cycle, I used '.5' which means at 30 FPS, it plays at 15.
+
     showGameOver();
     showGameArea();
     addtimer();
@@ -127,7 +129,7 @@ function loadComplete(evt) {
 }
 
 function loadFiles() {
-//    console.log(" you");
+    //    console.log(" you");
     createjs.Sound.alternateExtensions = ["mp3"];
     queue = new createjs.LoadQueue(true, "assets/");
     queue.installPlugin(createjs.Sound);
@@ -135,7 +137,6 @@ function loadFiles() {
     queue.loadManifest(manifest);
 }
 $('document').ready(function () {
-    var socket = io();
 
     $('#client_info').submit(function (evt) {
         evt.preventDefault();
@@ -148,7 +149,7 @@ $('document').ready(function () {
         for (var c in data) {
             $("#connected-users").prepend($('<li>').text(data[c]));
         }
-//        console.log(data);
+        //        console.log(data);
     });
 
     socket.on("peopleNum", function (peopleNum) {
@@ -189,7 +190,7 @@ $('document').ready(function () {
     socket.on('user joined', function (data, isMainRoom) {
         $("#messages").prepend($('<li>').text(data + " has joined."));
         mainRoom = isMainRoom;
-        if(mainRoom){
+        if (mainRoom) {
             $('#game').show();
         }
     });
@@ -216,6 +217,9 @@ $('document').ready(function () {
     });
 
     
+
+   
+
 });
 
 
@@ -235,16 +239,16 @@ function setupCanvas() {
 
 
 
-function getRandomInt(min, max){
-        return Math.floor(Math.random() * (max - min)) + min;
-    }
+function getRandomInt(min, max) {
+    return Math.floor(Math.random() * (max - min)) + min;
+}
 
 function main() {
     setupCanvas();
     loadFiles();
-    
-    
-    
+
+
+
 }
 if (!!(window.addEventListener)) {
     window.addEventListener("DOMContentLoaded", main);
