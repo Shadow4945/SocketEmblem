@@ -3,6 +3,8 @@ var my_name;
 var mouseX, mouseY;
 var date = new Date();
 var cacheVersion = date.getTime();
+var selectedTank = 1;
+var tankName = '';
 //replace date.getTime() above with the version number when ready to upload. This will prevent caching during development but will allow it for a particular version number when uploaded.
 var jsEnd = ".js?a=" + cacheVersion;
 manifest = [
@@ -33,8 +35,9 @@ manifest = [
     }
     , {
         src: "scripts/timer" + jsEnd
-    }
-     , {
+    }, {
+        src: "scripts/tanks" + jsEnd
+    }, {
         src: "images/tankBbottom.png",
         id: "tankBbottom"
     }, {
@@ -217,12 +220,34 @@ $('document').ready(function () {
         socket.emit('leave room');
     });
 
-    socket.on('addTank', function(tank){
-        game.addTank(tank.id, tank.type, tank.isLocal, tank.x, tank.y);
+    $('#join').click(function(){
+        tankName = $('#name_holder').val();
+        joinGame(tankName, selectedTank, socket);
     });
 
 
+
 });
+
+$(window).on('beforeunload', function(){
+    socket.emit('leaveGame', tankName);
+});
+
+socket.on('addTank', function(tank){
+        game.addTank(tank.id, tank.type, tank.isLocal, tank.x, tank.y);
+    });
+
+    socket.on('sync', function(gameServerData){
+        game.recieveData(gameServerData);
+    });
+
+    socket.on('killTank', function(tankData){
+        game.killTank(tankData);
+    });
+
+    socket.on('removeTank', function(tankId){
+        game.removeTank(tankId);
+    });
 
 var player = {
     score: 0,
