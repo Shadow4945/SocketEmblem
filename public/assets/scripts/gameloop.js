@@ -1,5 +1,5 @@
 var total = 0;
-var rounds=0;
+var rounds=1;
 var winner;
 var health=100;
 var rockArray=[];
@@ -37,14 +37,19 @@ function showGameArea() {
 }
 
 function updateVisuals(){
-    score.text="Score:" + total;
-    round.text="Round:" + rounds;
-    healthbar.graphics.clear().beginFill('#f00').drawRect(100, 50, health, 10).endFill();
+healthbar.graphics.clear().beginFill('#f00').drawRect(100, 50, health, 10).endFill();
     if(health==0){
+    rounds+=1;
+    health=100;
+    }
+    if(rounds==5){
       GAMESTATE="gameover";
     }
+    score.text="Score:" + total;
+    round.text="Round:" + rounds;
 
 }
+
 function reset(){
   health=100;
   rounds=0;

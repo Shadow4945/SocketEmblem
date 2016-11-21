@@ -25,7 +25,7 @@ function timerStart() {
         total+=50;
         }
         if(total==200){
-  
+
         GAMESTATE = 'gameover';
         }
 }

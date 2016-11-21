@@ -16,7 +16,7 @@
          titleScreen.visible = true;
          instructionScreen.visible = false;
          gamearea.visible = false;
-         walk.visible = false;
+
          btnPlay.visible = true;
          btnIns.visible = true;
          btnTitle.visible = false;
@@ -38,7 +38,7 @@
          titleScreen.visible = false;
          instructionScreen.visible = false;
          gamearea.visible = true;
-         walk.visible = true;
+
          btnPlay.visible = false;
          btnIns.visible = false;
          btnTitle.visible = false;
@@ -60,7 +60,7 @@
          titleScreen.visible = false;
          instructionScreen.visible = true;
          gamearea.visible = false;
-         walk.visible = false;
+
          btnPlay.visible = true;
          btnIns.visible = false;
          btnTitle.visible = true;
@@ -85,7 +85,7 @@
          instructionScreen.visible = false;
          gamearea.visible = false;
          gameover.visible = true;
-         walk.visible = false;
+
          btnPlay.visible = false;
          btnIns.visible = false;
          btnTitle.visible = true;
