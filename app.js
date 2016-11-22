@@ -40,7 +40,7 @@ io.on("connection", function (socket) {
         socket.room = 'main room';
         socket.join('main room');
         console.log(io.sockets.adapter.rooms['main room']);
-            peopleInGame += 1;
+        peopleInGame += 1;
     }
 
 
@@ -99,7 +99,7 @@ io.on("connection", function (socket) {
     });
 
     socket.on('add user', function (username) {
-        
+
         var isMainRoom = false;
         socket.nickname = username;
         clients.push(socket.nickname);
@@ -110,7 +110,17 @@ io.on("connection", function (socket) {
         if (socket.room === 'main room') {
             isMainRoom = true;
         }
-        io.to(socket.room).emit('user joined', socket.nickname, isMainRoom);
+        io.to(socket.room).emit('user joined', socket.nickname, isMainRoom, {
+            userId: peopleInQueue.indexOf(socket.id)
+        });
+    });
+
+    socket.on("sendPlayerId", function (data) {
+        console.log("sendPlayerId: "+ data.playerId);
+        socket.broadcast.to(socket.id).emit("getPlayerId", {
+            userId: data.playerId
+        });
+
     });
 
     socket.on("chat message", function (msg) {

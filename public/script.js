@@ -8,6 +8,7 @@ var tankName = '';
 var ROTATION_SPEED = 5;
 var socket;
 var mainRoom = false;
+var playerId = null;
 var socket = io();
 peopleInGame = 0;
 
@@ -188,13 +189,21 @@ $('document').ready(function () {
         $('#msg').val("");
     });
 
-    socket.on('user joined', function (data, isMainRoom) {
-        
+    socket.on('user joined', function (data, isMainRoom, id) {
+//        console.log("user joined: "+id.userId);
+        socket.emit("sendPlayerId", {
+            playerId: id.userId
+        });
         $("#messages").prepend($('<li>').text(data + " has joined."));
         mainRoom = isMainRoom;
         if (mainRoom) {
             $('#game').show();
         }
+    });
+
+    socket.on('getPlayerId', function (data) {
+        playerId = data.userId;
+        console.log("getplayerid: "+playerId);
     });
 
     socket.on('user left', function (data) {
@@ -218,13 +227,13 @@ $('document').ready(function () {
         socket.emit('leave room');
     });
 
-    socket.on('updatePeopleInGame', function(newNum){
+    socket.on('updatePeopleInGame', function (newNum) {
         peopleInGame = newNum;
     });
 
-    
 
-   
+
+
 
 });
 

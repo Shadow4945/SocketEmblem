@@ -21,7 +21,7 @@ function handleKeyDown(evt) {
         break;
     case KEYCODE_UP:
         socket.emit("shoot");
-        if (tankB.isShooting === false) {
+        if (tankB.isShooting === false ||tankG.isShooting === false ||tankR.isShooting === false) {
             shoot();
         }
         //        console.log("Pew Pew");
