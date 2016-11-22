@@ -109,13 +109,14 @@
  }
 
  function movement() {
+
      if (rotateTopRight === true) {
          tankBtop.rotation += 3;
      } else if (rotateTopLeft === true) {
          tankBtop.rotation -= 3;
      }
 
-     if (moveForward === true) {
+     if (moveForward === true)  {
          tankBbottom.regX = 0;
          tankBbottom.regY = 0;
          tankPoint = tankBbottom.localToGlobal(0, 3);
@@ -127,7 +128,11 @@
          tankTopPoint = tankBbottom.localToGlobal(0, 3);
          tankBtop.y = tankBbottom.y;
          tankBtop.x = tankBbottom.x;
-     } else if (moveBackward === true) {
+         console.log(tankBbottom.x);
+
+     }
+
+     else if (moveBackward === true) {
          tankBbottom.regX = 0;
          tankBbottom.regY = 0;
          tankPoint = tankBbottom.localToGlobal(0, 3);
@@ -139,8 +144,25 @@
          tankTopPoint = tankBbottom.localToGlobal(0, 1);
          tankBtop.y = tankBbottom.y;
          tankBtop.x = tankBbottom.x;
-     }
+          console.log(tankBbottom.x);
 
+     }
+     if(tankBbottom.x<=1){
+       tankBbottom.x=1;
+        tankBtop.x = tankBbottom.x;
+     }
+    if(tankBbottom.x>=799){
+       tankBbottom.x=799;
+        tankBtop.x = tankBbottom.x;
+     }
+     if(tankBbottom.y<=1){
+       tankBbottom.y=1;
+        tankBtop.y = tankBbottom.y;
+     }
+    if(tankBbottom.y>=499){
+       tankBbottom.y=499;
+        tankBtop.y = tankBbottom.y;
+     }
      if (turnRight === true) {
          tankBbottom.rotation += 2;
      } else if (turnLeft === true) {
