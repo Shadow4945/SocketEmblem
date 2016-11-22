@@ -82,23 +82,23 @@ function displaySprites() {
     //    walk.gotoAndPlay("walkRight");
 
 
-    myTank.tankBbottom = new createjs.Bitmap(queue.getResult("tankBbottom"));
-    myTank.tankBbottom.x = getRandomInt(10, 700);
-    myTank.tankBbottom.y = getRandomInt(10, 400);
-    myTank.tankPoint = myTank.tankBbottom.localToGlobal(0, 1);
-    myTank.tankBbottom.y += (myTank.tankPoint.y - myTank.tankBbottom.y);
-    myTank.tankBbottom.x += (myTank.tankPoint.x - myTank.tankBbottom.x);
-    myTank.tankBbottom.regX = 21.5;
-    myTank.tankBbottom.regY = 24;
-    stage.addChild(myTank.tankBbottom);
+    tankB.tankbottom = new createjs.Bitmap(queue.getResult("tankBbottom"));
+    tankB.tankbottom.x = 100;
+    tankB.tankbottom.y = 100;
+    tankB.tankPoint = tankB.tankbottom.localToGlobal(0, 1);
+    tankB.tankbottom.y += (tankB.tankPoint.y - tankB.tankbottom.y);
+    tankB.tankbottom.x += (tankB.tankPoint.x - tankB.tankbottom.x);
+    tankB.tankbottom.regX = 21.5;
+    tankB.tankbottom.regY = 24;
+    stage.addChild(tankB.tankbottom);
 
-    myTank.tankBtop = new createjs.Bitmap(queue.getResult("tankBtop"));
-    myTank.tankTopPoint = myTank.tankBtop.localToGlobal(0, 1);
-    myTank.tankBtop.x = myTank.tankBbottom.x;
-    myTank.tankBtop.y = myTank.tankBbottom.y;
-    myTank.tankBtop.regX = 13.5;
-    myTank.tankBtop.regY = 35;
-    stage.addChild(myTank.tankBtop);
+    tankB.tanktop = new createjs.Bitmap(queue.getResult("tankBtop"));
+    tankB.tankTopPoint = tankB.tanktop.localToGlobal(0, 1);
+    tankB.tanktop.x = tankB.tankbottom.x;
+    tankB.tanktop.y = tankB.tankbottom.y;
+    tankB.tanktop.regX = 13.5;
+    tankB.tanktop.regY = 35;
+    stage.addChild(tankB.tanktop);
 
     //This draws the objects the first time. It isn't really needed because we have a loop that redraws every frame.
     //stage.update();

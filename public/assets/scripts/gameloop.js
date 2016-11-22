@@ -56,9 +56,9 @@ healthbar.graphics.clear().beginFill('#f00').drawRect(100, 50, health, 10).endFi
 }
 
 function reset(){
-  myTank.tankBbottom.x = 100;
-  myTank.tankBbottom.y = 100;
-  myTank.tankBtop.x=myTank.tankBtop.y=myTank.tankBbottom.x;
+  tankB.tankbottom.x = 100;
+  tankB.tankbottom.y = 100;
+  tankB.tanktop.x=tankB.tanktop.y=tankB.tankbottom.x;
   health=100;
   rounds=0;
   total=0;
