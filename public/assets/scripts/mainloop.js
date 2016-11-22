@@ -138,6 +138,11 @@
 
  function movement() {
 
+tt1 = collisionMethod(myTank.tankBbottom, rockArray[0], 0);
+tt2 = collisionMethod(myTank.tankBbottom, rockArray[1], 0);
+tt3 = collisionMethod(myTank.tankBbottom, rockArray[2], 0);
+tt4 = collisionMethod(myTank.tankBbottom, rockArray[3], 0);
+
      if (rotateTopRight === true) {
          myTank.tankBtop.rotation += 3;
 //         console.log(myTank.tankBtop.rotation);
@@ -156,8 +161,14 @@
          myTank.tankBbottom.regX = 0;
          myTank.tankBbottom.regY = 0;
          myTank.tankPoint = myTank.tankBbottom.localToGlobal(0, 3);
-         myTank.tankBbottom.y -= (myTank.tankPoint.y - myTank.tankBbottom.y);
-         myTank.tankBbottom.x -= (myTank.tankPoint.x - myTank.tankBbottom.x);
+         deltaY= (myTank.tankPoint.y - myTank.tankBbottom.y);
+         deltaX= (myTank.tankPoint.x - myTank.tankBbottom.x);
+         if(tt1||tt2||tt3||tt4){
+           deltaX=deltaX/2;
+           deltaY=deltaY/2
+         }
+         myTank.tankBbottom.y -= deltaY;
+         myTank.tankBbottom.x -= deltaX;
          myTank.tankBbottom.regX = 21.5;
          myTank.tankBbottom.regY = 24;
 
@@ -172,8 +183,14 @@
          myTank.tankBbottom.regX = 0;
          myTank.tankBbottom.regY = 0;
          myTank.tankPoint = myTank.tankBbottom.localToGlobal(0, 3);
-         myTank.tankBbottom.y += (myTank.tankPoint.y - myTank.tankBbottom.y);
-         myTank.tankBbottom.x += (myTank.tankPoint.x - myTank.tankBbottom.x);
+         deltaY= (myTank.tankPoint.y - myTank.tankBbottom.y);
+         deltaX= (myTank.tankPoint.x - myTank.tankBbottom.x);
+         if(tt1||tt2||tt3||tt4){
+           deltaX=deltaX/2;
+           deltaY=deltaY/2
+         }
+         myTank.tankBbottom.y += deltaY;
+         myTank.tankBbottom.x += deltaX;
          myTank.tankBbottom.regX = 21.5;
          myTank.tankBbottom.regY = 24;
 

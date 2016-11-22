@@ -20,9 +20,7 @@ manifest = [
    }, {
         src: "scripts/ndgmr.collision" + jsEnd
     }
-    , {
-        src: "scripts/mouse" + jsEnd
-   }
+
 
     , {
         src: "scripts/gameover" + jsEnd
@@ -109,7 +107,7 @@ function loadComplete(evt) {
     instructionScreen = new createjs.Bitmap(queue.getResult("instructions"));
     gamearea = new createjs.Bitmap(queue.getResult("gamearea"));
     gameover = new createjs.Bitmap(queue.getResult("gameover"));
-    mouser = new createjs.Text(mouseX + "," + mouseY, "12px Arial", "#ffffff");
+
     music = createjs.Sound.play("music", {
         loop: -1
     });
@@ -124,8 +122,7 @@ function loadComplete(evt) {
     showTitle();
     buttons();
     displaySprites();
-    stage.addChild(mouser);
-    mouseInit();
+
     startLoop();
 }
 
@@ -189,7 +186,7 @@ $('document').ready(function () {
     });
 
     socket.on('user joined', function (data, isMainRoom) {
-        
+
         $("#messages").prepend($('<li>').text(data + " has joined."));
         mainRoom = isMainRoom;
         if (mainRoom) {
@@ -222,9 +219,9 @@ $('document').ready(function () {
         peopleInGame = newNum;
     });
 
-    
 
-   
+
+
 
 });
 

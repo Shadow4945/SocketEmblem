@@ -48,7 +48,9 @@ healthbar.graphics.clear().beginFill('#f00').drawRect(100, 50, health, 10).endFi
     reset();
     }
     if(rounds==5){
+        rounds=0;
       GAMESTATE="gameover";
+
     }
     score.text="Score:" + total;
     round.text="Round:" + rounds;
@@ -60,7 +62,7 @@ function reset(){
   myTank.tankBbottom.y = 100;
   myTank.tankBtop.x=myTank.tankBtop.y=myTank.tankBbottom.x;
   health=100;
-  rounds=0;
+
   total=0;
   rockArray[0].x=250
   rockArray[0].y= 200;
