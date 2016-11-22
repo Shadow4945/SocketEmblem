@@ -9,7 +9,6 @@
  var collisionMethod = ndgmr.checkPixelCollision;
  var pt1;
  var tankBbullet;
- var socket = io();
  myTank = {
      tankId: socket.id,
      tankBtop: this.tankBtop,
@@ -17,15 +16,15 @@
      tankBbullet: this.tankBbullet,
      tankPoint: this.tankPoint,
      tankTopPoint: this.tankTopPoint,
-     tankBulletPoint: this.tankBulletPoint,     
+     tankBulletPoint: this.tankBulletPoint,
      isShooting: this.isShooting
  }
- 
+
 
  function loop() {
      switch (GAMESTATE) {
      case "started":
-          winner.visible=false;
+         winner.visible = false;
          titleScreen.visible = true;
          instructionScreen.visible = false;
          gamearea.visible = false;
@@ -36,18 +35,18 @@
          Title.visible = false;
          Ins.visible = true;
          play.visible = true;
-         myTank.tankBtop.visible=false;
-         myTank.tankBbottom.visible=false;
-         rockArray[0].visible=false;
-         rockArray[1].visible=false;
-         rockArray[2].visible=false;
-         rockArray[3].visible=false;
+         myTank.tankBtop.visible = false;
+         myTank.tankBbottom.visible = false;
+         rockArray[0].visible = false;
+         rockArray[1].visible = false;
+         rockArray[2].visible = false;
+         rockArray[3].visible = false;
          score.visible = false;
          break;
      case "startgame":
          movement();
          shooting();
-                   winner.visible=false;
+         winner.visible = false;
          titleScreen.visible = false;
          instructionScreen.visible = false;
          gamearea.visible = true;
@@ -59,18 +58,17 @@
          Ins.visible = false;
          play.visible = false;
          score.visible = true;
-         myTank.tankBtop.visible=true;
-         myTank.tankBbottom.visible=true;
-         rockArray[0].visible=true;
-         rockArray[1].visible=true;
-         rockArray[2].visible=true;
-         rockArray[3].visible=true;
+         myTank.tankBtop.visible = true;
+         myTank.tankBbottom.visible = true;
+         rockArray[0].visible = true;
+         rockArray[1].visible = true;
+         rockArray[2].visible = true;
+         rockArray[3].visible = true;
          timerStart();
          updateVisuals();
-         socket.emit('get clients');
          break;
      case "instructions":
-               winner.visible=false;
+         winner.visible = false;
          titleScreen.visible = false;
          instructionScreen.visible = true;
          gamearea.visible = false;
@@ -82,19 +80,19 @@
          Ins.visible = false;
          score.visible = false;
          play.visible = true;
-         myTank.tankBtop.visible=false;
-         myTank.tankBbottom.visible=false;
-         rockArray[0].visible=false;
-         rockArray[1].visible=false;
-         rockArray[2].visible=false;
-         rockArray[3].visible=false;
+         myTank.tankBtop.visible = false;
+         myTank.tankBbottom.visible = false;
+         rockArray[0].visible = false;
+         rockArray[1].visible = false;
+         rockArray[2].visible = false;
+         rockArray[3].visible = false;
          break;
      case "gameover":
          reset();
-                   winner.visible=true;
-         myTank.tankBtop.visible=false;
-         myTank.tankBbottom.visible=false;
-                rockArray.visible=false;
+         winner.visible = true;
+         myTank.tankBtop.visible = false;
+         myTank.tankBbottom.visible = false;
+         rockArray.visible = false;
          titleScreen.visible = false;
          instructionScreen.visible = false;
          gamearea.visible = false;
@@ -107,25 +105,25 @@
          Ins.visible = false;
          play.visible = false;
          score.visible = true;
-         rockArray[0].visible=false;
-         rockArray[1].visible=false;
-         rockArray[2].visible=false;
-         rockArray[3].visible=false;
+         rockArray[0].visible = false;
+         rockArray[1].visible = false;
+         rockArray[2].visible = false;
+         rockArray[3].visible = false;
          break;
      }
      stage.update();
  }
 
- socket.on('recieve clients',function(){
-    var dataToSend = {
-        myTank,
-        rockArray
-    }
-    socket.emit('sendBack', dataToSend);
+ socket.on('recieve clients', function () {
+     var dataToSend = {
+         myTank,
+         rockArray
+     }
+     socket.emit('sendBack', dataToSend);
  });
 
- socket.on('client data', function(dataRecieved){
-     console.log("This is "+ dataRecieved);
+ socket.on('client data', function (dataRecieved) {
+     console.log("This is " + dataRecieved);
  });
 
  function startLoop() {
@@ -138,8 +136,16 @@
  function movement() {
      if (rotateTopRight === true) {
          myTank.tankBtop.rotation += 3;
+//         console.log(myTank.tankBtop.rotation);
+         socket.emit("sendRotate", {
+             tankRotate: myTank.tankBtop.rotation
+         });
      } else if (rotateTopLeft === true) {
          myTank.tankBtop.rotation -= 3;
+//         console.log(myTank.tankBtop.rotation);
+         socket.emit("sendRotate", {
+             tankRotate: myTank.tankBtop.rotation
+         });
      }
 
      if (moveForward === true) {
@@ -173,7 +179,7 @@
      } else if (turnLeft === true) {
          myTank.tankBbottom.rotation -= 2;
      }
-    
+
  }
 
  function shoot() {
@@ -214,40 +220,45 @@
 
          if (myTank.tankBbullet.x < 0 || myTank.tankBbullet.y < 0 || myTank.tankBbullet.x > 750 || myTank.tankBbullet.y > 500) {
              console.log("Reloaded");
-             myTank.isShooting= false;
+             myTank.isShooting = false;
              stage.removeChild(myTank.tankBbullet);
          }
-         if(pt1||pt2||pt3||pt4){
-           switch (pt1||pt2||pt3||pt4) {
+         if (pt1 || pt2 || pt3 || pt4) {
+             switch (pt1 || pt2 || pt3 || pt4) {
              case pt1:
-             console.log("hits")
-             myTank.isShooting=false;
-              // stage.removeChild(rockArray[0]);
-               rockArray[0].x=-50;
-               stage.removeChild(myTank.tankBbullet);
-   myTank.tankBbullet.x=-50;
-               break;
-               case pt2:
-                // stage.removeChild(rockArray[1]);
+                 console.log("hits")
+                 myTank.isShooting = false;
+                 // stage.removeChild(rockArray[0]);
+                 rockArray[0].x = -50;
                  stage.removeChild(myTank.tankBbullet);
-                    rockArray[1].x=-50;
-                       myTank.tankBbullet.x=-50;
+                 myTank.tankBbullet.x = -50;
                  break;
-                 case pt3:
-                  // stage.removeChild(rockArray[2]);
-                   myTank.tankBbullet.x=-50;
-                   stage.removeChild(myTank.tankBbullet);
-                      rockArray[2].x=-50;
-                   break;
-                   case pt4:
-                  //   stage.removeChild(rockArray[3]);
-                     stage.removeChild(myTank.tankBbullet);
-                          rockArray[3].x=-50;
-                             myTank.tankBbullet.x=-50;
-                     break;
+             case pt2:
+                 // stage.removeChild(rockArray[1]);
+                 stage.removeChild(myTank.tankBbullet);
+                 rockArray[1].x = -50;
+                 myTank.tankBbullet.x = -50;
+                 break;
+             case pt3:
+                 // stage.removeChild(rockArray[2]);
+                 myTank.tankBbullet.x = -50;
+                 stage.removeChild(myTank.tankBbullet);
+                 rockArray[2].x = -50;
+                 break;
+             case pt4:
+                 //   stage.removeChild(rockArray[3]);
+                 stage.removeChild(myTank.tankBbullet);
+                 rockArray[3].x = -50;
+                 myTank.tankBbullet.x = -50;
+                 break;
              default:
-               break;
-           }
+                 break;
+             }
          }
      }
  }
+
+ socket.on("rotate", function (data) {
+        console.log("data.tankRotate");
+        console.log(data.tankRotate);
+    });

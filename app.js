@@ -41,6 +41,10 @@ io.on("connection", function (socket) {
             socket.join('main room');
             console.log(io.sockets.adapter.rooms['main room']);
     }
+    
+    
+        
+    
 
     // if (io.sockets.adapter.rooms['main room'].length > 3) {
     //     console.log("Main Room");
@@ -81,30 +85,7 @@ io.on("connection", function (socket) {
 
     });
 
-    io.on('sync', function (data) {
-        if (data.tank != undefined) {
-            game.syncTank(data.tank);
-        }
-
-        game.syncBalls();
-
-        io.emit('sync', game.getData());
-        io.broadcast.emit('sync', game.getData());
-
-        game.cleadDeadTanks();
-        game.cleanDeadBalls();
-        counter++;
-    });
-
-    io.on('shoot', function (ball) {
-        var ball = new Ball(ball.ownderId, ball.alpha, ball.x, ball.y);
-        game.addBall(ball);
-    });
-
-    io.on('leaveGame', function (tankId) {
-        game.removeTank(tankId);
-        client.broadcast.emit('removeTank', tankId);
-    });
+    
 
 
     //Makes user at 0 in extra room join main room
@@ -155,6 +136,13 @@ io.on("connection", function (socket) {
     socket.on('sendBack', function(dataFromClients){
         socket.broadcast.to(socket.room).emit('clientData', dataFromClients);
     });
+    
+    socket.on("sendRotate",function(data){
+        console.log("tankrotate: "+ data.tankRotate);
+       io.sockets.in('main room').emit("rotate",{
+         tankRotate: data.tankRotate
+       });
+    });
 
 
 
@@ -195,6 +183,6 @@ function getRandomInt(min, max) {
 
 app.use(express.static('public'));
 
-http.listen(process.env.PORT || 3000, function () {
-    console.log("listening on port 3000");
+http.listen(process.env.PORT || 4000, function () {
+    console.log("listening on port 4000");
 });
