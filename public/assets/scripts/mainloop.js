@@ -101,12 +101,12 @@
          gamearea.visible = false;
          gameover.visible = true;
 
-        
+
          btnIns.visible = false;
          btnTitle.visible = true;
          Title.visible = true;
          Ins.visible = false;
-         
+
          score.visible = true;
          rockArray[0].visible = false;
          rockArray[1].visible = false;
@@ -183,21 +183,21 @@
           console.log(tankBbottom.x);
 
      }
-     if(tankBbottom.x<=1){
-       tankBbottom.x=1;
-        tankBtop.x = tankBbottom.x;
+     if(myTank.tankBbottom.x<=1){
+       myTank.tankBbottom.x=1;
+        myTank.tankBtop.x = myTank.tankBbottom.x;
      }
-    if(tankBbottom.x>=799){
-       tankBbottom.x=799;
-        tankBtop.x = tankBbottom.x;
+    if(myTank.tankBbottom.x>=799){
+       myTank.tankBbottom.x=799;
+        myTank.tankBtop.x = myTank.tankBbottom.x;
      }
-     if(tankBbottom.y<=1){
-       tankBbottom.y=1;
-        tankBtop.y = tankBbottom.y;
+     if(myTank.tankBbottom.y<=1){
+       myTank.tankBbottom.y=1;
+        myTank.tankBtop.y = myTank.tankBbottom.y;
      }
-    if(tankBbottom.y>=499){
-       tankBbottom.y=499;
-        tankBtop.y = tankBbottom.y;
+    if(myTank.tankBbottom.y>=499){
+       myTank.tankBbottom.y=499;
+        myTank.tankBtop.y = myTank.tankBbottom.y;
      }
      if (turnRight === true) {
          myTank.tankBbottom.rotation += 2;
