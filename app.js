@@ -40,6 +40,7 @@ io.on("connection", function (socket) {
         socket.room = 'main room';
         socket.join('main room');
         console.log(io.sockets.adapter.rooms['main room']);
+            peopleInGame += 1;
     }
 
 
@@ -59,6 +60,7 @@ io.on("connection", function (socket) {
     // }
 
     socket.nickname = 'Guest';
+    io.to(socket.room).emit('updatePeopleInGame', peopleInGame);
     socket.on("disconnect", function () {
         peopleInGame -= 1;
         clients.splice(clients.indexOf(socket.nickname), 1);

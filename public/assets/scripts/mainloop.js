@@ -42,6 +42,11 @@
          rockArray[2].visible = false;
          rockArray[3].visible = false;
          score.visible = false;
+
+         play.text = "Waiting for " + (3 - peopleInGame) + " players...";
+         if(peopleInGame >= 3){
+             GAMESTATE = "startgame";
+         }
          break;
      case "startgame":
          movement();
@@ -98,12 +103,12 @@
          gamearea.visible = false;
          gameover.visible = true;
 
-         btnPlay.visible = false;
+
          btnIns.visible = false;
          btnTitle.visible = true;
          Title.visible = true;
          Ins.visible = false;
-         play.visible = false;
+
          score.visible = true;
          rockArray[0].visible = false;
          rockArray[1].visible = false;
@@ -134,6 +139,7 @@
  }
 
  function movement() {
+
      if (rotateTopRight === true) {
          myTank.tankBtop.rotation += 3;
          //         console.log(myTank.tankBtop.rotation);
@@ -148,7 +154,7 @@
          });
      }
 
-     if (moveForward === true) {
+     if (moveForward === true)  {
          myTank.tankBbottom.regX = 0;
          myTank.tankBbottom.regY = 0;
          myTank.tankPoint = myTank.tankBbottom.localToGlobal(0, 3);
@@ -188,7 +194,22 @@
          });
 
      }
-
+     if(myTank.tankBbottom.x<=1){
+       myTank.tankBbottom.x=1;
+        myTank.tankBtop.x = myTank.tankBbottom.x;
+     }
+    if(myTank.tankBbottom.x>=799){
+       myTank.tankBbottom.x=799;
+        myTank.tankBtop.x = myTank.tankBbottom.x;
+     }
+     if(myTank.tankBbottom.y<=1){
+       myTank.tankBbottom.y=1;
+        myTank.tankBtop.y = myTank.tankBbottom.y;
+     }
+    if(myTank.tankBbottom.y>=499){
+       myTank.tankBbottom.y=499;
+        myTank.tankBtop.y = myTank.tankBbottom.y;
+     }
      if (turnRight === true) {
          myTank.tankBbottom.rotation += 2;
          socket.emit("sendTankRotate", {
