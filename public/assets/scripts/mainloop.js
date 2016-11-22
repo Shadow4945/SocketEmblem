@@ -396,6 +396,38 @@
          tankB.tankbottom.y = 499;
          tankB.tanktop.y = tankB.tankbottom.y;
      }
+     if (tankR.tankbottom.x <= 1) {
+         tankR.tankbottom.x = 1;
+         tankR.tanktop.x = tankB.tankbottom.x;
+     }
+     if (tankR.tankbottom.x >= 799) {
+         tankR.tankbottom.x = 799;
+         tankR.tanktop.x = tankB.tankbottom.x;
+     }
+     if (tankR.tankbottom.y <= 1) {
+         tankR.tankbottom.y = 1;
+         tankR.tanktop.y = tankB.tankbottom.y;
+     }
+     if (tankG.tankbottom.y >= 499) {
+         tankG.tankbottom.y = 499;
+         tankG.tanktop.y = tankB.tankbottom.y;
+     }
+     if (tankG.tankbottom.x <= 1) {
+         tankG.tankbottom.x = 1;
+         tankG.tanktop.x = tankB.tankbottom.x;
+     }
+     if (tankG.tankbottom.x >= 799) {
+         tankG.tankbottom.x = 799;
+         tankG.tanktop.x = tankB.tankbottom.x;
+     }
+     if (tankB.tankbottom.y <= 1) {
+         tankB.tankbottom.y = 1;
+         tankB.tanktop.y = tankB.tankbottom.y;
+     }
+     if (tankB.tankbottom.y >= 499) {
+         tankB.tankbottom.y = 499;
+         tankB.tanktop.y = tankB.tankbottom.y;
+     }
 
      if (turnRight === true) {
          if (playerId === 1) {
