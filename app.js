@@ -29,23 +29,23 @@ io.on("connection", function (socket) {
             socket.join('main room');
             console.log(io.sockets.adapter.rooms['main room']);
             peopleInGame += 1;
-            
+
         } else {
             console.log("Extra room")
             socket.room = 'extra room';
             socket.join('extra room');
         }
     } catch (err) {
-          console.log("Main Room");
-            socket.room = 'main room';
-            socket.join('main room');
-            console.log(io.sockets.adapter.rooms['main room']);
+        console.log("Main Room");
+        socket.room = 'main room';
+        socket.join('main room');
+        console.log(io.sockets.adapter.rooms['main room']);
             peopleInGame += 1;
     }
-    
-    
-        
-    
+
+
+
+
 
     // if (io.sockets.adapter.rooms['main room'].length > 3) {
     //     console.log("Main Room");
@@ -87,7 +87,7 @@ io.on("connection", function (socket) {
 
     });
 
-    
+
 
 
     //Makes user at 0 in extra room join main room
@@ -99,10 +99,14 @@ io.on("connection", function (socket) {
     });
 
     socket.on('add user', function (username) {
+        
         var isMainRoom = false;
         socket.nickname = username;
         clients.push(socket.nickname);
-        console.log(clients);
+        //---------What christian wants i think---------------------------------------------------------
+        var peopleInQueue = (Object.keys(io.sockets.adapter.rooms['main room'].sockets));
+        console.log("I am in index " + peopleInQueue.indexOf(socket.id) + " of " + socket.room);
+        //-----------------------------------------------------------------------------------------------
         if (socket.room === 'main room') {
             isMainRoom = true;
         }
@@ -130,30 +134,68 @@ io.on("connection", function (socket) {
     socket.on("get clients", function () {
         //console.log('sending clients');
         //io.emit('list clients', clients);
-      
+
 
         socket.broadcast.to(socket.room).emit('recieve clients');
     });
 
-    socket.on('sendBack', function(dataFromClients){
+    socket.on('sendBack', function (dataFromClients) {
         socket.broadcast.to(socket.room).emit('clientData', dataFromClients);
     });
-    
-    socket.on("sendRotate",function(data){
-        console.log("tankrotate: "+ data.tankRotate);
-       io.sockets.in('main room').emit("rotate",{
-         tankRotate: data.tankRotate
-       });
+
+    socket.on("sendTurretRotate", function (data) {
+        //        console.log("tankrotate: "+ data.tankRotate);
+        socket.broadcast.to('main room').emit("rotateTurret", {
+            turretRotation: data.turretRotate
+        });
     });
 
+    socket.on("sendTankRotate", function (data) {
+        //        console.log("tankrotate: "+ data.tankRotate);
+        socket.broadcast.to('main room').emit("rotateTank", {
+            tankRotation: data.tankRotate
+        });
+    });
+
+    socket.on("sendTankMove", function (data) {
+        socket.broadcast.to('main room').emit("moveTank", {
+            tankX: data.tankX,
+            tankY: data.tankY,
+            tankTopX: data.tankTopX,
+            tankTopY: data.tankTopY,
+        });
+    });
+
+    socket.on("shoot", function (data) {
+        //        console.log("tankrotate: "+ data.tankRotate);
+        socket.broadcast.to('main room').emit("shootIt");
+    });
 
 
     function getTank(user) {
         var startX = getRandomInt(40, 700);
         var startY = getRandomInt(40, 400);
-        user.emit('addTank', { id: user.id, type: tank.type, isLocal: true, x: startX, y: startY, hp: 100 });
-        user.broadcast.emit('addTank', { id: user.id, type: tank.type, isLocal: false, x: startX, y: startY, hp: 100 });
-        game.addTank({ id: user.id, type: tank.type, hp: 100 });
+        user.emit('addTank', {
+            id: user.id,
+            type: tank.type,
+            isLocal: true,
+            x: startX,
+            y: startY,
+            hp: 100
+        });
+        user.broadcast.emit('addTank', {
+            id: user.id,
+            type: tank.type,
+            isLocal: false,
+            x: startX,
+            y: startY,
+            hp: 100
+        });
+        game.addTank({
+            id: user.id,
+            type: tank.type,
+            hp: 100
+        });
     }
 
 });

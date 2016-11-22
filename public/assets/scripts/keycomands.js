@@ -20,7 +20,8 @@ function handleKeyDown(evt) {
         rotateTopRight = true;
         break;
     case KEYCODE_UP:
-        if (myTank.isShooting === false) {
+        socket.emit("shoot");
+        if (tankB.isShooting === false) {
             shoot();
         }
         //        console.log("Pew Pew");
