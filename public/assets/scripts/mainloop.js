@@ -59,6 +59,10 @@
          play.visible = true;
          tankB.tanktop.visible = false;
          tankB.tankbottom.visible = false;
+         tankG.tankbottom.visible = false;
+         tankG.tanktop.visible = false;
+         tankR.tanktop.visible = false;
+         tankR.tankbottom.visible = false;
          rockArray[0].visible = false;
          rockArray[1].visible = false;
          rockArray[2].visible = false;
@@ -87,6 +91,10 @@
          score.visible = true;
          tankB.tanktop.visible = true;
          tankB.tankbottom.visible = true;
+         tankG.tankbottom.visible = true;
+         tankG.tanktop.visible = true;
+         tankR.tanktop.visible = true;
+         tankR.tankbottom.visible = true;
          rockArray[0].visible = true;
          rockArray[1].visible = true;
          rockArray[2].visible = true;
@@ -109,6 +117,10 @@
          play.visible = true;
          tankB.tanktop.visible = false;
          tankB.tankbottom.visible = false;
+         tankG.tankbottom.visible = false;
+         tankG.tanktop.visible = false;
+         tankR.tanktop.visible = false;
+         tankR.tankbottom.visible = false;
          rockArray[0].visible = false;
          rockArray[1].visible = false;
          rockArray[2].visible = false;
@@ -119,6 +131,10 @@
          winner.visible = true;
          tankB.tanktop.visible = false;
          tankB.tankbottom.visible = false;
+         tankG.tankbottom.visible = false;
+         tankG.tanktop.visible = false;
+         tankR.tanktop.visible = false;
+         tankR.tankbottom.visible = false;
          rockArray.visible = false;
          titleScreen.visible = false;
          instructionScreen.visible = false;
