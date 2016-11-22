@@ -103,12 +103,12 @@
          gamearea.visible = false;
          gameover.visible = true;
 
-        
+
          btnIns.visible = false;
          btnTitle.visible = true;
          Title.visible = true;
          Ins.visible = false;
-         
+
          score.visible = true;
          rockArray[0].visible = false;
          rockArray[1].visible = false;
@@ -139,6 +139,7 @@
  }
 
  function movement() {
+
      if (rotateTopRight === true) {
          myTank.tankBtop.rotation += 3;
 //         console.log(myTank.tankBtop.rotation);
@@ -153,7 +154,7 @@
          });
      }
 
-     if (moveForward === true) {
+     if (moveForward === true)  {
          myTank.tankBbottom.regX = 0;
          myTank.tankBbottom.regY = 0;
          myTank.tankPoint = myTank.tankBbottom.localToGlobal(0, 3);
@@ -165,7 +166,11 @@
          myTank.tankTopPoint = myTank.tankBbottom.localToGlobal(0, 3);
          myTank.tankBtop.y = myTank.tankBbottom.y;
          myTank.tankBtop.x = myTank.tankBbottom.x;
-     } else if (moveBackward === true) {
+         console.log(tankBbottom.x);
+
+     }
+
+     else if (moveBackward === true) {
          myTank.tankBbottom.regX = 0;
          myTank.tankBbottom.regY = 0;
          myTank.tankPoint = myTank.tankBbottom.localToGlobal(0, 3);
@@ -177,8 +182,25 @@
          myTank.tankTopPoint = myTank.tankBbottom.localToGlobal(0, 1);
          myTank.tankBtop.y = myTank.tankBbottom.y;
          myTank.tankBtop.x = myTank.tankBbottom.x;
-     }
+          console.log(tankBbottom.x);
 
+     }
+     if(myTank.tankBbottom.x<=1){
+       myTank.tankBbottom.x=1;
+        myTank.tankBtop.x = myTank.tankBbottom.x;
+     }
+    if(myTank.tankBbottom.x>=799){
+       myTank.tankBbottom.x=799;
+        myTank.tankBtop.x = myTank.tankBbottom.x;
+     }
+     if(myTank.tankBbottom.y<=1){
+       myTank.tankBbottom.y=1;
+        myTank.tankBtop.y = myTank.tankBbottom.y;
+     }
+    if(myTank.tankBbottom.y>=499){
+       myTank.tankBbottom.y=499;
+        myTank.tankBtop.y = myTank.tankBbottom.y;
+     }
      if (turnRight === true) {
          myTank.tankBbottom.rotation += 2;
      } else if (turnLeft === true) {
