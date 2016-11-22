@@ -9,6 +9,7 @@ var ROTATION_SPEED = 5;
 var socket;
 var mainRoom = false;
 var socket = io();
+peopleInGame = 0;
 
 //replace date.getTime() above with the version number when ready to upload. This will prevent caching during development but will allow it for a particular version number when uploaded.
 var jsEnd = ".js?a=" + cacheVersion;
@@ -168,7 +169,6 @@ $('document').ready(function () {
         $('#name_holder').html('<h3>' + my_name + '</h3>');
         $('#message_form').show();
 
-        console.log(socket.room);
         socket.emit('add user', my_name);
     });
 
@@ -189,6 +189,7 @@ $('document').ready(function () {
     });
 
     socket.on('user joined', function (data, isMainRoom) {
+        
         $("#messages").prepend($('<li>').text(data + " has joined."));
         mainRoom = isMainRoom;
         if (mainRoom) {
@@ -215,6 +216,10 @@ $('document').ready(function () {
     socket.on('move room', function (data) {
         $("#messages").prepend($('<li>').text(data.message));
         socket.emit('leave room');
+    });
+
+    socket.on('updatePeopleInGame', function(newNum){
+        peopleInGame = newNum;
     });
 
     

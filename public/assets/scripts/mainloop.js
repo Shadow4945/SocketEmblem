@@ -42,6 +42,9 @@
          rockArray[2].visible = false;
          rockArray[3].visible = false;
          score.visible = false;
+         if(peopleInGame >= 3){
+             GAMESTATE = "startgame";
+         }
          break;
      case "startgame":
          movement();
@@ -98,12 +101,12 @@
          gamearea.visible = false;
          gameover.visible = true;
 
-         btnPlay.visible = false;
+        
          btnIns.visible = false;
          btnTitle.visible = true;
          Title.visible = true;
          Ins.visible = false;
-         play.visible = false;
+         
          score.visible = true;
          rockArray[0].visible = false;
          rockArray[1].visible = false;
