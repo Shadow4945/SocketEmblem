@@ -4,7 +4,7 @@ var chatRooms = ['main room', 'extra room'];
 var WIDTH = 800;
 var HEIGHT = 500;
 var BALL_SPEED = 10;
-
+var idNum = 0;
 
 
 
@@ -17,7 +17,7 @@ app.get('/', function (req, res) {
 
     res.sendFile(__dirname + "/public/index.html");
 });
-var people = 0;
+
 
 
 io.on("connection", function (socket) {
@@ -42,7 +42,12 @@ io.on("connection", function (socket) {
         console.log(io.sockets.adapter.rooms['main room']);
         peopleInGame += 1;
     }
+    console.log(socket.id + " yo go and playe num "+ peopleInGame);
 
+    socket.join("playerRoom"+peopleInGame);
+    io.to("playerRoom"+peopleInGame).emit("getPlayerId", {
+        userId: peopleInGame
+    });
 
 
 
@@ -115,13 +120,11 @@ io.on("connection", function (socket) {
         });
     });
 
-    socket.on("sendPlayerId", function (data) {
-        console.log("sendPlayerId: "+ data.playerId);
-        socket.broadcast.to(socket.id).emit("getPlayerId", {
-            userId: data.playerId
-        });
-
-    });
+    //    socket.on("sendPlayerId", function (data) {
+    //        console.log("socket id: " + socket.id);
+    //
+    //
+    //    });
 
     socket.on("chat message", function (msg) {
         console.log(socket.room);

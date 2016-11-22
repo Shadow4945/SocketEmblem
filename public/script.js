@@ -5,12 +5,16 @@ var date = new Date();
 var cacheVersion = date.getTime();
 var selectedTank = 1;
 var tankName = '';
-var ROTATION_SPEED = 5;
-var socket;
 var mainRoom = false;
 var playerId = null;
 var socket = io();
 peopleInGame = 0;
+
+ socket.on('getPlayerId', function (data) {
+        playerId = data.userId;
+        console.log("getplayerid: "+playerId);
+    });
+
 
 //replace date.getTime() above with the version number when ready to upload. This will prevent caching during development but will allow it for a particular version number when uploaded.
 var jsEnd = ".js?a=" + cacheVersion;
@@ -191,9 +195,9 @@ $('document').ready(function () {
 
     socket.on('user joined', function (data, isMainRoom, id) {
 //        console.log("user joined: "+id.userId);
-        socket.emit("sendPlayerId", {
-            playerId: id.userId
-        });
+//        socket.emit("sendPlayerId", {
+//            playerId: id.userId
+//        });
         $("#messages").prepend($('<li>').text(data + " has joined."));
         mainRoom = isMainRoom;
         if (mainRoom) {
@@ -201,11 +205,7 @@ $('document').ready(function () {
         }
     });
 
-    socket.on('getPlayerId', function (data) {
-        playerId = data.userId;
-        console.log("getplayerid: "+playerId);
-    });
-
+   
     socket.on('user left', function (data) {
         $("#messages").prepend($('<li>').text(data + " has left."));
     });
