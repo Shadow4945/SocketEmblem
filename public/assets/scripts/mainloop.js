@@ -66,7 +66,7 @@
          score.visible = false;
 
          play.text = "Waiting for " + (3 - peopleInGame) + " players...";
-         if(peopleInGame >= 3){
+         if (peopleInGame >= 3) {
              GAMESTATE = "startgame";
          }
          break;
@@ -163,106 +163,119 @@
  function movement() {
 
      if (rotateTopRight === true) {
-         tankB.tanktop.rotation += 3;
-         //         console.log(tankB.tanktop.rotation);
-         socket.emit("sendTurretRotate", {
-             turretRotate: tankB.tanktop.rotation
-         });
+         if (playerId === 1) {
+             tankB.tanktop.rotation += 3;
+             //         console.log(tankB.tanktop.rotation);
+             socket.emit("sendTurretRotate", {
+                 turretRotate: tankB.tanktop.rotation
+             });
+         }
      } else if (rotateTopLeft === true) {
-         tankB.tanktop.rotation -= 3;
-         //         console.log(tankB.tanktop.rotation);
-         socket.emit("sendTurretRotate", {
-             turretRotate: tankB.tanktop.rotation
-         });
+         if (playerId === 1) {
+             tankB.tanktop.rotation -= 3;
+             //         console.log(tankB.tanktop.rotation);
+             socket.emit("sendTurretRotate", {
+                 turretRotate: tankB.tanktop.rotation
+             });
+         }
      }
 
-     if (moveForward === true)  {
-         tankB.tankbottom.regX = 0;
-         tankB.tankbottom.regY = 0;
-         tankB.tankPoint = tankB.tankbottom.localToGlobal(0, 3);
-         tankB.tankbottom.y -= (tankB.tankPoint.y - tankB.tankbottom.y);
-         tankB.tankbottom.x -= (tankB.tankPoint.x - tankB.tankbottom.x);
-         tankB.tankbottom.regX = 21.5;
-         tankB.tankbottom.regY = 24;
+     if (moveForward === true) {
+         if (playerId === 1) {
+             tankB.tankbottom.regX = 0;
+             tankB.tankbottom.regY = 0;
+             tankB.tankPoint = tankB.tankbottom.localToGlobal(0, 3);
+             tankB.tankbottom.y -= (tankB.tankPoint.y - tankB.tankbottom.y);
+             tankB.tankbottom.x -= (tankB.tankPoint.x - tankB.tankbottom.x);
+             tankB.tankbottom.regX = 21.5;
+             tankB.tankbottom.regY = 24;
 
-         tankB.tankTopPoint = tankB.tankbottom.localToGlobal(0, 3);
-         tankB.tanktop.y = tankB.tankbottom.y;
-         tankB.tanktop.x = tankB.tankbottom.x;
+             tankB.tankTopPoint = tankB.tankbottom.localToGlobal(0, 3);
+             tankB.tanktop.y = tankB.tankbottom.y;
+             tankB.tanktop.x = tankB.tankbottom.x;
 
-         socket.emit("sendTankMove", {
-             tankX: tankB.tankbottom.x,
-             tankY: tankB.tankbottom.y,
-             tankTopX: tankB.tanktop.x,
-             tankTopY: tankB.tanktop.y
-         });
+             socket.emit("sendTankMove", {
+                 tankX: tankB.tankbottom.x,
+                 tankY: tankB.tankbottom.y,
+                 tankTopX: tankB.tanktop.x,
+                 tankTopY: tankB.tanktop.y
+             });
+         }
      } else if (moveBackward === true) {
-         tankB.tankbottom.regX = 0;
-         tankB.tankbottom.regY = 0;
-         tankB.tankPoint = tankB.tankbottom.localToGlobal(0, 3);
-         tankB.tankbottom.y += (tankB.tankPoint.y - tankB.tankbottom.y);
-         tankB.tankbottom.x += (tankB.tankPoint.x - tankB.tankbottom.x);
-         tankB.tankbottom.regX = 21.5;
-         tankB.tankbottom.regY = 24;
+         if (playerId === 1) {
+             tankB.tankbottom.regX = 0;
+             tankB.tankbottom.regY = 0;
+             tankB.tankPoint = tankB.tankbottom.localToGlobal(0, 3);
+             tankB.tankbottom.y += (tankB.tankPoint.y - tankB.tankbottom.y);
+             tankB.tankbottom.x += (tankB.tankPoint.x - tankB.tankbottom.x);
+             tankB.tankbottom.regX = 21.5;
+             tankB.tankbottom.regY = 24;
 
-         tankB.tankTopPoint = tankB.tankbottom.localToGlobal(0, 1);
-         tankB.tanktop.y = tankB.tankbottom.y;
+             tankB.tankTopPoint = tankB.tankbottom.localToGlobal(0, 1);
+             tankB.tanktop.y = tankB.tankbottom.y;
+             tankB.tanktop.x = tankB.tankbottom.x;
+
+             socket.emit("sendTankMove", {
+                 tankX: tankB.tankbottom.x,
+                 tankY: tankB.tankbottom.y,
+                 tankTopX: tankB.tanktop.x,
+                 tankTopY: tankB.tanktop.y
+             });
+         }
+     }
+     if (tankB.tankbottom.x <= 1) {
+         tankB.tankbottom.x = 1;
          tankB.tanktop.x = tankB.tankbottom.x;
-
-         socket.emit("sendTankMove", {
-             tankX: tankB.tankbottom.x,
-             tankY: tankB.tankbottom.y,
-             tankTopX: tankB.tanktop.x,
-             tankTopY: tankB.tanktop.y
-         });
-
      }
-     if(tankB.tankbottom.x<=1){
-       tankB.tankbottom.x=1;
-        tankB.tanktop.x = tankB.tankbottom.x;
+     if (tankB.tankbottom.x >= 799) {
+         tankB.tankbottom.x = 799;
+         tankB.tanktop.x = tankB.tankbottom.x;
      }
-    if(tankB.tankbottom.x>=799){
-       tankB.tankbottom.x=799;
-        tankB.tanktop.x = tankB.tankbottom.x;
+     if (tankB.tankbottom.y <= 1) {
+         tankB.tankbottom.y = 1;
+         tankB.tanktop.y = tankB.tankbottom.y;
      }
-     if(tankB.tankbottom.y<=1){
-       tankB.tankbottom.y=1;
-        tankB.tanktop.y = tankB.tankbottom.y;
-     }
-    if(tankB.tankbottom.y>=499){
-       tankB.tankbottom.y=499;
-        tankB.tanktop.y = tankB.tankbottom.y;
+     if (tankB.tankbottom.y >= 499) {
+         tankB.tankbottom.y = 499;
+         tankB.tanktop.y = tankB.tankbottom.y;
      }
      if (turnRight === true) {
-         tankB.tankbottom.rotation += 2;
-         socket.emit("sendTankRotate", {
-             tankRotate: tankB.tankbottom.rotation
-         });
+         if (playerId === 1) {
+             tankB.tankbottom.rotation += 2;
+             socket.emit("sendTankRotate", {
+                 tankRotate: tankB.tankbottom.rotation
+             });
+         }
      } else if (turnLeft === true) {
-         tankB.tankbottom.rotation -= 2;
-         socket.emit("sendTankRotate", {
-             tankRotate: tankB.tankbottom.rotation
-         });
+         if (playerId === 1) {
+             tankB.tankbottom.rotation -= 2;
+             socket.emit("sendTankRotate", {
+                 tankRotate: tankB.tankbottom.rotation
+             });
+         }
      }
 
  }
 
  function shoot() {
-     tankB.tankbullet = new createjs.Bitmap(queue.getResult("tankBbullet"));
-     tankB.tanktop.regX = 0;
-     tankB.tanktop.regY = 0;
-     tankB.tankTopPoint = tankB.tanktop.localToGlobal(0, 3);
-     tankB.tankbullet.x += (tankB.tankTopPoint.x);
-     tankB.tankbullet.y += (tankB.tankTopPoint.y);
-     tankB.tankbullet.regX = 8;
-     tankB.tankbullet.regY = 90;
-     tankB.tankbullet.rotation = tankB.tanktop.rotation;
-     tankB.tanktop.regX = 13.5;
-     tankB.tanktop.regY = 35;
-     tankB.tankbullet.scaleX = 0.5;
-     tankB.tankbullet.scaleY = 0.5;
-     tankB.isShooting = true;
+     if (playerId === 1) {
+         tankB.tankbullet = new createjs.Bitmap(queue.getResult("tankBbullet"));
+         tankB.tanktop.regX = 0;
+         tankB.tanktop.regY = 0;
+         tankB.tankTopPoint = tankB.tanktop.localToGlobal(0, 3);
+         tankB.tankbullet.x += (tankB.tankTopPoint.x);
+         tankB.tankbullet.y += (tankB.tankTopPoint.y);
+         tankB.tankbullet.regX = 8;
+         tankB.tankbullet.regY = 90;
+         tankB.tankbullet.rotation = tankB.tanktop.rotation;
+         tankB.tanktop.regX = 13.5;
+         tankB.tanktop.regY = 35;
+         tankB.tankbullet.scaleX = 0.5;
+         tankB.tankbullet.scaleY = 0.5;
+         tankB.isShooting = true;
 
-     stage.addChild(tankB.tankbullet);
+         stage.addChild(tankB.tankbullet);
+     }
  }
 
  var timePerShot = 300;
@@ -282,14 +295,14 @@
          pt4 = collisionMethod(tankB.tankbullet, rockArray[3], 0);
 
          if (tankB.tankbullet.x < 0 || tankB.tankbullet.y < 0 || tankB.tankbullet.x > 750 || tankB.tankbullet.y > 500) {
-//             console.log("Reloaded");
+             //             console.log("Reloaded");
              tankB.isShooting = false;
              stage.removeChild(tankB.tankbullet);
          }
          if (pt1 || pt2 || pt3 || pt4) {
              switch (pt1 || pt2 || pt3 || pt4) {
              case pt1:
-//                 console.log("hits")
+                 //                 console.log("hits")
                  tankB.isShooting = false;
                  // stage.removeChild(rockArray[0]);
                  rockArray[0].x = -50;
@@ -342,7 +355,7 @@
      tankB.tankTopPoint = tankB.tankbottom.localToGlobal(0, 3);
      tankB.tanktop.y = data.tankTopY;
      tankB.tanktop.x = data.tankTopX;
-     
+
  });
 
  socket.on("shootIt", function (data) {
