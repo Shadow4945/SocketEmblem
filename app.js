@@ -42,10 +42,10 @@ io.on("connection", function (socket) {
         console.log(io.sockets.adapter.rooms['main room']);
         peopleInGame += 1;
     }
-    console.log(socket.id + " yo go and playe num "+ peopleInGame);
+    console.log(socket.id + " yo go and playe num " + peopleInGame);
 
-    socket.join("playerRoom"+peopleInGame);
-    io.to("playerRoom"+peopleInGame).emit("getPlayerId", {
+    socket.join("playerRoom" + peopleInGame);
+    io.to("playerRoom" + peopleInGame).emit("getPlayerId", {
         userId: peopleInGame
     });
 
@@ -159,14 +159,16 @@ io.on("connection", function (socket) {
     socket.on("sendTurretRotate", function (data) {
         //        console.log("tankrotate: "+ data.tankRotate);
         socket.broadcast.to('main room').emit("rotateTurret", {
-            turretRotation: data.turretRotate
+            turretRotation: data.turretRotate,
+            playerId: data.playerId
         });
     });
 
     socket.on("sendTankRotate", function (data) {
         //        console.log("tankrotate: "+ data.tankRotate);
         socket.broadcast.to('main room').emit("rotateTank", {
-            tankRotation: data.tankRotate
+            tankRotation: data.tankRotate,
+            playerId: data.playerId
         });
     });
 
@@ -176,12 +178,15 @@ io.on("connection", function (socket) {
             tankY: data.tankY,
             tankTopX: data.tankTopX,
             tankTopY: data.tankTopY,
+            playerId: data.playerId
         });
     });
 
     socket.on("shoot", function (data) {
         //        console.log("tankrotate: "+ data.tankRotate);
-        socket.broadcast.to('main room').emit("shootIt");
+        socket.broadcast.to('main room').emit("shootIt" {
+            shootId: data.shootId
+        });
     });
 
 
