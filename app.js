@@ -99,10 +99,14 @@ io.on("connection", function (socket) {
     });
 
     socket.on('add user', function (username) {
+        
         var isMainRoom = false;
         socket.nickname = username;
         clients.push(socket.nickname);
-        console.log(clients);
+        //---------What christian wants i think---------------------------------------------------------
+        var peopleInQueue = (Object.keys(io.sockets.adapter.rooms['main room'].sockets));
+        console.log("I am in index " + peopleInQueue.indexOf(socket.id) + " of " + socket.room);
+        //-----------------------------------------------------------------------------------------------
         if (socket.room === 'main room') {
             isMainRoom = true;
         }
