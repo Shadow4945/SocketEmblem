@@ -136,15 +136,15 @@
  function movement() {
      if (rotateTopRight === true) {
          myTank.tankBtop.rotation += 3;
-//         console.log(myTank.tankBtop.rotation);
-         socket.emit("sendRotate", {
-             tankRotate: myTank.tankBtop.rotation
+         //         console.log(myTank.tankBtop.rotation);
+         socket.emit("sendTurretRotate", {
+             turretRotate: myTank.tankBtop.rotation
          });
      } else if (rotateTopLeft === true) {
          myTank.tankBtop.rotation -= 3;
-//         console.log(myTank.tankBtop.rotation);
-         socket.emit("sendRotate", {
-             tankRotate: myTank.tankBtop.rotation
+         //         console.log(myTank.tankBtop.rotation);
+         socket.emit("sendTurretRotate", {
+             turretRotate: myTank.tankBtop.rotation
          });
      }
 
@@ -160,6 +160,13 @@
          myTank.tankTopPoint = myTank.tankBbottom.localToGlobal(0, 3);
          myTank.tankBtop.y = myTank.tankBbottom.y;
          myTank.tankBtop.x = myTank.tankBbottom.x;
+
+         socket.emit("sendTankMove", {
+             tankX: myTank.tankBbottom.x,
+             tankY: myTank.tankBbottom.y,
+             tankTopX: myTank.tankBtop.x,
+             tankTopY: myTank.tankBtop.y
+         });
      } else if (moveBackward === true) {
          myTank.tankBbottom.regX = 0;
          myTank.tankBbottom.regY = 0;
@@ -172,12 +179,26 @@
          myTank.tankTopPoint = myTank.tankBbottom.localToGlobal(0, 1);
          myTank.tankBtop.y = myTank.tankBbottom.y;
          myTank.tankBtop.x = myTank.tankBbottom.x;
+
+         socket.emit("sendTankMove", {
+             tankX: myTank.tankBbottom.x,
+             tankY: myTank.tankBbottom.y,
+             tankTopX: myTank.tankBtop.x,
+             tankTopY: myTank.tankBtop.y
+         });
+
      }
 
      if (turnRight === true) {
          myTank.tankBbottom.rotation += 2;
+         socket.emit("sendTankRotate", {
+             tankRotate: myTank.tankBbottom.rotation
+         });
      } else if (turnLeft === true) {
          myTank.tankBbottom.rotation -= 2;
+         socket.emit("sendTankRotate", {
+             tankRotate: myTank.tankBbottom.rotation
+         });
      }
 
  }
@@ -194,7 +215,6 @@
      myTank.tankBbullet.rotation = myTank.tankBtop.rotation;
      myTank.tankBtop.regX = 13.5;
      myTank.tankBtop.regY = 35;
-     //     console.log((tankTopPoint.x - tankBtop.x));
      myTank.tankBbullet.scaleX = 0.5;
      myTank.tankBbullet.scaleY = 0.5;
      myTank.isShooting = true;
@@ -219,14 +239,14 @@
          pt4 = collisionMethod(myTank.tankBbullet, rockArray[3], 0);
 
          if (myTank.tankBbullet.x < 0 || myTank.tankBbullet.y < 0 || myTank.tankBbullet.x > 750 || myTank.tankBbullet.y > 500) {
-             console.log("Reloaded");
+//             console.log("Reloaded");
              myTank.isShooting = false;
              stage.removeChild(myTank.tankBbullet);
          }
          if (pt1 || pt2 || pt3 || pt4) {
              switch (pt1 || pt2 || pt3 || pt4) {
              case pt1:
-                 console.log("hits")
+//                 console.log("hits")
                  myTank.isShooting = false;
                  // stage.removeChild(rockArray[0]);
                  rockArray[0].x = -50;
@@ -258,7 +278,30 @@
      }
  }
 
- socket.on("rotate", function (data) {
-        console.log("data.tankRotate");
-        console.log(data.tankRotate);
-    });
+ socket.on("rotateTurret", function (data) {
+     myTank.tankBtop.rotation = data.turretRotation;
+     //     console.log(data.turretRotation);
+ });
+
+ socket.on("rotateTank", function (data) {
+     myTank.tankBbottom.rotation = data.tankRotation;
+ });
+
+ socket.on("moveTank", function (data) {
+     myTank.tankBbottom.regX = 0;
+     myTank.tankBbottom.regY = 0;
+     myTank.tankPoint = myTank.tankBbottom.localToGlobal(0, 3);
+     myTank.tankBbottom.y = data.tankY;
+     myTank.tankBbottom.x = data.tankX;
+     myTank.tankBbottom.regX = 21.5;
+     myTank.tankBbottom.regY = 24;
+
+     myTank.tankTopPoint = myTank.tankBbottom.localToGlobal(0, 3);
+     myTank.tankBtop.y = data.tankTopY;
+     myTank.tankBtop.x = data.tankTopX;
+     
+ });
+
+ socket.on("shootIt", function (data) {
+     shoot();
+ });
