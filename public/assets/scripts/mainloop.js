@@ -184,19 +184,22 @@
              //         console.log(tankB.tanktop.rotation);
              socket.emit("sendTurretRotate", {
                  turretRotate: tankB.tanktop.rotation,
-                 playerId: playerId
+                 playerId: playerId,
+                 tankColor: "blue"
              });
          } else if (playerId === 2) {
              tankR.tanktop.rotation += 3;
              socket.emit("sendTurretRotate", {
                  turretRotate: tankR.tanktop.rotation,
-                 playerId: playerId
+                 playerId: playerId,
+                 tankColor: "red"
              });
          } else if (playerId === 3) {
              tankG.tanktop.rotation += 3;
              socket.emit("sendTurretRotate", {
                  turretRotate: tankG.tanktop.rotation,
-                 playerId: playerId
+                 playerId: playerId,
+                 tankColor: "green"
              });
          }
      } else if (rotateTopLeft === true) {
@@ -204,19 +207,23 @@
              tankB.tanktop.rotation -= 3;
              //         console.log(tankB.tanktop.rotation);
              socket.emit("sendTurretRotate", {
-                 turretRotate: tankB.tanktop.rotation
+                 turretRotate: tankB.tanktop.rotation,
+                 playerId: playerId,
+                 tankColor: "blue"
              });
          } else if (playerId === 2) {
              tankR.tanktop.rotation -= 3;
              socket.emit("sendTurretRotate", {
                  turretRotate: tankR.tanktop.rotation,
-                 playerId: playerId
+                 playerId: playerId,
+                 tankColor: "red"
              });
          } else if (playerId === 3) {
              tankG.tanktop.rotation -= 3;
              socket.emit("sendTurretRotate", {
                  turretRotate: tankG.tanktop.rotation,
-                 playerId: playerId
+                 playerId: playerId,
+                 tankColor: "green"
              });
          }
      }
@@ -240,7 +247,8 @@
                  tankY: tankB.tankbottom.y,
                  tankTopX: tankB.tanktop.x,
                  tankTopY: tankB.tanktop.y,
-                 playerId: playerId
+                 playerId: playerId,
+                 tankColor: "blue"
              });
          } else if (playerId === 2) {
              tankR.tankbottom.regX = 0;
@@ -260,7 +268,8 @@
                  tankY: tankR.tankbottom.y,
                  tankTopX: tankR.tanktop.x,
                  tankTopY: tankR.tanktop.y,
-                 playerId: playerId
+                 playerId: playerId,
+                 tankColor: "red"
              });
          } else if (playerId == 3) {
              tankG.tankbottom.regX = 0;
@@ -280,7 +289,8 @@
                  tankY: tankG.tankbottom.y,
                  tankTopX: tankG.tanktop.x,
                  tankTopY: tankG.tanktop.y,
-                 playerId: playerId
+                 playerId: playerId,
+                 tankColor: "green"
              });
          }
      } else if (moveBackward === true) {
@@ -323,7 +333,8 @@
                  tankY: tankB.tankbottom.y,
                  tankTopX: tankB.tanktop.x,
                  tankTopY: tankB.tanktop.y,
-                 playerId: playerId
+                 playerId: playerId,
+                 tankColor: "blue"
              });
          } else if (playerId === 2) {
              tankR.tankbottom.regX = 0;
@@ -343,7 +354,8 @@
                  tankY: tankR.tankbottom.y,
                  tankTopX: tankR.tanktop.x,
                  tankTopY: tankR.tanktop.y,
-                 playerId: playerId
+                 playerId: playerId,
+                 tankColor: "red"
              });
          } else if (playerId == 3) {
              tankG.tankbottom.regX = 0;
@@ -363,7 +375,8 @@
                  tankY: tankG.tankbottom.y,
                  tankTopX: tankG.tanktop.x,
                  tankTopY: tankG.tanktop.y,
-                 playerId: playerId
+                 playerId: playerId,
+                 tankColor: "green"
              });
          }
      }
@@ -388,34 +401,46 @@
          if (playerId === 1) {
              tankB.tankbottom.rotation += 2;
              socket.emit("sendTankRotate", {
-                 tankRotate: tankB.tankbottom.rotation
+                 tankRotate: tankB.tankbottom.rotation,
+                 playerId: playerId,
+                 tankColor: "blue"
              });
          } else if (playerId === 2) {
              tankR.tankbottom.rotation += 2;
              socket.emit("sendTankRotate", {
-                 tankRotate: tankR.tankbottom.rotation
+                 tankRotate: tankR.tankbottom.rotation,
+                 playerId: playerId,
+                 tankColor: "red"
              });
          } else if (playerId === 3) {
              tankG.tankbottom.rotation += 2;
              socket.emit("sendTankRotate", {
-                 tankRotate: tankG.tankbottom.rotation
+                 tankRotate: tankG.tankbottom.rotation,
+                 playerId: playerId,
+                 tankColor: "green"
              });
          }
      } else if (turnLeft === true) {
          if (playerId === 1) {
              tankB.tankbottom.rotation -= 2;
              socket.emit("sendTankRotate", {
-                 tankRotate: tankB.tankbottom.rotation
+                 tankRotate: tankB.tankbottom.rotation,
+                 playerId: playerId,
+                 tankColor: "blue"
              });
          } else if (playerId === 2) {
              tankR.tankbottom.rotation -= 2;
              socket.emit("sendTankRotate", {
-                 tankRotate: tankR.tankbottom.rotation
+                 tankRotate: tankR.tankbottom.rotation,
+                 playerId: playerId,
+                 tankColor: "red"
              });
          } else if (playerId === 3) {
              tankG.tankbottom.rotation -= 2;
              socket.emit("sendTankRotate", {
-                 tankRotate: tankG.tankbottom.rotation
+                 tankRotate: tankG.tankbottom.rotation,
+                 playerId: playerId,
+                 tankColor: "green"
              });
          }
      }
@@ -530,7 +555,7 @@
                  break;
              }
          }
-     }else if (tankR.isShooting === true) {
+     } else if (tankR.isShooting === true) {
          tankR.tankbullet.regX = 0;
          tankR.tankbullet.regY = 0;
          tankR.tankBulletPoint = tankR.tankbullet.localToGlobal(0, 13);
@@ -580,7 +605,7 @@
                  break;
              }
          }
-     }else if (tankG.isShooting === true) {
+     } else if (tankG.isShooting === true) {
          tankG.tankbullet.regX = 0;
          tankG.tankbullet.regY = 0;
          tankG.tankBulletPoint = tankG.tankbullet.localToGlobal(0, 13);
@@ -634,27 +659,64 @@
  }
 
  socket.on("rotateTurret", function (data) {
-     tankB.tanktop.rotation = data.turretRotation;
+     if (data.tankColor === "blue") {
+         tankB.tanktop.rotation = data.turretRotation;
+     } else if (data.tankColor === "red") {
+         tankR.tanktop.rotation = data.turretRotation;
+     } else if (data.tankColor === "green") {
+         tankG.tanktop.rotation = data.turretRotation;
+     }
      //     console.log(data.turretRotation);
  });
 
  socket.on("rotateTank", function (data) {
-     tankB.tankbottom.rotation = data.tankRotation;
+     if (data.tankColor === "blue") {
+         tankB.tankbottom.rotation = data.tankRotation;
+     } else if (data.tankColor === "red") {
+         tankR.tankbottom.rotation = data.tankRotation;
+     } else if (data.tankColor === "green") {
+         tankG.tankbottom.rotation = data.tankRotation;
+     }
  });
 
  socket.on("moveTank", function (data) {
-     tankB.tankbottom.regX = 0;
-     tankB.tankbottom.regY = 0;
-     tankB.tankPoint = tankB.tankbottom.localToGlobal(0, 3);
-     tankB.tankbottom.y = data.tankY;
-     tankB.tankbottom.x = data.tankX;
-     tankB.tankbottom.regX = 21.5;
-     tankB.tankbottom.regY = 24;
+     if (data.tankColor === "blue") {
+         tankB.tankbottom.regX = 0;
+         tankB.tankbottom.regY = 0;
+         tankB.tankPoint = tankB.tankbottom.localToGlobal(0, 3);
+         tankB.tankbottom.y = data.tankY;
+         tankB.tankbottom.x = data.tankX;
+         tankB.tankbottom.regX = 21.5;
+         tankB.tankbottom.regY = 24;
 
-     tankB.tankTopPoint = tankB.tankbottom.localToGlobal(0, 3);
-     tankB.tanktop.y = data.tankTopY;
-     tankB.tanktop.x = data.tankTopX;
+         tankB.tankTopPoint = tankB.tankbottom.localToGlobal(0, 3);
+         tankB.tanktop.y = data.tankTopY;
+         tankB.tanktop.x = data.tankTopX;
+     } else if (data.tankColor === "red") {
+         tankR.tankbottom.regX = 0;
+         tankR.tankbottom.regY = 0;
+         tankR.tankPoint = tankR.tankbottom.localToGlobal(0, 3);
+         tankR.tankbottom.y = data.tankY;
+         tankR.tankbottom.x = data.tankX;
+         tankR.tankbottom.regX = 21.5;
+         tankR.tankbottom.regY = 24;
 
+         tankR.tankTopPoint = tankR.tankbottom.localToGlobal(0, 3);
+         tankR.tanktop.y = data.tankTopY;
+         tankR.tanktop.x = data.tankTopX;
+     } else if (data.tankColor === "green") {
+         tankG.tankbottom.regX = 0;
+         tankG.tankbottom.regY = 0;
+         tankG.tankPoint = tankG.tankbottom.localToGlobal(0, 3);
+         tankG.tankbottom.y = data.tankY;
+         tankG.tankbottom.x = data.tankX;
+         tankG.tankbottom.regX = 21.5;
+         tankG.tankbottom.regY = 24;
+
+         tankG.tankTopPoint = tankG.tankbottom.localToGlobal(0, 3);
+         tankG.tanktop.y = data.tankTopY;
+         tankG.tanktop.x = data.tankTopX;
+     }
  });
 
  socket.on("shootIt", function (data) {

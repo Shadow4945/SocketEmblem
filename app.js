@@ -160,7 +160,8 @@ io.on("connection", function (socket) {
         //        console.log("tankrotate: "+ data.tankRotate);
         socket.broadcast.to('main room').emit("rotateTurret", {
             turretRotation: data.turretRotate,
-            playerId: data.playerId
+            playerId: data.playerId,
+            tankColor: data.tankColor
         });
     });
 
@@ -168,7 +169,8 @@ io.on("connection", function (socket) {
         //        console.log("tankrotate: "+ data.tankRotate);
         socket.broadcast.to('main room').emit("rotateTank", {
             tankRotation: data.tankRotate,
-            playerId: data.playerId
+            playerId: data.playerId,
+            tankColor: data.tankColor
         });
     });
 
@@ -178,13 +180,14 @@ io.on("connection", function (socket) {
             tankY: data.tankY,
             tankTopX: data.tankTopX,
             tankTopY: data.tankTopY,
-            playerId: data.playerId
+            playerId: data.playerId,
+            tankColor: data.tankColor
         });
     });
 
     socket.on("shoot", function (data) {
         //        console.log("tankrotate: "+ data.tankRotate);
-        socket.broadcast.to('main room').emit("shootIt" {
+        socket.broadcast.to('main room').emit("shootIt",{
             shootId: data.shootId
         });
     });
