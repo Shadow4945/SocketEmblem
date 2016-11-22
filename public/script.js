@@ -167,6 +167,7 @@ $('document').ready(function () {
         $('#name_holder').html('<h3>' + my_name + '</h3>');
         $('#message_form').show();
 
+        console.log(socket.room);
         socket.emit('add user', my_name);
     });
 
