@@ -42,6 +42,8 @@
          rockArray[2].visible = false;
          rockArray[3].visible = false;
          score.visible = false;
+
+         play.text = "Waiting for " + (3 - peopleInGame) + " players...";
          if(peopleInGame >= 3){
              GAMESTATE = "startgame";
          }
