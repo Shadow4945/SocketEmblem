@@ -21,24 +21,24 @@ function handleKeyDown(evt) {
         break;
     case KEYCODE_UP:
         if (playerId === 1) {
-            socket.emit("shoot", {
-                shootId: "blue"
-            });
             if (tankB.isShooting === false) {
+                socket.emit("shoot", {
+                    shootId: "blue"
+                });
                 shoot("blue");
             }
         } else if (playerId === 2) {
-            socket.emit("shoot", {
-                shootId: "red"
-            });
             if (tankR.isShooting === false) {
+                socket.emit("shoot", {
+                    shootId: "red"
+                });
                 shoot("red");
             }
         } else if (playerId === 3) {
-            socket.emit("shoot", {
-                shootId: "green"
-            });
             if (tankG.isShooting === false) {
+                socket.emit("shoot", {
+                    shootId: "green"
+                });
                 shoot("green");
             }
         }

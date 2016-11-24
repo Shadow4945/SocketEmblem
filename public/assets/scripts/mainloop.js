@@ -587,7 +587,8 @@
                  break;
              }
          }
-     } else if (tankR.isShooting === true) {
+     }
+     if (tankR.isShooting === true) {
          tankR.tankbullet.regX = 0;
          tankR.tankbullet.regY = 0;
          tankR.tankBulletPoint = tankR.tankbullet.localToGlobal(0, 13);
@@ -637,7 +638,8 @@
                  break;
              }
          }
-     } else if (tankG.isShooting === true) {
+     }
+     if (tankG.isShooting === true) {
          tankG.tankbullet.regX = 0;
          tankG.tankbullet.regY = 0;
          tankG.tankBulletPoint = tankG.tankbullet.localToGlobal(0, 13);
