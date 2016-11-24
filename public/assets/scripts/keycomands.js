@@ -31,14 +31,14 @@ function handleKeyDown(evt) {
             socket.emit("shoot", {
                 shootId: "red"
             });
-            if (tankB.isShooting === false) {
+            if (tankR.isShooting === false) {
                 shoot("red");
             }
-        } else if (playerId === 2) {
+        } else if (playerId === 3) {
             socket.emit("shoot", {
                 shootId: "green"
             });
-            if (tankB.isShooting === false) {
+            if (tankG.isShooting === false) {
                 shoot("green");
             }
         }

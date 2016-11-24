@@ -501,7 +501,7 @@
          tankR.tankbullet = new createjs.Bitmap(queue.getResult("tankRbullet"));
          tankR.tanktop.regX = 0;
          tankR.tanktop.regY = 0;
-         tankR.tankTopPoint = tankB.tanktop.localToGlobal(0, 3);
+         tankR.tankTopPoint = tankR.tanktop.localToGlobal(0, 3);
          tankR.tankbullet.x += (tankR.tankTopPoint.x);
          tankR.tankbullet.y += (tankR.tankTopPoint.y);
          tankR.tankbullet.regX = 8;
@@ -515,7 +515,7 @@
 
          stage.addChild(tankR.tankbullet);
      } else if (shootId === "green") {
-         tankG.tankbullet = new createjs.Bitmap(queue.getResult("tankBbullet"));
+         tankG.tankbullet = new createjs.Bitmap(queue.getResult("tankGbullet"));
          tankG.tanktop.regX = 0;
          tankG.tanktop.regY = 0;
          tankG.tankTopPoint = tankG.tanktop.localToGlobal(0, 3);
