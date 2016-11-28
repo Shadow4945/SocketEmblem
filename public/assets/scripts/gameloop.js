@@ -62,7 +62,6 @@ function reset(){
   tankB.tankbottom.y = 100;
   tankB.tanktop.x=tankB.tanktop.y=tankB.tankbottom.x;
   health=100;
-
   total=0;
   rockArray[0].x=250
   rockArray[0].y= 200;
