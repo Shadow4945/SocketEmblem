@@ -178,10 +178,10 @@
 
  function movement() {
 
-tt1 = collisionMethod(myTank.tankBbottom, rockArray[0], 0);
-tt2 = collisionMethod(myTank.tankBbottom, rockArray[1], 0);
-tt3 = collisionMethod(myTank.tankBbottom, rockArray[2], 0);
-tt4 = collisionMethod(myTank.tankBbottom, rockArray[3], 0);
+tt1 = collisionMethod(tankB.tankBbottom, rockArray[0], 0);
+tt2 = collisionMethod(tankB.tankBbottom, rockArray[1], 0);
+tt3 = collisionMethod(tankB.tankBbottom, rockArray[2], 0);
+tt4 = collisionMethod(tankB.tankBbottom, rockArray[3], 0);
 
      if (rotateTopRight === true) {
          if (playerId === 1) {
