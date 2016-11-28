@@ -5,11 +5,16 @@ var date = new Date();
 var cacheVersion = date.getTime();
 var selectedTank = 1;
 var tankName = '';
-var ROTATION_SPEED = 5;
-var socket;
 var mainRoom = false;
+var playerId = null;
 var socket = io();
 peopleInGame = 0;
+
+socket.on('getPlayerId', function (data) {
+    playerId = data.userId;
+    //        console.log("getplayerid: "+playerId);
+});
+
 
 //replace date.getTime() above with the version number when ready to upload. This will prevent caching during development but will allow it for a particular version number when uploaded.
 var jsEnd = ".js?a=" + cacheVersion;
@@ -49,6 +54,24 @@ manifest = [
         src: "images/tankBbullet.png",
         id: "tankBbullet"
     }, {
+        src: "images/tankRbottom.png",
+        id: "tankRbottom"
+    }, {
+        src: "images/tankRtop.png",
+        id: "tankRtop"
+    }, {
+        src: "images/tankRbullet.png",
+        id: "tankRbullet"
+    }, {
+        src: "images/tankGbottom.png",
+        id: "tankGbottom"
+    }, {
+        src: "images/tankGtop.png",
+        id: "tankGtop"
+    }, {
+        src: "images/tankGbullet.png",
+        id: "tankGbullet"
+    }, {
         src: "images/title.jpg",
         id: "title"
     }
@@ -57,7 +80,7 @@ manifest = [
         id: "instructions"
     }
        , {
-        src: "images/gamearea.jpg",
+        src: "images/background2.png",
         id: "gamearea"
     }
     , {
@@ -97,6 +120,42 @@ function displaySprites() {
     tankB.tanktop.regX = 13.5;
     tankB.tanktop.regY = 35;
     stage.addChild(tankB.tanktop);
+
+    tankR.tankbottom = new createjs.Bitmap(queue.getResult("tankRbottom"));
+    tankR.tankbottom.x = 400;
+    tankR.tankbottom.y = 100;
+    tankR.tankPoint = tankR.tankbottom.localToGlobal(0, 1);
+    tankR.tankbottom.y += (tankR.tankPoint.y - tankR.tankbottom.y);
+    tankR.tankbottom.x += (tankR.tankPoint.x - tankR.tankbottom.x);
+    tankR.tankbottom.regX = 21.5;
+    tankR.tankbottom.regY = 24;
+    stage.addChild(tankR.tankbottom);
+
+    tankR.tanktop = new createjs.Bitmap(queue.getResult("tankRtop"));
+    tankR.tankTopPoint = tankR.tanktop.localToGlobal(0, 1);
+    tankR.tanktop.x = tankR.tankbottom.x;
+    tankR.tanktop.y = tankR.tankbottom.y;
+    tankR.tanktop.regX = 13.5;
+    tankR.tanktop.regY = 35;
+    stage.addChild(tankR.tanktop);
+
+    tankG.tankbottom = new createjs.Bitmap(queue.getResult("tankGbottom"));
+    tankG.tankbottom.x = 700;
+    tankG.tankbottom.y = 100;
+    tankG.tankPoint = tankG.tankbottom.localToGlobal(0, 1);
+    tankG.tankbottom.y += (tankG.tankPoint.y - tankG.tankbottom.y);
+    tankG.tankbottom.x += (tankG.tankPoint.x - tankG.tankbottom.x);
+    tankG.tankbottom.regX = 21.5;
+    tankG.tankbottom.regY = 24;
+    stage.addChild(tankG.tankbottom);
+
+    tankG.tanktop = new createjs.Bitmap(queue.getResult("tankGtop"));
+    tankG.tankTopPoint = tankG.tanktop.localToGlobal(0, 1);
+    tankG.tanktop.x = tankG.tankbottom.x;
+    tankG.tanktop.y = tankG.tankbottom.y;
+    tankG.tanktop.regX = 13.5;
+    tankG.tanktop.regY = 35;
+    stage.addChild(tankG.tanktop);
 
     //This draws the objects the first time. It isn't really needed because we have a loop that redraws every frame.
     //stage.update();
@@ -185,14 +244,18 @@ $('document').ready(function () {
         $('#msg').val("");
     });
 
-    socket.on('user joined', function (data, isMainRoom) {
-
+    socket.on('user joined', function (data, isMainRoom, id) {
+        //        console.log("user joined: "+id.userId);
+        //        socket.emit("sendPlayerId", {
+        //            playerId: id.userId
+        //        });
         $("#messages").prepend($('<li>').text(data + " has joined."));
         mainRoom = isMainRoom;
         if (mainRoom) {
             $('#game').show();
         }
     });
+
 
     socket.on('user left', function (data) {
         $("#messages").prepend($('<li>').text(data + " has left."));
@@ -215,7 +278,7 @@ $('document').ready(function () {
         socket.emit('leave room');
     });
 
-    socket.on('updatePeopleInGame', function(newNum){
+    socket.on('updatePeopleInGame', function (newNum) {
         peopleInGame = newNum;
     });
 

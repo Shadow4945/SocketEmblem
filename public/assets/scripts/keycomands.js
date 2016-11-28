@@ -20,9 +20,27 @@ function handleKeyDown(evt) {
         rotateTopRight = true;
         break;
     case KEYCODE_UP:
-        socket.emit("shoot");
-        if (tankB.isShooting === false) {
-            shoot();
+        if (playerId === 1) {
+            if (tankB.isShooting === false) {
+                socket.emit("shoot", {
+                    shootId: "blue"
+                });
+                shoot("blue");
+            }
+        } else if (playerId === 2) {
+            if (tankR.isShooting === false) {
+                socket.emit("shoot", {
+                    shootId: "red"
+                });
+                shoot("red");
+            }
+        } else if (playerId === 3) {
+            if (tankG.isShooting === false) {
+                socket.emit("shoot", {
+                    shootId: "green"
+                });
+                shoot("green");
+            }
         }
         //        console.log("Pew Pew");
         break;

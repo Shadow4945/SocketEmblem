@@ -4,7 +4,7 @@ var chatRooms = ['main room', 'extra room'];
 var WIDTH = 800;
 var HEIGHT = 500;
 var BALL_SPEED = 10;
-
+var idNum = 0;
 
 
 
@@ -17,7 +17,7 @@ app.get('/', function (req, res) {
 
     res.sendFile(__dirname + "/public/index.html");
 });
-var people = 0;
+
 
 
 io.on("connection", function (socket) {
@@ -40,9 +40,14 @@ io.on("connection", function (socket) {
         socket.room = 'main room';
         socket.join('main room');
         console.log(io.sockets.adapter.rooms['main room']);
-            peopleInGame += 1;
+        peopleInGame += 1;
     }
+    console.log(socket.id + " yo go and playe num " + peopleInGame);
 
+    socket.join("playerRoom" + peopleInGame);
+    io.to("playerRoom" + peopleInGame).emit("getPlayerId", {
+        userId: peopleInGame
+    });
 
 
 
@@ -99,7 +104,7 @@ io.on("connection", function (socket) {
     });
 
     socket.on('add user', function (username) {
-        
+
         var isMainRoom = false;
         socket.nickname = username;
         clients.push(socket.nickname);
@@ -110,8 +115,16 @@ io.on("connection", function (socket) {
         if (socket.room === 'main room') {
             isMainRoom = true;
         }
-        io.to(socket.room).emit('user joined', socket.nickname, isMainRoom);
+        io.to(socket.room).emit('user joined', socket.nickname, isMainRoom, {
+            userId: peopleInQueue.indexOf(socket.id)
+        });
     });
+
+    //    socket.on("sendPlayerId", function (data) {
+    //        console.log("socket id: " + socket.id);
+    //
+    //
+    //    });
 
     socket.on("chat message", function (msg) {
         console.log(socket.room);
@@ -146,14 +159,18 @@ io.on("connection", function (socket) {
     socket.on("sendTurretRotate", function (data) {
         //        console.log("tankrotate: "+ data.tankRotate);
         socket.broadcast.to('main room').emit("rotateTurret", {
-            turretRotation: data.turretRotate
+            turretRotation: data.turretRotate,
+            playerId: data.playerId,
+            tankColor: data.tankColor
         });
     });
 
     socket.on("sendTankRotate", function (data) {
         //        console.log("tankrotate: "+ data.tankRotate);
         socket.broadcast.to('main room').emit("rotateTank", {
-            tankRotation: data.tankRotate
+            tankRotation: data.tankRotate,
+            playerId: data.playerId,
+            tankColor: data.tankColor
         });
     });
 
@@ -163,12 +180,16 @@ io.on("connection", function (socket) {
             tankY: data.tankY,
             tankTopX: data.tankTopX,
             tankTopY: data.tankTopY,
+            playerId: data.playerId,
+            tankColor: data.tankColor
         });
     });
 
     socket.on("shoot", function (data) {
         //        console.log("tankrotate: "+ data.tankRotate);
-        socket.broadcast.to('main room').emit("shootIt");
+        socket.broadcast.to('main room').emit("shootIt",{
+            shootId: data.shootId
+        });
     });
 
 
