@@ -42,14 +42,15 @@ function showGameArea() {
 
 function updateVisuals() {
     healthbar.graphics.clear().beginFill('#f00').drawRect(100, 50, health, 10).endFill();
-    if (health == 0) {
+    if (health === 0) {
         rounds += 1;
         health = 100;
         reset();
     }
-    if (rounds == 5) {
+    if (rounds === 6) {
         GAMESTATE = "gameover";
-rounds = 0;
+        round = 0;
+
     }
     score.text = "Score:" + total;
     round.text = "Round:" + rounds;
@@ -62,10 +63,12 @@ function reset() {
     tankB.tanktop.x = tankB.tanktop.y = tankB.tankbottom.x;
     tankR.tankbottom.x = 400;
     tankR.tankbottom.y = 100;
-    tankR.tanktop.x = tankR.tanktop.y = tankR.tankbottom.x;
+    tankR.tanktop.x = tankR.tankbottom.x;
+    tankR.tanktop.y = tankR.tankbottom.y;
     tankG.tankbottom.x = 700;
     tankG.tankbottom.y = 100;
-    tankG.tanktop.x = tankG.tanktop.y = tankG.tankbottom.x;
+    tankG.tanktop.x = tankG.tankbottom.x;
+    tankG.tanktop.y = tankG.tankbottom.y;
     health = 100;
 
     total = 0;
