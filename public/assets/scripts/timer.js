@@ -4,7 +4,7 @@ var time = 0.0;
 function addtimer() {
     timer = new createjs.Text(time, "20px", "#fff");
     timer.x = timer.y = 100
-    stage.addChild(timer);
+    //stage.addChild(timer);
 }
 
 function timerStart() {
@@ -17,7 +17,7 @@ function timerStart() {
             tenth = 0;
         }
         time = whole + "." + tenth;
-        timer.text = time;
+        //timer.text = time;
     }
     if (time >= 60) {
         whole = tenth = seconds = time = 0;

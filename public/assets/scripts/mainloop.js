@@ -128,6 +128,7 @@
          break;
      case "gameover":
          reset();
+         peopleInGame = 0;
          winner.visible = true;
          tankB.tanktop.visible = false;
          tankB.tankbottom.visible = false;
