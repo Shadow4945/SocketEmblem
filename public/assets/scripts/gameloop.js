@@ -60,13 +60,16 @@ function updateVisuals() {
 function reset() {
     tankB.tankbottom.x = 100;
     tankB.tankbottom.y = 100;
+    tankB.tankbottom.rotation = 0;
     tankB.tanktop.x = tankB.tanktop.y = tankB.tankbottom.x;
     tankR.tankbottom.x = 400;
-    tankR.tankbottom.y = 100;
+    tankR.tankbottom.y = 100; 
+    tankR.tankbottom.rotation = 0;
     tankR.tanktop.x = tankR.tankbottom.x;
     tankR.tanktop.y = tankR.tankbottom.y;
     tankG.tankbottom.x = 700;
     tankG.tankbottom.y = 100;
+    tankG.tankbottom.rotation = 0;
     tankG.tanktop.x = tankG.tankbottom.x;
     tankG.tanktop.y = tankG.tankbottom.y;
     health = 100;
