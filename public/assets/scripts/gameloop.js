@@ -49,7 +49,7 @@ function updateVisuals() {
     }
     if (rounds == 5) {
         GAMESTATE = "gameover";
-
+rounds = 0;
     }
     score.text = "Score:" + total;
     round.text = "Round:" + rounds;
@@ -67,7 +67,7 @@ function reset() {
     tankG.tankbottom.y = 100;
     tankG.tanktop.x = tankG.tanktop.y = tankG.tankbottom.x;
     health = 100;
-    rounds = 0;
+
     total = 0;
     rockArray[0].x = 250
     rockArray[0].y = 200;
