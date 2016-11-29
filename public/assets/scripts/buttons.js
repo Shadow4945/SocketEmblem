@@ -27,6 +27,7 @@ function buttons() {
     Title.y = 410;
     stage.addChild(Title); //adds the text object to the stage
     btnTitle.on("click", function (evt) {
+        peopleInGame += 1;
         GAMESTATE = "started";
     });
     btnMute = new createjs.Shape();

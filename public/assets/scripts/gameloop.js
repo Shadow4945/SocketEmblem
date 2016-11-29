@@ -58,6 +58,7 @@ function updateVisuals() {
 }
 
 function reset() {
+    peopleInGame = 0;
     tankB.tankbottom.x = 100;
     tankB.tankbottom.y = 100;
     tankB.tankbottom.rotation = 0;

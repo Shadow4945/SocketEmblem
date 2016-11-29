@@ -219,6 +219,12 @@ io.on("connection", function (socket) {
         });
     }
 
+    socket.on('updateOthers', function(newNumInGame){
+        io.to(socket.room).emit('updatePeopleInGame', newNumInGame);
+    });
+        
+    
+
 });
 
 function Ball(ownderId, alpha, x, y) {
