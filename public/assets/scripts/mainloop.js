@@ -68,11 +68,12 @@
          rockArray[2].visible = false;
          rockArray[3].visible = false;
          score.visible = false;
-
+        
          play.text = "Waiting for " + (3 - peopleInGame) + " players...";
          if (peopleInGame >= 3) {
              GAMESTATE = "startgame";
          }
+         socket.emit('updateOthers', peopleInGame);
          break;
      case "startgame":
          movement();
@@ -128,7 +129,6 @@
          break;
      case "gameover":
          reset();
-         peopleInGame = 0;
          winner.visible = true;
          tankB.tanktop.visible = false;
          tankB.tankbottom.visible = false;
