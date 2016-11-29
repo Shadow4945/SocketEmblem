@@ -1,4 +1,4 @@
-var total = 0;
+var Rtotal=Btotal=Gtotal = 0;
 var rounds = 1;
 var winner;
 var Bhealth =Ghealth =Rhealth = 100;
@@ -13,7 +13,7 @@ function showGameArea() {
     winner.y = 250;
     stage.addChild(winner)
     stage.addChild(gamearea);
-    score = new createjs.Text("Score: " + total, "12px Arial", "#ffffff"); //creates text object
+    score = new createjs.Text("Red Score: " + Rtotal+" Blue Score: "+Btotal+" Green Score: "+Gtotal, "12px Arial", "#ffffff"); //creates text object
     score.x = score.y = 30;
     stage.addChild(score);
     round = new createjs.Text("Round: " + rounds, "12px Arial", "#ffffff"); //creates text object
@@ -21,13 +21,13 @@ function showGameArea() {
     round.y = 40;
     stage.addChild(round)
     Bhealthbar = new createjs.Shape();
-    Bhealthbar.graphics.beginFill('#00f').drawRect(100, 10, Bhealth, 10);
+    Bhealthbar.graphics.beginFill('#00f').drawRect(500, 10, Bhealth, 10);
     stage.addChild(Bhealthbar);
     Rhealthbar = new createjs.Shape();
-    Rhealthbar.graphics.beginFill('#f00').drawRect(100, 30, Rhealth, 10);
+    Rhealthbar.graphics.beginFill('#f00').drawRect(500, 30, Rhealth, 10);
     stage.addChild(Rhealthbar);
     Ghealthbar = new createjs.Shape();
-    Ghealthbar.graphics.beginFill('#0f0').drawRect(100, 50, Ghealth, 10);
+    Ghealthbar.graphics.beginFill('#0f0').drawRect(500, 50, Ghealth, 10);
     stage.addChild(Ghealthbar);
     for (i = 0; i < 4; i++) {
         rock.scaleX = rock.scaleY = .5;
@@ -47,9 +47,9 @@ function showGameArea() {
 }
 
 function updateVisuals() {
-    Bhealthbar.graphics.clear().beginFill('#00f').drawRect(100, 10, Bhealth, 10).endFill();
-      Rhealthbar.graphics.clear().beginFill('#f00').drawRect(100, 30, Rhealth, 10).endFill();
-        Ghealthbar.graphics.clear().beginFill('#0f0').drawRect(100, 50, Ghealth, 10).endFill();
+    Bhealthbar.graphics.clear().beginFill('#00f').drawRect(500, 10, Bhealth, 10).endFill();
+      Rhealthbar.graphics.clear().beginFill('#f00').drawRect(500, 30, Rhealth, 10).endFill();
+        Ghealthbar.graphics.clear().beginFill('#0f0').drawRect(500, 50, Ghealth, 10).endFill();
     if (Bhealth === 0||Rhealth === 0||Ghealth === 0) {
         rounds += 1;
        Bhealth =Ghealth =Rhealth = 100;
@@ -58,9 +58,10 @@ function updateVisuals() {
     if (rounds === 6) {
         GAMESTATE = "gameover";
         round = 0;
+        Rtotal=Btotal=Gtotal = 0;
 
     }
-    score.text = "Score:" + total;
+    score.text = "Red Score: " + Rtotal+" Blue Score: "+Btotal+" Green Score: "+Gtotal;
     round.text = "Round:" + rounds;
 
 }
@@ -80,7 +81,7 @@ function reset() {
     tankG.tanktop.y = tankG.tankbottom.y;
     health = 100;
 
-    total = 0;
+
     rockArray[0].x = 250
     rockArray[0].y = 200;
     rockArray[1].x = 250;
