@@ -555,14 +555,16 @@
          pt2 = collisionMethod(tankB.tankbullet, rockArray[1], 0);
          pt3 = collisionMethod(tankB.tankbullet, rockArray[2], 0);
          pt4 = collisionMethod(tankB.tankbullet, rockArray[3], 0);
+         pt5 = collisionMethod(tankB.tankbullet,tankR.tankbottom, 0);
+         pt6 = collisionMethod(tankB.tankbullet,tankG.tankbottom, 0);
 
          if (tankB.tankbullet.x < 0 || tankB.tankbullet.y < 0 || tankB.tankbullet.x > 750 || tankB.tankbullet.y > 500) {
              //             console.log("Reloaded");
              tankB.isShooting = false;
              stage.removeChild(tankB.tankbullet);
          }
-         if (pt1 || pt2 || pt3 || pt4) {
-             switch (pt1 || pt2 || pt3 || pt4) {
+         if (pt1 || pt2 || pt3 || pt4||pt5||pt6) {
+             switch (pt1 || pt2 || pt3 || pt4||pt5||pt6) {
              case pt1:
                  //                 console.log("hits")
                  tankB.isShooting = false;
@@ -589,6 +591,18 @@
                  rockArray[3].x = -50;
                  tankB.tankbullet.x = -50;
                  break;
+                 case pt5:
+                     //   stage.removeChild(rockArray[3]);
+                     stage.removeChild(tankB.tankbullet);
+                    health-=100;
+                     tankB.tankbullet.x = -50;
+                     break;
+                     case pt6:
+                         //   stage.removeChild(rockArray[3]);
+                         stage.removeChild(tankB.tankbullet);
+                           health-=100;
+                         tankB.tankbullet.x = -50;
+                         break;
              default:
                  break;
              }
@@ -606,14 +620,15 @@
          pt2 = collisionMethod(tankR.tankbullet, rockArray[1], 0);
          pt3 = collisionMethod(tankR.tankbullet, rockArray[2], 0);
          pt4 = collisionMethod(tankR.tankbullet, rockArray[3], 0);
-
+         pt5 = collisionMethod(tankR.tankbullet,tankB.tankbottom, 0);
+         pt6 = collisionMethod(tankR.tankbullet,tankG.tankbottom, 0);
          if (tankR.tankbullet.x < 0 || tankR.tankbullet.y < 0 || tankR.tankbullet.x > 750 || tankR.tankbullet.y > 500) {
              //             console.log("Reloaded");
              tankR.isShooting = false;
              stage.removeChild(tankR.tankbullet);
          }
-         if (pt1 || pt2 || pt3 || pt4) {
-             switch (pt1 || pt2 || pt3 || pt4) {
+         if (pt1 || pt2 || pt3 || pt4||pt5|pt6) {
+             switch (pt1 || pt2 || pt3 || pt4||pt5|pt6) {
              case pt1:
                  //                 console.log("hits")
                  tankR.isShooting = false;
@@ -640,6 +655,18 @@
                  rockArray[3].x = -50;
                  tankR.tankbullet.x = -50;
                  break;
+            case pt4:
+                     //   stage.removeChild(rockArray[3]);
+                     stage.removeChild(tankR.tankbullet);
+                    health-=100;
+                     tankR.tankbullet.x = -50;
+                     break;
+           case pt4:
+                 //   stage.removeChild(rockArray[3]);
+              stage.removeChild(tankR.tankbullet);
+        health-=100;
+             tankR.tankbullet.x = -50;
+                         break;
              default:
                  break;
              }
@@ -657,14 +684,15 @@
          pt2 = collisionMethod(tankG.tankbullet, rockArray[1], 0);
          pt3 = collisionMethod(tankG.tankbullet, rockArray[2], 0);
          pt4 = collisionMethod(tankG.tankbullet, rockArray[3], 0);
-
+         pt5 = collisionMethod(tankG.tankbullet,tankB.tankbottom, 0);
+         pt6 = collisionMethod(tankG.tankbullet,tankR.tankbottom, 0);
          if (tankG.tankbullet.x < 0 || tankG.tankbullet.y < 0 || tankG.tankbullet.x > 750 || tankG.tankbullet.y > 500) {
              //             console.log("Reloaded");
              tankG.isShooting = false;
              stage.removeChild(tankG.tankbullet);
          }
-         if (pt1 || pt2 || pt3 || pt4) {
-             switch (pt1 || pt2 || pt3 || pt4) {
+         if (pt1 || pt2 || pt3 || pt4||pt5||pt6) {
+             switch (pt1 || pt2 || pt3 || pt4||pt5||pt6) {
              case pt1:
                  //                 console.log("hits")
                  tankG.isShooting = false;
@@ -691,6 +719,18 @@
                  rockArray[3].x = -50;
                  tankG.tankbullet.x = -50;
                  break;
+             case pt5:
+                 //   stage.removeChild(rockArray[3]);
+               stage.removeChild(tankG.tankbullet);
+                 health-=100;
+                 tankG.tankbullet.x = -50;
+                 break;
+               case pt6:
+                   //   stage.removeChild(rockArray[3]);
+                   stage.removeChild(tankG.tankbullet);
+                   health-=100;
+                   tankG.tankbullet.x = -50;
+                         break;
              default:
                  break;
              }
