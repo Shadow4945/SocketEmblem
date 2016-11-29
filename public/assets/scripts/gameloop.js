@@ -1,7 +1,7 @@
 var total = 0;
 var rounds = 1;
 var winner;
-var health = 100;
+var Bhealth =Ghealth =Rhealth = 100;
 var rockArray = [];
 
 
@@ -20,9 +20,15 @@ function showGameArea() {
     round.x = 30;
     round.y = 40;
     stage.addChild(round)
-    healthbar = new createjs.Shape();
-    healthbar.graphics.beginFill('#f00').drawRect(100, 50, health, 10);
-    stage.addChild(healthbar);
+    Bhealthbar = new createjs.Shape();
+    Bhealthbar.graphics.beginFill('#00f').drawRect(100, 10, Bhealth, 10);
+    stage.addChild(Bhealthbar);
+    Rhealthbar = new createjs.Shape();
+    Rhealthbar.graphics.beginFill('#f00').drawRect(100, 30, Rhealth, 10);
+    stage.addChild(Rhealthbar);
+    Ghealthbar = new createjs.Shape();
+    Ghealthbar.graphics.beginFill('#0f0').drawRect(100, 50, Ghealth, 10);
+    stage.addChild(Ghealthbar);
     for (i = 0; i < 4; i++) {
         rock.scaleX = rock.scaleY = .5;
         rockArray.push(rock.clone());
@@ -41,10 +47,12 @@ function showGameArea() {
 }
 
 function updateVisuals() {
-    healthbar.graphics.clear().beginFill('#f00').drawRect(100, 50, health, 10).endFill();
-    if (health === 0) {
+    Bhealthbar.graphics.clear().beginFill('#00f').drawRect(100, 10, Bhealth, 10).endFill();
+      Rhealthbar.graphics.clear().beginFill('#f00').drawRect(100, 30, Rhealth, 10).endFill();
+        Ghealthbar.graphics.clear().beginFill('#0f0').drawRect(100, 50, Ghealth, 10).endFill();
+    if (Bhealth === 0||Rhealth === 0||Ghealth === 0) {
         rounds += 1;
-        health = 100;
+       Bhealth =Ghealth =Rhealth = 100;
         reset();
     }
     if (rounds === 6) {
