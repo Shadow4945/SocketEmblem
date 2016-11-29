@@ -593,13 +593,13 @@
                  case pt5:
                      //   stage.removeChild(rockArray[3]);
                      stage.removeChild(tankB.tankbullet);
-                    health-=100;
+                    Rhealth-=50;
                      tankB.tankbullet.x = -50;
                      break;
                      case pt6:
                          //   stage.removeChild(rockArray[3]);
                          stage.removeChild(tankB.tankbullet);
-                           health-=100;
+                           Ghealth-=50;
                          tankB.tankbullet.x = -50;
                          break;
              default:
@@ -654,16 +654,16 @@
                  rockArray[3].x = -50;
                  tankR.tankbullet.x = -50;
                  break;
-            case pt4:
+            case pt5:
                      //   stage.removeChild(rockArray[3]);
                      stage.removeChild(tankR.tankbullet);
-                    health-=100;
+                    Bhealth-=50;
                      tankR.tankbullet.x = -50;
                      break;
-           case pt4:
+           case pt6:
                  //   stage.removeChild(rockArray[3]);
               stage.removeChild(tankR.tankbullet);
-        health-=100;
+        Ghealth-=50;
              tankR.tankbullet.x = -50;
                          break;
              default:
@@ -721,13 +721,13 @@
              case pt5:
                  //   stage.removeChild(rockArray[3]);
                stage.removeChild(tankG.tankbullet);
-                 health-=100;
+                 Bhealth-=50;
                  tankG.tankbullet.x = -50;
                  break;
                case pt6:
                    //   stage.removeChild(rockArray[3]);
                    stage.removeChild(tankG.tankbullet);
-                   health-=100;
+                   Rhealth-=50;
                    tankG.tankbullet.x = -50;
                          break;
              default:
