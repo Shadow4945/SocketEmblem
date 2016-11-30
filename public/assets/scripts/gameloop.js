@@ -1,7 +1,7 @@
 var Rtotal=Btotal=Gtotal = 0;
 var rounds = 1;
 var winner;
-var Bhealth =Ghealth =Rhealth = 100;
+var Bhealth =Ghealth =Rhealth = 200;
 var rockArray = [];
 
 
@@ -52,7 +52,7 @@ function updateVisuals() {
         Ghealthbar.graphics.clear().beginFill('#0f0').drawRect(500, 50, Ghealth, 10).endFill();
     if (Bhealth === 0||Rhealth === 0||Ghealth === 0) {
         rounds += 1;
-       Bhealth =Ghealth =Rhealth = 100;
+       Bhealth =Ghealth =Rhealth = 200;
         reset();
     }
     if (rounds === 6) {

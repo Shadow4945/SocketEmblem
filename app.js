@@ -187,8 +187,15 @@ io.on("connection", function (socket) {
 
     socket.on("shoot", function (data) {
         //        console.log("tankrotate: "+ data.tankRotate);
-        socket.broadcast.to('main room').emit("shootIt",{
+        socket.broadcast.to('main room').emit("shootIt", {
             shootId: data.shootId
+        });
+    });
+
+    socket.on("tankHit", function (data) {
+        socket.emit("tankHasBeenHit", {
+            tankshootingColor: data.tankshootingColor,
+            tankshotColor: data.tankshotColor
         });
     });
 
@@ -219,11 +226,11 @@ io.on("connection", function (socket) {
         });
     }
 
-    socket.on('updateOthers', function(newNumInGame){
+    socket.on('updateOthers', function (newNumInGame) {
         io.to(socket.room).emit('updatePeopleInGame', newNumInGame);
     });
-        
-    
+
+
 
 });
 

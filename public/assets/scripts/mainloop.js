@@ -50,7 +50,6 @@
          titleScreen.visible = true;
          instructionScreen.visible = false;
          gamearea.visible = false;
-
          btnPlay.visible = true;
          btnIns.visible = true;
          btnTitle.visible = false;
@@ -158,13 +157,13 @@
      stage.update();
  }
 
- socket.on('recieve clients', function () {
-     var dataToSend = {
-         tankB,
-         rockArray
-     }
-     socket.emit('sendBack', dataToSend);
- });
+ // socket.on('recieve clients', function () {
+ //     var dataToSend = {
+ //         tankB,
+ //         rockArray
+ //     }
+ //     socket.emit('sendBack', dataToSend);
+ // });
 
  socket.on('client data', function (dataRecieved) {
      console.log("This is " + dataRecieved);
@@ -179,10 +178,10 @@
 
  function movement() {
 
-// tt1 = collisionMethod(tankB.tankBbottom, rockArray[0], 0);
-// tt2 = collisionMethod(tankB.tankBbottom, rockArray[1], 0);
-// tt3 = collisionMethod(tankB.tankBbottom, rockArray[2], 0);
-// tt4 = collisionMethod(tankB.tankBbottom, rockArray[3], 0);
+     // tt1 = collisionMethod(tankB.tankBbottom, rockArray[0], 0);
+     // tt2 = collisionMethod(tankB.tankBbottom, rockArray[1], 0);
+     // tt3 = collisionMethod(tankB.tankBbottom, rockArray[2], 0);
+     // tt4 = collisionMethod(tankB.tankBbottom, rockArray[3], 0);
 
      if (rotateTopRight === true) {
          if (playerId === 1) {
@@ -300,26 +299,7 @@
              });
          }
      } else if (moveBackward === true) {
-         //         if (playerId === 1) {
-         //             tankB.tankbottom.regX = 0;
-         //             tankB.tankbottom.regY = 0;
-         //             tankB.tankPoint = tankB.tankbottom.localToGlobal(0, 3);
-         //             tankB.tankbottom.y += (tankB.tankPoint.y - tankB.tankbottom.y);
-         //             tankB.tankbottom.x += (tankB.tankPoint.x - tankB.tankbottom.x);
-         //             tankB.tankbottom.regX = 21.5;
-         //             tankB.tankbottom.regY = 24;
-         //
-         //             tankB.tankTopPoint = tankB.tankbottom.localToGlobal(0, 1);
-         //             tankB.tanktop.y = tankB.tankbottom.y;
-         //             tankB.tanktop.x = tankB.tankbottom.x;
-         //
-         //             socket.emit("sendTankMove", {
-         //                 tankX: tankB.tankbottom.x,
-         //                 tankY: tankB.tankbottom.y,
-         //                 tankTopX: tankB.tanktop.x,
-         //                 tankTopY: tankB.tanktop.y
-         //             });
-         //         }
+
 
          if (playerId === 1) {
              tankB.tankbottom.regX = 0;
@@ -386,6 +366,7 @@
              });
          }
      }
+
      if (tankB.tankbottom.x <= 1) {
          tankB.tankbottom.x = 1;
          tankB.tanktop.x = tankB.tankbottom.x;
@@ -555,16 +536,16 @@
          pt2 = collisionMethod(tankB.tankbullet, rockArray[1], 0);
          pt3 = collisionMethod(tankB.tankbullet, rockArray[2], 0);
          pt4 = collisionMethod(tankB.tankbullet, rockArray[3], 0);
-         pt5 = collisionMethod(tankB.tankbullet,tankR.tankbottom, 0);
-         pt6 = collisionMethod(tankB.tankbullet,tankG.tankbottom, 0);
+         pt5 = collisionMethod(tankB.tankbullet, tankR.tankbottom, 0);
+         pt6 = collisionMethod(tankB.tankbullet, tankG.tankbottom, 0);
 
          if (tankB.tankbullet.x < 0 || tankB.tankbullet.y < 0 || tankB.tankbullet.x > 750 || tankB.tankbullet.y > 500) {
              //             console.log("Reloaded");
              tankB.isShooting = false;
              stage.removeChild(tankB.tankbullet);
          }
-         if (pt1 || pt2 || pt3 || pt4||pt5||pt6) {
-             switch (pt1 || pt2 || pt3 || pt4||pt5||pt6) {
+         if (pt1 || pt2 || pt3 || pt4 || pt5 || pt6) {
+             switch (pt1 || pt2 || pt3 || pt4 || pt5 || pt6) {
              case pt1:
                  //                 console.log("hits")
                  tankB.isShooting = false;
@@ -591,20 +572,28 @@
                  rockArray[3].x = -50;
                  tankB.tankbullet.x = -50;
                  break;
-                 case pt5:
-                     //   stage.removeChild(rockArray[3]);
-                     stage.removeChild(tankB.tankbullet);
-                     Btotal+=10;
-                    Rhealth-=50;
-                     tankB.tankbullet.x = -50;
-                     break;
-                     case pt6:
-                         //   stage.removeChild(rockArray[3]);
-                         stage.removeChild(tankB.tankbullet);
-                         Btotal+=10;
-                           Ghealth-=50;
-                         tankB.tankbullet.x = -50;
-                         break;
+             case pt5:
+                 //   stage.removeChild(rockArray[3]);
+                 stage.removeChild(tankB.tankbullet);
+                 socket.emit("tankHit", {
+                     tankshootingColor: "blue",
+                     tankshotColor: "red"
+                 });
+                 //                 Btotal += 10;
+                 //                 Rhealth -= 50;
+                 tankB.tankbullet.x = -50;
+                 break;
+             case pt6:
+                 //   stage.removeChild(rockArray[3]);
+                 stage.removeChild(tankB.tankbullet);
+                 socket.emit("tankHit", {
+                     tankshootingColor: "blue",
+                     tankshotColor: "green"
+                 });
+                 //                 Btotal += 10;
+                 //                 Ghealth -= 50;
+                 tankB.tankbullet.x = -50;
+                 break;
              default:
                  break;
              }
@@ -622,15 +611,15 @@
          pt2 = collisionMethod(tankR.tankbullet, rockArray[1], 0);
          pt3 = collisionMethod(tankR.tankbullet, rockArray[2], 0);
          pt4 = collisionMethod(tankR.tankbullet, rockArray[3], 0);
-         pt5 = collisionMethod(tankR.tankbullet,tankB.tankbottom, 0);
-         pt6 = collisionMethod(tankR.tankbullet,tankG.tankbottom, 0);
+         pt5 = collisionMethod(tankR.tankbullet, tankB.tankbottom, 0);
+         pt6 = collisionMethod(tankR.tankbullet, tankG.tankbottom, 0);
          if (tankR.tankbullet.x < 0 || tankR.tankbullet.y < 0 || tankR.tankbullet.x > 750 || tankR.tankbullet.y > 500) {
              //             console.log("Reloaded");
              tankR.isShooting = false;
              stage.removeChild(tankR.tankbullet);
          }
-         if (pt1 || pt2 || pt3 || pt4||pt5||pt6) {
-             switch (pt1 || pt2 || pt3 || pt4||pt5||pt6) {
+         if (pt1 || pt2 || pt3 || pt4 || pt5 || pt6) {
+             switch (pt1 || pt2 || pt3 || pt4 || pt5 || pt6) {
              case pt1:
                  //                 console.log("hits")
                  tankR.isShooting = false;
@@ -657,20 +646,28 @@
                  rockArray[3].x = -50;
                  tankR.tankbullet.x = -50;
                  break;
-            case pt5:
-                     //   stage.removeChild(rockArray[3]);
-                     stage.removeChild(tankR.tankbullet);
-                    Bhealth-=50;
-                    Rtotal+=10;
-                     tankR.tankbullet.x = -50;
-                     break;
-           case pt6:
+             case pt5:
                  //   stage.removeChild(rockArray[3]);
-              stage.removeChild(tankR.tankbullet);
-        Ghealth-=50;
-        Rtotal+=10;
-             tankR.tankbullet.x = -50;
-                         break;
+                 stage.removeChild(tankR.tankbullet);
+                 socket.emit("tankHit", {
+                     tankshootingColor: "red",
+                     tankshotColor: "blue"
+                 });
+                 //                 Bhealth -= 50;
+                 //                 Rtotal += 10;
+                 tankR.tankbullet.x = -50;
+                 break;
+             case pt6:
+                 //   stage.removeChild(rockArray[3]);
+                 stage.removeChild(tankR.tankbullet);
+                 socket.emit("tankHit", {
+                     tankshootingColor: "red",
+                     tankshotColor: "green"
+                 });
+                 //                 Ghealth -= 50;
+                 //                 Rtotal += 10;
+                 tankR.tankbullet.x = -50;
+                 break;
              default:
                  break;
              }
@@ -688,15 +685,15 @@
          pt2 = collisionMethod(tankG.tankbullet, rockArray[1], 0);
          pt3 = collisionMethod(tankG.tankbullet, rockArray[2], 0);
          pt4 = collisionMethod(tankG.tankbullet, rockArray[3], 0);
-         pt5 = collisionMethod(tankG.tankbullet,tankB.tankbottom, 0);
-         pt6 = collisionMethod(tankG.tankbullet,tankR.tankbottom, 0);
+         pt5 = collisionMethod(tankG.tankbullet, tankB.tankbottom, 0);
+         pt6 = collisionMethod(tankG.tankbullet, tankR.tankbottom, 0);
          if (tankG.tankbullet.x < 0 || tankG.tankbullet.y < 0 || tankG.tankbullet.x > 750 || tankG.tankbullet.y > 500) {
              //             console.log("Reloaded");
              tankG.isShooting = false;
              stage.removeChild(tankG.tankbullet);
          }
-         if (pt1 || pt2 || pt3 || pt4||pt5||pt6) {
-             switch (pt1 || pt2 || pt3 || pt4||pt5||pt6) {
+         if (pt1 || pt2 || pt3 || pt4 || pt5 || pt6) {
+             switch (pt1 || pt2 || pt3 || pt4 || pt5 || pt6) {
              case pt1:
                  //                 console.log("hits")
                  tankG.isShooting = false;
@@ -725,18 +722,26 @@
                  break;
              case pt5:
                  //   stage.removeChild(rockArray[3]);
-               stage.removeChild(tankG.tankbullet);
-                 Bhealth-=50;
-                 Gtotal+=10;
+                 stage.removeChild(tankG.tankbullet);
+                 socket.emit("tankHit", {
+                     tankshootingColor: "green",
+                     tankshotColor: "blue"
+                 });
+                 //                 Bhealth -= 50;
+                 //                 Gtotal += 10;
                  tankG.tankbullet.x = -50;
                  break;
-               case pt6:
-                   //   stage.removeChild(rockArray[3]);
-                   stage.removeChild(tankG.tankbullet);
-                   Rhealth-=50;
-                   Gtotal+=10;
-                   tankG.tankbullet.x = -50;
-                         break;
+             case pt6:
+                 //   stage.removeChild(rockArray[3]);
+                 stage.removeChild(tankG.tankbullet);
+                 socket.emit("tankHit", {
+                     tankshootingColor: "green",
+                     tankshotColor: "red"
+                 });
+                 //                 Rhealth -= 50;
+                 //                 Gtotal += 10;
+                 tankG.tankbullet.x = -50;
+                 break;
              default:
                  break;
              }
@@ -807,4 +812,33 @@
 
  socket.on("shootIt", function (data) {
      shoot(data.shootId);
+ });
+
+ socket.on("tankHasBeenHit", function (data) {
+//     console.log(data.tankshootingColor);
+     if (data.tankshootingColor === "blue") {
+         Btotal += 10;
+         tankB.tankbullet.x = -50;
+         if (data.tankshotColor === "red") {
+             Rhealth -= 50;
+         } else {
+             Ghealth -= 50;
+         }
+     } else if (data.tankshootingColor === "red") {
+         Rtotal += 10;
+         tankR.tankbullet.x = -50;
+         if (data.tankshotColor === "blue") {
+             Bhealth -= 50;
+         } else {
+             Ghealth -= 50;
+         }
+     } else {
+         Gtotal += 10;
+         tankG.tankbullet.x = -50;
+         if (data.tankshotColor === "blue") {
+             Bhealth -= 50;
+         } else {
+             Rhealth -= 50;
+         }
+     }
  });
