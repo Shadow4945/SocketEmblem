@@ -21,11 +21,7 @@ function timerStart() {
     }
     if (time >= 60) {
         whole = tenth = seconds = time = 0;
-        //rounds++;
-        total+=50;
-        }
-        if(total==200){
 
-        GAMESTATE = 'gameover';
         }
+        
 }

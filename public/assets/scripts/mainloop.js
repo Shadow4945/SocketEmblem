@@ -68,7 +68,7 @@
          rockArray[2].visible = false;
          rockArray[3].visible = false;
          score.visible = false;
-        
+
          play.text = "Waiting for " + (3 - peopleInGame) + " players...";
          if (peopleInGame >= 3) {
              GAMESTATE = "startgame";
@@ -594,12 +594,14 @@
                  case pt5:
                      //   stage.removeChild(rockArray[3]);
                      stage.removeChild(tankB.tankbullet);
+                     Btotal+=10;
                     Rhealth-=50;
                      tankB.tankbullet.x = -50;
                      break;
                      case pt6:
                          //   stage.removeChild(rockArray[3]);
                          stage.removeChild(tankB.tankbullet);
+                         Btotal+=10;
                            Ghealth-=50;
                          tankB.tankbullet.x = -50;
                          break;
@@ -627,8 +629,8 @@
              tankR.isShooting = false;
              stage.removeChild(tankR.tankbullet);
          }
-         if (pt1 || pt2 || pt3 || pt4||pt5|pt6) {
-             switch (pt1 || pt2 || pt3 || pt4||pt5|pt6) {
+         if (pt1 || pt2 || pt3 || pt4||pt5||pt6) {
+             switch (pt1 || pt2 || pt3 || pt4||pt5||pt6) {
              case pt1:
                  //                 console.log("hits")
                  tankR.isShooting = false;
@@ -659,12 +661,14 @@
                      //   stage.removeChild(rockArray[3]);
                      stage.removeChild(tankR.tankbullet);
                     Bhealth-=50;
+                    Rtotal+=10;
                      tankR.tankbullet.x = -50;
                      break;
            case pt6:
                  //   stage.removeChild(rockArray[3]);
               stage.removeChild(tankR.tankbullet);
         Ghealth-=50;
+        Rtotal+=10;
              tankR.tankbullet.x = -50;
                          break;
              default:
@@ -723,12 +727,14 @@
                  //   stage.removeChild(rockArray[3]);
                stage.removeChild(tankG.tankbullet);
                  Bhealth-=50;
+                 Gtotal+=10;
                  tankG.tankbullet.x = -50;
                  break;
                case pt6:
                    //   stage.removeChild(rockArray[3]);
                    stage.removeChild(tankG.tankbullet);
                    Rhealth-=50;
+                   Gtotal+=10;
                    tankG.tankbullet.x = -50;
                          break;
              default:
