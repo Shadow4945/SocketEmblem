@@ -1,7 +1,7 @@
 var Rtotal=Btotal=Gtotal = 0;
 var rounds = 1;
 var winner;
-var Bhealth =Ghealth =Rhealth = 100;
+var Bhealth =Ghealth =Rhealth = 200;
 var rockArray = [];
 
 
@@ -52,7 +52,7 @@ function updateVisuals() {
         Ghealthbar.graphics.clear().beginFill('#0f0').drawRect(500, 50, Ghealth, 10).endFill();
     if (Bhealth === 0||Rhealth === 0||Ghealth === 0) {
         rounds += 1;
-       Bhealth =Ghealth =Rhealth = 100;
+       Bhealth =Ghealth =Rhealth = 200;
         reset();
     }
     if (rounds === 6) {
@@ -71,13 +71,19 @@ function reset() {
     peopleInGame = 0;
     tankB.tankbottom.x = 100;
     tankB.tankbottom.y = 100;
+    tankB.tankbottom.rotation = 0;
+    tankB.tanktop.rotation = 0;
     tankB.tanktop.x = tankB.tanktop.y = tankB.tankbottom.x;
     tankR.tankbottom.x = 400;
-    tankR.tankbottom.y = 100;
+    tankR.tankbottom.y = 100; 
+    tankR.tankbottom.rotation = 0;
+    tankR.tanktop.rotation = 0;
     tankR.tanktop.x = tankR.tankbottom.x;
     tankR.tanktop.y = tankR.tankbottom.y;
     tankG.tankbottom.x = 700;
     tankG.tankbottom.y = 100;
+    tankG.tankbottom.rotation = 0;
+    tankG.tanktop.rotation = 0;
     tankG.tanktop.x = tankG.tankbottom.x;
     tankG.tanktop.y = tankG.tankbottom.y;
     health = 100;
