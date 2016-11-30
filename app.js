@@ -41,6 +41,7 @@ io.on("connection", function (socket) {
         socket.join('main room');
         console.log(io.sockets.adapter.rooms['main room']);
         peopleInGame += 1;
+        
     }
     console.log(socket.id + " yo go and playe num " + peopleInGame);
 
@@ -65,9 +66,9 @@ io.on("connection", function (socket) {
     // }
 
     socket.nickname = 'Guest';
-    io.to(socket.room).emit('updatePeopleInGame', peopleInGame);
+    // io.to(socket.room).emit('updatePeopleInGame', peopleInGame);
     socket.on("disconnect", function () {
-        peopleInGame -= 1;
+        //peopleInGame -= 1;
         clients.splice(clients.indexOf(socket.nickname), 1);
         console.log(clients.indexOf(socket.nickname) + " user has disconnected");
         //io.to(socket.room).emit('list clients', clients);
@@ -82,7 +83,7 @@ io.on("connection", function (socket) {
                 io.sockets.connected[peopleInQueue[0]].emit('move room', {
                     message: "Leaving room"
                 });
-                peopleInGame += 1;
+                
             }
         } catch (err) {
             console.log("No users in extra room");

@@ -2,13 +2,20 @@ function buttons() {
     btnPlay = new createjs.Shape();
     btnPlay.graphics.beginFill("#447").drawRect(200, 353, 150, 30);
     stage.addChild(btnPlay);
-    play = new createjs.Text("Waiting for 3 players...", "12px Arial", "#ffffff"); //creates text object
+    play = new createjs.Text("Play", "12px Arial", "#ffffff"); //creates text object
     play.x = 220; //positions the text
     play.y = 360;
     stage.addChild(play); //adds the text object to the stage
-    // btnPlay.on("click", function (evt) {
-    //     GAMESTATE = "startgame";
-    // });
+    btnPlay.on("click", function (evt) {
+        peopleInGame += 1;
+        GAMESTATE = "waiting";
+    });
+    
+    waitingSign = new createjs.Text("Play", "12px Arial", "#ffffff"); //creates text object
+    waitingSign.x = 220; //positions the text
+    waitingSign.y = 360;
+    stage.addChild(waitingSign);
+
     btnIns = new createjs.Shape();
     btnIns.graphics.beginFill("#447").drawRect(200, 400, 100, 30);
     stage.addChild(btnIns);
@@ -27,7 +34,6 @@ function buttons() {
     Title.y = 410;
     stage.addChild(Title); //adds the text object to the stage
     btnTitle.on("click", function (evt) {
-        peopleInGame += 1;
         GAMESTATE = "started";
     });
     btnMute = new createjs.Shape();

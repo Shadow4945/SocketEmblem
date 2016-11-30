@@ -279,7 +279,10 @@ $('document').ready(function () {
     });
 
     socket.on('updatePeopleInGame', function (newNum) {
-        peopleInGame = newNum;
+        console.log(newNum);
+        if(peopleInGame <= newNum){
+            peopleInGame = newNum;
+        }
     });
 
 
