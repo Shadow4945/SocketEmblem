@@ -57,6 +57,7 @@ function updateVisuals() {
     }
     if (rounds === 6) {
         GAMESTATE = "gameover";
+        Bhealth =Ghealth =Rhealth = 100;
         round = 0;
         Rtotal=Btotal=Gtotal = 0;
 

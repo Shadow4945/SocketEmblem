@@ -94,6 +94,12 @@ manifest = [
 }, {
         src: "images/Rock.png",
         id: "Rock"
+}, {
+        src: "sounds/Sniper_Rifle-Kibblesbob-2053709564.mp3",
+        id: "shootSound"
+}, {
+        src: "sounds/Hitman.mp3",
+        id: "music"
 }];
 
 //This displays the sprites on the screen. Notice that I am putting clones of the blocks into an array. This is a really efficient way to duplicate sprite content and the preferred method.
