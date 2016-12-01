@@ -43,6 +43,7 @@ io.on("connection", function (socket) {
         peopleInGame += 1;
         
     }
+    //Super special commit comment
     console.log(socket.id + " yo go and playe num " + peopleInGame);
 
     socket.join("playerRoom" + peopleInGame);
