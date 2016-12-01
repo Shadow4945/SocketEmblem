@@ -184,7 +184,7 @@ function loop() {
             rockArray[2].visible = false;
             rockArray[3].visible = false;
 
-            rounds = 1;
+           
             break;
     }
     stage.update();

@@ -56,11 +56,16 @@ function updateVisuals() {
         reset();
     }
     if (rounds === 6) {
-        GAMESTATE = "gameover";
-        Bhealth =Ghealth =Rhealth = 100;
-        round = 0;
+        Bhealth =Ghealth =Rhealth = 200;
+        console.log("Round is: " + round);
+        rounds = 1;
+        round.text = "Round:" + rounds;
+        console.log("Round is: " + round);
+        
         Rtotal=Btotal=Gtotal = 0;
-
+        stage.update();
+        GAMESTATE = "gameover";
+        
     }
     score.text = "Red Score: " + Rtotal+" Blue Score: "+Btotal+" Green Score: "+Gtotal;
     round.text = "Round:" + rounds;
