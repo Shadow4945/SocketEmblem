@@ -68,11 +68,12 @@ io.on("connection", function (socket) {
     socket.nickname = 'Guest';
     // io.to(socket.room).emit('updatePeopleInGame', peopleInGame);
     socket.on("disconnect", function () {
-        //peopleInGame -= 1;
+        peopleInGame -= 1;
         clients.splice(clients.indexOf(socket.nickname), 1);
         console.log(clients.indexOf(socket.nickname) + " user has disconnected");
         //io.to(socket.room).emit('list clients', clients);
         io.to(socket.room).emit('user left', socket.nickname);
+        console.log(peopleInGame);
         console.log(peopleInGame);
 
         //Try catch in case there are no people in the extra room

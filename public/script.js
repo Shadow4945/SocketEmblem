@@ -319,6 +319,7 @@ function getRandomInt(min, max) {
 }
 
 function main() {
+    localStorage.setItem("highScore", 0);
     setupCanvas();
     loadFiles();
 
