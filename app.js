@@ -5,7 +5,7 @@ var WIDTH = 800;
 var HEIGHT = 500;
 var BALL_SPEED = 10;
 var idNum = 0;
-
+var portArray = [3, 2, 1];
 
 
 var express = require('express'),
@@ -22,9 +22,13 @@ app.get('/', function (req, res) {
 
 io.on("connection", function (socket) {
     console.log(socket.id + " user has connected");
+    console.log(portArray);
+    socket.ruben = portArray.pop();
+    console.log(portArray);
+
+    console.log("Main Room and player id:" + socket.playerId);
     try {
         if (io.sockets.adapter.rooms['main room'].length < 3) {
-            console.log("Main Room");
             socket.room = 'main room';
             socket.join('main room');
             console.log(io.sockets.adapter.rooms['main room']);
@@ -41,14 +45,14 @@ io.on("connection", function (socket) {
         socket.join('main room');
         console.log(io.sockets.adapter.rooms['main room']);
         peopleInGame += 1;
-        
+
     }
     //Super special commit comment
-    console.log(socket.id + " yo go and playe num " + peopleInGame);
+    console.log(socket.id + " yo go and player num " + peopleInGame);
 
     socket.join("playerRoom" + peopleInGame);
     io.to("playerRoom" + peopleInGame).emit("getPlayerId", {
-        userId: peopleInGame
+        userId: socket.ruben
     });
 
 
@@ -73,12 +77,15 @@ io.on("connection", function (socket) {
         peopleInGame -= 1;
         clients.splice(clients.indexOf(socket.nickname), 1);
         console.log(clients.indexOf(socket.nickname) + " user has disconnected");
+        console.log("disconnect player num" + socket.playerId);
+        console.log(portArray);
+        portArray.push(socket.ruben);
+        console.log(portArray);
         //io.to(socket.room).emit('list clients', clients);
-        if(socket.room === 'main room'){
+        if (socket.room === 'main room') {
             isMainRoom = true;
         }
         io.to(socket.room).emit('user left', socket.nickname, isMainRoom);
-        console.log(peopleInGame);
         console.log(peopleInGame);
 
         //Try catch in case there are no people in the extra room
@@ -89,7 +96,7 @@ io.on("connection", function (socket) {
                 io.sockets.connected[peopleInQueue[0]].emit('move room', {
                     message: "Leaving room"
                 });
-                
+
             }
         } catch (err) {
             console.log("No users in extra room");

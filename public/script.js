@@ -6,13 +6,12 @@ var cacheVersion = date.getTime();
 var selectedTank = 1;
 var tankName = '';
 var mainRoom = false;
-var playerId = null;
 var socket = io();
 peopleInGame = 0;
 
 socket.on('getPlayerId', function (data) {
     playerId = data.userId;
-    //        console.log("getplayerid: "+playerId);
+    console.log("getplayerid: " + playerId);
 });
 
 
@@ -265,7 +264,7 @@ $('document').ready(function () {
 
 
     socket.on('user left', function (data, isMainRoom) {
-        if(isMainRoom){
+        if (isMainRoom) {
             peopleInGame -= 1;
         }
         socket.playerId = null;
@@ -291,7 +290,7 @@ $('document').ready(function () {
 
     socket.on('updatePeopleInGame', function (newNum) {
         console.log(newNum);
-        if(peopleInGame <= newNum){
+        if (peopleInGame <= newNum) {
             peopleInGame = newNum;
         }
     });
