@@ -12,11 +12,16 @@ function showGameArea() {
     winner = new createjs.Text("Winner is " + player.name, "20px Arial", "#ffffff"); //creates text object
     winner.x = 400;
     winner.y = 250;
-    stage.addChild(winner)
+
+    playerHighscore = new createjs.Text('Your personal highscore in this game is ' + localStorage.getItem("highScore"), "20px Arial", "#ffffff");
+    playerHighscore.x = 100;
+    playerHighscore.y = 280;
+    stage.addChild(playerHighscore);
+    stage.addChild(winner);
     stage.addChild(gamearea);
     score = new createjs.Text("Red Score: " + Rtotal + " Blue Score: " + Btotal + " Green Score: " + Gtotal, "12px Arial", "#ffffff"); //creates text object
     score.x = score.y = 30;
-    
+
     stage.addChild(score);
     round = new createjs.Text("Round: " + rounds, "12px Arial", "#ffffff"); //creates text object
     round.x = 30;
@@ -58,21 +63,44 @@ function updateVisuals() {
         reset();
     }
     if (rounds === 6) {
-        Bhealth =Ghealth =Rhealth = 200;
+        Bhealth = Ghealth = Rhealth = 200;
         console.log("Round is: " + round);
         rounds = 1;
         round.text = "Round:" + rounds;
         console.log("Round is: " + round);
-        if(Rtotal>Gtotal&&Rtotal>Btotal){
-          winner.text="Red wins with " + Rtotal;
+        if (Rtotal > Gtotal && Rtotal > Btotal) {
+            winner.text = "Red wins with " + Rtotal;
         }
-        if(Gtotal>Rtotal&&Gtotal>Btotal){
-          winner.text="Green wins with " + Gtotal;
+        if (Gtotal > Rtotal && Gtotal > Btotal) {
+            winner.text = "Green wins with " + Gtotal;
         }
-        if(Btotal>Gtotal&&Btotal>Rtotal){
-          winner.text="Blue wins with " + Btotal;
+        if (Btotal > Gtotal && Btotal > Rtotal) {
+            winner.text = "Blue wins with " + Btotal;
         }
-        Rtotal=Btotal=Gtotal = 0;
+
+        if (typeof (Storage) !== "undefined") {
+
+            if (playerId === 1) {
+                if (localStorage.highScore <= Btotal) {
+                    localStorage.highScore = Btotal;
+                    console.log("Yo Yo Blue guy");
+                }
+            } else if (playerId === 2) {
+                if (localStorage.highScore <= Rtotal) {
+                    localStorage.highScore = Rtotal;
+                    console.log("Yo Yo Red guy");
+                }
+            } else if (playerId === 3) {
+                if (localStorage.highScore <= Gtotal) {
+                    localStorage.highScore = Gtotal;
+                    console.log("Yo Yo Green guy");
+                }
+            }
+        } else {
+            console.log('Sorry! No Web Storage support..');
+        }
+
+        Rtotal = Btotal = Gtotal = 0;
         stage.update();
         GAMESTATE = "gameover";
         Bhealth = Ghealth = Rhealth = 100;
@@ -83,6 +111,7 @@ function updateVisuals() {
     }
     score.text = "Red Score: " + Rtotal + " Blue Score: " + Btotal + " Green Score: " + Gtotal;
     round.text = "Round:" + rounds;
+    playerHighscore.text = 'Your personal highscore in this game is ' + localStorage.getItem("highScore");
 
 }
 
