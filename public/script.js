@@ -71,7 +71,7 @@ manifest = [
         src: "images/tankGbullet.png",
         id: "tankGbullet"
     }, {
-        src: "images/title.jpg",
+        src: "images/title.png",
         id: "title"
     }
      , {
