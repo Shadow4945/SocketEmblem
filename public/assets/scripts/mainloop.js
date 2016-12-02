@@ -170,8 +170,9 @@ function loop() {
             instructionScreen.visible = false;
             gamearea.visible = false;
             gameover.visible = true;
-
-
+            Bhealthbar.visible=false;
+            Ghealthbar.visible=false;
+            Rhealthbar.visible=false;
             btnIns.visible = false;
             btnTitle.visible = true;
             Title.visible = true;
@@ -184,7 +185,7 @@ function loop() {
             rockArray[2].visible = false;
             rockArray[3].visible = false;
 
-           
+
             break;
     }
     stage.update();

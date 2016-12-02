@@ -61,11 +61,19 @@ function updateVisuals() {
         rounds = 1;
         round.text = "Round:" + rounds;
         console.log("Round is: " + round);
-        
+        if(Rtotal>Gtotal&&Rtotal>Btotal){
+          winner.text="Red wins with " + Rtotal;
+        }
+        if(Gtotal>Rtotal&&Gtotal>Btotal){
+          winner.text="Green wins with " + Gtotal;
+        }
+        if(Btotal>Gtotal&&Btotal>Rtotal){
+          winner.text="Blue wins with " + Btotal;
+        }
         Rtotal=Btotal=Gtotal = 0;
         stage.update();
         GAMESTATE = "gameover";
-        
+
     }
     score.text = "Red Score: " + Rtotal+" Blue Score: "+Btotal+" Green Score: "+Gtotal;
     round.text = "Round:" + rounds;
@@ -80,7 +88,7 @@ function reset() {
     tankB.tanktop.rotation = 0;
     tankB.tanktop.x = tankB.tanktop.y = tankB.tankbottom.x;
     tankR.tankbottom.x = 400;
-    tankR.tankbottom.y = 100; 
+    tankR.tankbottom.y = 100;
     tankR.tankbottom.rotation = 0;
     tankR.tanktop.rotation = 0;
     tankR.tanktop.x = tankR.tankbottom.x;
