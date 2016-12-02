@@ -8,6 +8,7 @@ function buttons() {
     stage.addChild(play); //adds the text object to the stage
     btnPlay.on("click", function (evt) {
         peopleInGame += 1;
+        socket.emit('checkPorts');
         GAMESTATE = "waiting";
     });
     

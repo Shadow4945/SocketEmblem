@@ -26,7 +26,7 @@ io.on("connection", function (socket) {
     socket.ruben = portArray.pop();
     console.log(portArray);
 
-    console.log("Main Room and player id:" + socket.playerId);
+    console.log("Main Room and player id:" + socket.ruben);
     try {
         if (io.sockets.adapter.rooms['main room'].length < 3) {
             socket.room = 'main room';
@@ -77,13 +77,14 @@ io.on("connection", function (socket) {
         peopleInGame -= 1;
         clients.splice(clients.indexOf(socket.nickname), 1);
         console.log(clients.indexOf(socket.nickname) + " user has disconnected");
-        console.log("disconnect player num" + socket.playerId);
-        console.log(portArray);
-        portArray.push(socket.ruben);
-        console.log(portArray);
+
         //io.to(socket.room).emit('list clients', clients);
         if (socket.room === 'main room') {
             isMainRoom = true;
+            console.log("disconnect player num: " + socket.ruben);
+            console.log(portArray);
+            portArray.push(socket.ruben);
+            console.log(portArray);
         }
         io.to(socket.room).emit('user left', socket.nickname, isMainRoom);
         console.log(peopleInGame);
@@ -242,6 +243,12 @@ io.on("connection", function (socket) {
 
     socket.on('updateOthers', function (newNumInGame) {
         io.to(socket.room).emit('updatePeopleInGame', newNumInGame);
+    });
+    
+    socket.on('checkPorts', function () {
+        io.to(socket.room).emit('givePortArrayLength', {
+            length: portArray.length
+        });
     });
 
 

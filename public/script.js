@@ -267,7 +267,7 @@ $('document').ready(function () {
         if (isMainRoom) {
             peopleInGame -= 1;
         }
-        socket.playerId = null;
+//        socket.playerId = null;
         $("#messages").prepend($('<li>').text(data + " has left."));
     });
 
@@ -296,8 +296,9 @@ $('document').ready(function () {
     });
 
 
-
-
+    socket.on('givePortArrayLength', function (data){
+       emptyPortArrayLength = data.length; 
+    });
 
 });
 
