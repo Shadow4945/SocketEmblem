@@ -256,6 +256,7 @@ $('document').ready(function () {
         //            playerId: id.userId
         //        });
         $("#messages").prepend($('<li>').text(data + " has joined."));
+        player.name = data;
         mainRoom = isMainRoom;
         if (mainRoom) {
             $('#game').show();
@@ -263,7 +264,11 @@ $('document').ready(function () {
     });
 
 
-    socket.on('user left', function (data) {
+    socket.on('user left', function (data, isMainRoom) {
+        if(isMainRoom){
+            peopleInGame -= 1;
+        }
+        socket.playerId = null;
         $("#messages").prepend($('<li>').text(data + " has left."));
     });
 

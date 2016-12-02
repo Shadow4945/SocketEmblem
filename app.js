@@ -43,6 +43,7 @@ io.on("connection", function (socket) {
         peopleInGame += 1;
         
     }
+    //Super special commit comment
     console.log(socket.id + " yo go and playe num " + peopleInGame);
 
     socket.join("playerRoom" + peopleInGame);
@@ -68,11 +69,15 @@ io.on("connection", function (socket) {
     socket.nickname = 'Guest';
     // io.to(socket.room).emit('updatePeopleInGame', peopleInGame);
     socket.on("disconnect", function () {
+        var isMainRoom = false;
         peopleInGame -= 1;
         clients.splice(clients.indexOf(socket.nickname), 1);
         console.log(clients.indexOf(socket.nickname) + " user has disconnected");
         //io.to(socket.room).emit('list clients', clients);
-        io.to(socket.room).emit('user left', socket.nickname);
+        if(socket.room === 'main room'){
+            isMainRoom = true;
+        }
+        io.to(socket.room).emit('user left', socket.nickname, isMainRoom);
         console.log(peopleInGame);
         console.log(peopleInGame);
 

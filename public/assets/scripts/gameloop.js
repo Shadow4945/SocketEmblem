@@ -58,29 +58,22 @@ function updateVisuals() {
         reset();
     }
     if (rounds === 6) {
-        if (typeof (Storage) !== "undefined") {
-            
-            if (playerId === 1) {
-                if(localStorage.highScore <= Btotal ){
-                    localStorage.highScore = Btotal;
-                    console.log("Yo Yo Blue guy");
-                }
-            } else if (playerId === 2) {
-                if(localStorage.highScore <= Rtotal ){
-                    localStorage.highScore = Rtotal;
-                    console.log("Yo Yo Red guy");
-                }
-            } else if (playerId === 3) {
-                if(localStorage.highScore <= Gtotal ){
-                    localStorage.highScore = Gtotal;
-                    console.log("Yo Yo Green guy");
-                }
-            }
-        } else {
-            console.log('Sorry! No Web Storage support..');
+        Bhealth =Ghealth =Rhealth = 200;
+        console.log("Round is: " + round);
+        rounds = 1;
+        round.text = "Round:" + rounds;
+        console.log("Round is: " + round);
+        if(Rtotal>Gtotal&&Rtotal>Btotal){
+          winner.text="Red wins with " + Rtotal;
         }
-
-
+        if(Gtotal>Rtotal&&Gtotal>Btotal){
+          winner.text="Green wins with " + Gtotal;
+        }
+        if(Btotal>Gtotal&&Btotal>Rtotal){
+          winner.text="Blue wins with " + Btotal;
+        }
+        Rtotal=Btotal=Gtotal = 0;
+        stage.update();
         GAMESTATE = "gameover";
         Bhealth = Ghealth = Rhealth = 100;
         round = 0;
