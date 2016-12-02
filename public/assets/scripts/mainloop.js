@@ -110,6 +110,10 @@ function loop() {
             instructionScreen.visible = false;
             gamearea.visible = true;
 
+            Bhealthbar.visible=true;
+            Ghealthbar.visible=true;
+            Rhealthbar.visible=true;
+
             btnPlay.visible = false;
             btnIns.visible = false;
             btnTitle.visible = false;
